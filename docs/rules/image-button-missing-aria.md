@@ -1,6 +1,12 @@
 # image-button-missing-aria (`image-button-missing-aria`)
 
-Please describe the origin of the rule here.
+All interactive elements must have an accessible name.
+
+Image buttons without additional text content lack an accessible name.
+
+Please add title, aria-label, aria-labelledby, aria-described by etc.
+
+<https://www.w3.org/TR/html-aria/>
 
 ## Rule Details
 
@@ -10,7 +16,7 @@ Examples of **incorrect** code for this rule:
 
 ```js
 
-// fill me in
+<Button icon={<CalendarMonthRegular />} />
 
 ```
 
@@ -18,7 +24,8 @@ Examples of **correct** code for this rule:
 
 ```js
 
-// fill me in
+<Button icon={<CalendarMonthRegular />} aria-label="Current month" />
+<Button icon={<CalendarMonthRegular />} title="Current month" />
 
 ```
 
