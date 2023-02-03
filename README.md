@@ -2,7 +2,7 @@
 
 ## ***Under Construction***
 
-A set of eslint rules against [fluentui]<https://fluentsite.z22.web.core.windows.net/0.64.0> to prevent common accessibility issues.
+A set of eslint rules against [FluentUI](https://fluentsite.z22.web.core.windows.net/0.64.0) to prevent common accessibility issues.
 
 ## Contributing
 
