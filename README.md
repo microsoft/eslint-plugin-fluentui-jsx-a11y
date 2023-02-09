@@ -4,6 +4,19 @@
 
 A set of eslint rules against [FluentUI](https://fluentsite.z22.web.core.windows.net/0.64.0) to prevent common accessibility issues.
 
+This plugin was generated with The ESLint generator for Yeoman: [eslint/generator-eslint]<https://github.com/eslint/generator-eslint>.
+
+### eslint:plugin
+```sh
+yo eslint:plugin
+```
+
+### eslint:rule
+If you want to create a new ESLint rule, make sure you're in the top-level directory of an ESLint repo clone or an ESLint plugin and type:
+```sh
+yo eslint:rule
+```
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
