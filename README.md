@@ -4,7 +4,7 @@
 
 A set of eslint rules against [FluentUI](https://fluentsite.z22.web.core.windows.net/0.64.0) to prevent common accessibility issues.
 
-This plugin was generated with The ESLint generator for Yeoman: [eslint/generator-eslint]<https://github.com/eslint/generator-eslint>.
+This plugin was generated with The ESLint generator for Yeoman: [eslint/generator-eslint](https://github.com/eslint/generator-eslint).
 
 ### eslint:plugin
 ```sh
