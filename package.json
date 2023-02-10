@@ -1,6 +1,6 @@
 {
-  "name": "fluentui-eslint-plugin-jsx-a11y",
-  "version": "0.0.0",
+  "name": "@microsoft/fluentui-eslint-plugin-jsx-a11y",
+  "version": "1.0.0",
   "description": "Static AST checker for accessibility rules on FluentUI JSX elements.",
   "keywords": [
     "eslint",
@@ -9,12 +9,15 @@
     "a11y",
     "accessibility",
     "jsx",
-    "fluentui"
+    "fluentui",
+    "javascript",
+    "typescript",
+    "lint"
   ],
   "author": "Aubrey Quinn",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/fluentui-eslint-plugin-jsx-a11y.git"
+    "url": "git+https://github.com/microsoft/fluentui-eslint-plugin-jsx-a11y.git"
   },
   "main": "./lib/index.js",
   "exports": "./lib/index.js",
@@ -43,5 +46,8 @@
   "peerDependencies": {
     "eslint": ">=7"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
+  }
 }
