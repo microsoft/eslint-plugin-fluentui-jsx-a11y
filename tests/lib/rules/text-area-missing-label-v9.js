@@ -10,7 +10,7 @@
 
 const RuleTester = require("eslint").RuleTester;
 
-const rule = require("../../../lib/rules/text-area-missing-label");
+const rule = require("../../../lib/rules/text-area-missing-label-v9");
 
 RuleTester.setDefaultConfig({
     parserOptions: {
