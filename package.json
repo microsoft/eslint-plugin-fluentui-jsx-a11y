@@ -44,7 +44,8 @@
     "node": "^14.17.0 || ^16.0.0 || >= 18.0.0"
   },
   "peerDependencies": {
-    "eslint": ">=7"
+    "eslint": ">=7",
+    "@typescript-eslint/parser": "^5.12.0"
   },
   "license": "MIT",
   "publishConfig": {
