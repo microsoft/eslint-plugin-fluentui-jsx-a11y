@@ -19,6 +19,9 @@
     "type": "git",
     "url": "git+https://github.com/microsoft/fluentui-eslint-plugin-jsx-a11y.git"
   },
+  "files": [
+    "lib"
+  ],
   "main": "./lib/index.js",
   "exports": "./lib/index.js",
   "scripts": {
