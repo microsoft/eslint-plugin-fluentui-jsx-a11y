@@ -2,8 +2,6 @@
 
 <!-- end auto-generated rule header -->
 
-<!-- end auto-generated rule header -->
-
 ## Rule Details
 
 This rule aims to prevent that a text area is placed without a label.

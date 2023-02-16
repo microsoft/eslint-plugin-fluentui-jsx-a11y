@@ -47,12 +47,14 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 ## Rules
 <!-- begin auto-generated rules list -->
 
-🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
-
-| Name                                                                   | Description                                                                                                | 🔧 |
-| :--------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------- | :- |
-| [image-button-missing-aria](docs/rules/image-button-missing-aria.md)   | Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby |    |
-| [image-link-missing-aria-v9](docs/rules/image-link-missing-aria-v9.md) | Accessibility: Image links must have an accessible name                                                    | 🔧 |
-| [text-area-missing-label-v9](docs/rules/text-area-missing-label-v9.md) | Accessibility: Textarea must have an accessible name                                                       |    |
+| Name                                                                                                         | Description                                                                                                                                                                                                            |
+| :----------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [icon-text-content-button-does-not-need-aria](docs/rules/icon-text-content-button-does-not-need-aria.md)     | Accessibility: an image button with text content does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users. |
+| [image-button-missing-aria](docs/rules/image-button-missing-aria.md)                                         | Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                                             |
+| [image-button-prefer-aria-over-title-attribute](docs/rules/image-button-prefer-aria-over-title-attribute.md) | Accessibility: prefer wai-aria over title or placeholder attributes. Title/placeholder can be used in addition to wai-aria. aria-label, aria-labelledby, aria-describedby                                              |
+| [no-empty-buttons](docs/rules/no-empty-buttons.md)                                                           | Accessibility: buttons must either text content or accessible labelling                                                                                                                                                |
+| [object-literal-button-no-missing-aria](docs/rules/object-literal-button-no-missing-aria.md)                 | Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                              |
+| [text-area-missing-label-v9](docs/rules/text-area-missing-label-v9.md)                                       | Accessibility: Textarea must have an accessible name                                                                                                                                                                   |
+| [text-content-button-does-not-need-aria](docs/rules/text-content-button-does-not-need-aria.md)               | Accessibility: a button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users.                           |
 
 <!-- end auto-generated rules list -->
