@@ -19,6 +19,9 @@
     "type": "git",
     "url": "git+https://github.com/microsoft/fluentui-eslint-plugin-jsx-a11y.git"
   },
+  "files": [
+    "lib"
+  ],
   "main": "./lib/index.js",
   "exports": "./lib/index.js",
   "scripts": {
@@ -29,6 +32,7 @@
     "update:eslint-docs": "eslint-doc-generator"
   },
   "dependencies": {
+    "eslint-plugin-header": "^3.1.1",
     "jsx-ast-utils": "^3.3.3",
     "requireindex": "^1.2.0"
   },
@@ -48,6 +52,6 @@
   },
   "license": "MIT",
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com/"
+    "@aubreyquinn:registry": "https://npm.pkg.github.com"
   }
 }

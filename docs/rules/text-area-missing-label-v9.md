@@ -1,8 +1,6 @@
-# Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9`)
+# Accessibility: Textarea must have an accessible name (`@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9`)
 
 <!-- end auto-generated rule header -->
-
-Please describe the origin of the rule here.
 
 ## Rule Details
 
@@ -21,7 +19,6 @@ or
 <Label htmlFor="text-area-id">Label name</Label>
 <Textarea/>
 ```
-
 
 Examples of **correct** code for this rule:
 

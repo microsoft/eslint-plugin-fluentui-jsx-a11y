@@ -12,7 +12,7 @@ Please add title, aria-label, aria-labelledby, aria-described by etc.
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to prevent an icon button from having no aria label.
 
 Examples of **incorrect** code for this rule:
 
@@ -30,15 +30,3 @@ Examples of **correct** code for this rule:
 <Button icon={<CalendarMonthRegular />} title="Current month" />
 
 ```
-
-### Options
-
-If there are any options, describe them here. Otherwise, delete this section.
-
-## When Not To Use It
-
-Give a short description of when it would be appropriate to turn off this rule.
-
-## Further Reading
-
-If there are other links that describe the issue this rule addresses, please include them here in a bulleted list.

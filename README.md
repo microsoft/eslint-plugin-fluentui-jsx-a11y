@@ -36,20 +36,6 @@ Or add this package to your `package.json` file:
   }
 ```
 
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit <https://cla.opensource.microsoft.com>.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
@@ -57,3 +43,21 @@ trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.
+
+## Rules
+<!-- begin auto-generated rules list -->
+
+🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
+
+| Name                                                                                                         | Description                                                                                                                                                                                                            | 🔧 |
+| :----------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :- |
+| [icon-text-content-button-does-not-need-aria](docs/rules/icon-text-content-button-does-not-need-aria.md)     | Accessibility: an image button with text content does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users. |    |
+| [image-button-missing-aria](docs/rules/image-button-missing-aria.md)                                         | Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                                             |    |
+| [image-button-prefer-aria-over-title-attribute](docs/rules/image-button-prefer-aria-over-title-attribute.md) | Accessibility: prefer wai-aria over title or placeholder attributes. Title/placeholder can be used in addition to wai-aria. aria-label, aria-labelledby, aria-describedby                                              |    |
+| [image-link-missing-aria-v9](docs/rules/image-link-missing-aria-v9.md)                                       | Accessibility: Image links must have an accessible name                                                                                                                                                                | 🔧 |
+| [no-empty-buttons](docs/rules/no-empty-buttons.md)                                                           | Accessibility: buttons must either text content or accessible labelling                                                                                                                                                |    |
+| [object-literal-button-no-missing-aria](docs/rules/object-literal-button-no-missing-aria.md)                 | Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                              |    |
+| [text-area-missing-label-v9](docs/rules/text-area-missing-label-v9.md)                                       | Accessibility: Textarea must have an accessible name                                                                                                                                                                   |    |
+| [text-content-button-does-not-need-aria](docs/rules/text-content-button-does-not-need-aria.md)               | Accessibility: a button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users.                           |    |
+
+<!-- end auto-generated rules list -->
