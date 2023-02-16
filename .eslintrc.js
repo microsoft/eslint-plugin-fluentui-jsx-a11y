@@ -1,3 +1,6 @@
+//Copyright (c) Microsoft Corporation.
+//Licensed under the MIT License.
+
 "use strict";
 
 module.exports = {
@@ -6,6 +9,9 @@ module.exports = {
     "eslint:recommended",
     "plugin:eslint-plugin/recommended",
     "plugin:node/recommended",
+  ],
+  "plugins": [
+    "header"
   ],
   env: {
     node: true,
@@ -16,4 +22,7 @@ module.exports = {
       env: { mocha: true },
     },
   ],
+  "rules": {
+    "header/header": [2, "line", ["Copyright (c) Microsoft Corporation.", "Licensed under the MIT License."], 2],
+  }
 };
