@@ -2,6 +2,8 @@
 
 <!-- end auto-generated rule header -->
 
+<!-- end auto-generated rule header -->
+
 Object literal image buttons must have accessible labelling: aria-label
 
 <https://www.w3.org/TR/html-aria/>

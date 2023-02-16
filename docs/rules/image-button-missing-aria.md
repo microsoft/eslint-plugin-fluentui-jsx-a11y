@@ -4,6 +4,8 @@
 
 <!-- end auto-generated rule header -->
 
+<!-- end auto-generated rule header -->
+
 All interactive elements must have an accessible name.
 
 Image buttons without additional text content lack an accessible name.

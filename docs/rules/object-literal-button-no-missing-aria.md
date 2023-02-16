@@ -2,6 +2,8 @@
 
 <!-- end auto-generated rule header -->
 
+<!-- end auto-generated rule header -->
+
 A button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users.
 
 <https://www.w3.org/TR/html-aria/>
