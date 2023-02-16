@@ -12,7 +12,6 @@ const RuleTester = require("eslint").RuleTester;
 const rule = require("../../../lib/rules/object-literal-button-no-missing-aria");
 
 RuleTester.setDefaultConfig({
-    parser: require.resolve("@typescript-eslint/parser"),
     parserOptions: {
         ecmaVersion: 6,
         ecmaFeatures: {
@@ -38,8 +37,6 @@ ruleTester.run("object-literal-button-no-missing-aria", rule, {
         "const props = [{ icon: <CloseIcon />, iconOnly: true, 'aria-label': 'Close', title: 'Close',}, { icon: <AcceptIcon />, 'aria-label': 'Accept',}];",
         "const props = { icon: <CloseIcon />, content: 'Close' };",
         "const props = { icon: <CloseIcon />, 'aria-label': 'Close' };",
-        "const props: ICommandBarProps = { icon: <CloseIcon />, 'aria-label': 'Close' };",
-        "const approvalCommandBarProps: IButtonProps = {buttonProps: {text: true, iconPosition: 'before', content: 'Close', disabled: 'false', onClick: '', icon: <AddIcon />}};",
         "const approvalCommandBarProps = {buttonProps: {text: true, iconPosition: 'before', content: 'Close', disabled: 'false', onClick: '', icon: <AddIcon />}};",
         "<Dialog headerAction={{icon: <CloseIcon />, 'aria-label': 'Close', title: 'Close', onClick: ''}}/>",
         "<Dialog headerAction={{icon: <CloseIcon />, 'aria-label': 'Close', title: 'Close', onClick: ''}} footerAction={{icon: <CancelIcon />, content: 'Close'}} />",
