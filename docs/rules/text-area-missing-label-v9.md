@@ -1,4 +1,6 @@
-# Checks if the text area component is missing a label. (`text-area-missing-label`)
+# Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9`)
+
+<!-- end auto-generated rule header -->
 
 Please describe the origin of the rule here.
 
