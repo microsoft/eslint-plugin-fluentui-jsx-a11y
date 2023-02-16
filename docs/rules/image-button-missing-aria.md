@@ -2,6 +2,8 @@
 
 <!-- end auto-generated rule header -->
 
+<!-- end auto-generated rule header -->
+
 All interactive elements must have an accessible name.
 
 Image buttons without additional text content lack an accessible name.
@@ -12,7 +14,7 @@ Please add title, aria-label, aria-labelledby, aria-described by etc.
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to prevent an icon button from having no aria label.
 
 Examples of **incorrect** code for this rule:
 
