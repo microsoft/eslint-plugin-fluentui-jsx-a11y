@@ -1,6 +1,8 @@
-# Checks if the text area component is missing a label. (`text-area-missing-label`)
+# Accessibility: Textarea must have an accessible name (`@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9`)
 
-Please describe the origin of the rule here.
+<!-- end auto-generated rule header -->
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 
@@ -19,7 +21,6 @@ or
 <Label htmlFor="text-area-id">Label name</Label>
 <Textarea/>
 ```
-
 
 Examples of **correct** code for this rule:
 
