@@ -1,5 +1,5 @@
-//Copyright (c) Microsoft Corporation.
-//Licensed under the MIT License.
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 "use strict";
 
@@ -23,6 +23,6 @@ module.exports = {
     },
   ],
   "rules": {
-    "header/header": [2, "line", ["Copyright (c) Microsoft Corporation.", "Licensed under the MIT License."], 2],
+    "header/header": [2, "line", [" Copyright (c) Microsoft Corporation.", " Licensed under the MIT License."], 2],
   }
 };
