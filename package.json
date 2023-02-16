@@ -52,6 +52,6 @@
   },
   "license": "MIT",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "@aubreyquinn:registry": "https://npm.pkg.github.com"
   }
 }
