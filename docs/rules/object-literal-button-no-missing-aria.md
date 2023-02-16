@@ -1,4 +1,6 @@
-# object-literal-button-no-missing-aria(`object-literal-button-no-missing-aria`)
+# Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/object-literal-button-no-missing-aria`)
+
+<!-- end auto-generated rule header -->
 
 A button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users.
 

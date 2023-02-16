@@ -1,4 +1,6 @@
-# no-empty-button(`no-empty-buttons`)
+# Accessibility: buttons must either text content or accessible labelling (`@microsoft/fluentui-jsx-a11y/no-empty-buttons`)
+
+<!-- end auto-generated rule header -->
 
 Buttons must either have text, content or accessible labelling
 
