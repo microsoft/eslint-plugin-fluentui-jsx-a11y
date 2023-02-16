@@ -7,7 +7,7 @@ All interactive elements must have an accessible name.
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to overwrite the auto generated aria label of content prop.
 
 Examples of **incorrect** code for this rule:
 

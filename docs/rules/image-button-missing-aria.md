@@ -10,7 +10,7 @@ Please add title, aria-label, aria-labelledby, aria-described by etc.
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to prevent an icon button from having no aria label.
 
 Examples of **incorrect** code for this rule:
 

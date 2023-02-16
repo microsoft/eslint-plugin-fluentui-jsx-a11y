@@ -6,7 +6,7 @@ Buttons must either have text, content or accessible labelling
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to make a button to have something to generate an aria-label.
 
 Examples of **incorrect** code for this rule:
 

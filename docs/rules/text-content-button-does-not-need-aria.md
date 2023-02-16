@@ -6,7 +6,7 @@ Object literal image buttons must have accessible labelling: aria-label
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to get the object literal props.
 
 Examples of **incorrect** code for this rule:
 

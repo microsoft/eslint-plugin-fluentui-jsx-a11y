@@ -6,12 +6,12 @@ Image buttons must have accessible labelling: aria-label
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to require aria label even when button has title.
 
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<Button icon={<CloseIcon />} iconOnly />
+<Button icon={<CloseIcon />} title="Close" iconOnly />
 ```
 
 Examples of **correct** code for this rule:

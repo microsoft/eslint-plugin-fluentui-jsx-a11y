@@ -6,7 +6,7 @@ A button with text content does not need aria labelling. The button already has 
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to prevent duplicates of aria label.
 
 Examples of **incorrect** code for this rule:
 
