@@ -1,4 +1,6 @@
-# image-button-missing-aria (`image-button-missing-aria`)
+# Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/image-button-missing-aria`)
+
+<!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.
 
@@ -28,15 +30,3 @@ Examples of **correct** code for this rule:
 <Button icon={<CalendarMonthRegular />} title="Current month" />
 
 ```
-
-### Options
-
-If there are any options, describe them here. Otherwise, delete this section.
-
-## When Not To Use It
-
-Give a short description of when it would be appropriate to turn off this rule.
-
-## Further Reading
-
-If there are other links that describe the issue this rule addresses, please include them here in a bulleted list.
