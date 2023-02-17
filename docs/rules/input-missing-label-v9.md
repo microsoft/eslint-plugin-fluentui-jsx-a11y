@@ -14,14 +14,14 @@ Rule explanation here [https://www.w3.org/WAI/tutorials/forms/labels/](https://w
 
 Examples of **incorrect** code for this rule:
 
-```js
+```jsx
 <Label>Label name</Label>
 <Input id="input-id"/>
 ```
 
 or
 
-```js
+```jsx
 <Label htmlFor="input-id">Label name</Label>
 <Input/>
 ```

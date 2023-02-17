@@ -8,14 +8,14 @@ This rule aims to prevent that a text area is placed without a label.
 
 Examples of **incorrect** code for this rule:
 
-```js
+```jsx
 <Label>Label name</Label>
 <Textarea id="text-area-id"/>
 ```
 
 or
 
-```js
+```jsx
 <Label htmlFor="text-area-id">Label name</Label>
 <Textarea/>
 ```
