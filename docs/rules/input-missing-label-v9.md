@@ -2,7 +2,9 @@
 
 <!-- end auto-generated rule header -->
 
-Please describe the origin of the rule here.
+<!-- end auto-generated rule header -->
+
+All interactive elements must have an accessible name.
 
 ## Rule Details
 
