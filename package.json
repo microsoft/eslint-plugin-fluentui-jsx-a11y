@@ -12,7 +12,10 @@
         "fluentui",
         "javascript",
         "typescript",
-        "lint"
+        "lint",
+        "React",
+        "@fluentui/react-components",
+        "react-components"
     ],
     "author": "Aubrey Quinn",
     "repository": {
