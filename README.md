@@ -2,13 +2,13 @@
 
 A set of eslint rules against [FluentUI](https://fluentsite.z22.web.core.windows.net/0.64.0) to prevent common accessibility issues.
 
-Developed an maintained by the [MWT Dublin Accessibility V-Team](https://domoreexp.visualstudio.com/Teamspace/_wiki/wikis/Teamspace.wiki/28464/Accessibility-Contacts).
+Developed and maintained by the [MWT Dublin Accessibility V-Team](https://domoreexp.visualstudio.com/Teamspace/_wiki/wikis/Teamspace.wiki/28464/Accessibility-Contacts).
 
 ## Why?
 
 This plugin does a static code analysis of the React JSX to spot accessibility issues in apps built with FluentUI. That way, common accessibility issues are detected before the pull request stage and will be prevented from being checked into a code base.
 
-As the plugin can only catches errors in static source code, please use it in combination with [@axe-core/react](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/react) to test the accessibility of the rendered DOM. Consider these tools just as one step of a larger a11y testing process and always test your apps with assistive technology.
+As the plugin can only catch errors in static source code, please use it in combination with [@axe-core/react](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/react) to test the accessibility of the rendered DOM. Consider these tools just as one step of a larger a11y testing process and always test your apps with assistive technology.
 
 We also recomend that you use this plugin in conjuction with the [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) plugin. Please configure [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) to work with FluentUI components.
 
