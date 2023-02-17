@@ -16,17 +16,13 @@ This rule aims to prevent an icon button from having no aria label.
 
 Examples of **incorrect** code for this rule:
 
-```js
-
+```jsx
 <Button icon={<CalendarMonthRegular />} />
-
 ```
 
 Examples of **correct** code for this rule:
 
-```js
-
+```jsx
 <Button icon={<CalendarMonthRegular />} aria-label="Current month" />
 <Button icon={<CalendarMonthRegular />} title="Current month" />
-
 ```

@@ -1,5 +1,4 @@
 {
-    "typescript.updateImportsOnFileMove.enabled": "always",
     "javascript.updateImportsOnFileMove.enabled": "always",
     "editor.formatOnSave": true,
     "markdown.validate.enabled": true,
