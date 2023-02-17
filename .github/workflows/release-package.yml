@@ -1,8 +1,8 @@
 name: Publish as Github package
 
 on:
-  release:
-    types: [created, prereleased]
+    release:
+        types: [created, prereleased]
 
 jobs:
   build:
