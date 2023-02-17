@@ -32,6 +32,7 @@ ruleTester.run("no-empty-buttons", rule, {
         '<Button content="anything" />',
         '<Button icon={<CloseIcon />} iconOnly aria-label="Close"></Button>',
         '<Button content="anything"></Button>',
+        "<Button>Hello</Button>",
         "<Image />",
         '<Datepicker daysToSelectInDayView={0} popup="Compress program" />'
     ],
