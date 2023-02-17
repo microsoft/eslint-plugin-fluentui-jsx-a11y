@@ -1,0 +1,9 @@
+*.md
+*.txt
+*.zip
+.gitignore
+.npmrc
+.prettierignore
+node_modules/
+package-lock.json
+yarn.lock
