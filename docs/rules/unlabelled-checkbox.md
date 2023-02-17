@@ -19,7 +19,7 @@ This rule aims to make Checkboxes accessible.
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<Checkbox />
+<Checkbox checked={true} />
 <Checkbox></Checkbox>
 ```
 
@@ -27,7 +27,7 @@ Examples of **correct** code for this rule:
 
 ```jsx
 <Checkbox label="anything" />
-<Checkbox aria-label="Select instance" />
-<Checkbox aria-labelledby="label-id-2" />
+<Checkbox aria-label="Select instance" checked={true} />
+<Checkbox aria-labelledby="label-id-2" checked={false} />
 <Checkbox aria-describedby="label-id-2" />
 ```
