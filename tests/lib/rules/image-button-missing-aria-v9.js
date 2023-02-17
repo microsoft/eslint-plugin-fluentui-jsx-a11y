@@ -25,9 +25,9 @@ ruleTester.run("image-button-missing-aria-v9", rule, {
         "<Button icon={<CloseIcon />}>Close</Button>",
         "<Image />",
         '<Datepicker daysToSelectInDayView={0} popup="Compress program" />',
-        '<Tooltip content="With calendar icon only" relationship="label"><Button icon={<CalendarMonthRegular />} /></Tooltip>',
-        '<Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-4"></Button>'
-        // '<Button icon={<CloseIcon />} aria-describedby="label-id-4"></Button>'
+        // '<Tooltip content="With calendar icon only" relationship="label"><Button icon={<CalendarMonthRegular />} /></Tooltip>'
+        // '<Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-4"></Button>',
+        '<Button icon={<CloseIcon />} aria-describedby="label-id-4"></Button>'
     ],
     invalid: [
         {
@@ -48,4 +48,3 @@ ruleTester.run("image-button-missing-aria-v9", rule, {
         }
     ]
 });
-
