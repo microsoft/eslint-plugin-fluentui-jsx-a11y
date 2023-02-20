@@ -23,11 +23,25 @@ Examples of **incorrect** code for this rule:
 <Checkbox></Checkbox>
 ```
 
+```jsx
+    <Label>This is a switch.</Label>
+    <Checkbox
+      checked={true}
+      onChange={onChange}
+    />
+```
+
 Examples of **correct** code for this rule:
 
 ```jsx
-<Checkbox label="anything" />
-<Checkbox aria-label="Select instance" checked={true} />
-<Checkbox aria-labelledby="label-id-2" checked={false} />
-<Checkbox aria-describedby="label-id-2" />
+<Checkbox label="anything" checked={true} />
+```
+
+```jsx
+    <Label id="my-label-1">This is a checkbox.</Label>
+    <Checkbox
+      checked={checked}
+      onChange={onChange}
+      aria-labelledby="my-label-1"
+    />
 ```
