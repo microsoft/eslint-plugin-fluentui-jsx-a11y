@@ -3,6 +3,7 @@
 A set of eslint rules against [FluentUI](https://github.com/microsoft/fluentui) to prevent common accessibility issues.
 
 Rules for FluentUI v9 end in `-v9`. [Fluent UI React v9](https://react.fluentui.dev/?path=/docs/concepts-introduction--page)
+
 Rules for v8 have no ending.
 
 Developed and maintained by the [MWT Dublin Accessibility V-Team](https://domoreexp.visualstudio.com/Teamspace/_wiki/wikis/Teamspace.wiki/28464/Accessibility-Contacts).
