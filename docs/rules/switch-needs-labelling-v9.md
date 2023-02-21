@@ -1,4 +1,6 @@
-# abc (`switch-needs-labelling-v9`)
+# Accessibility: Switch without label must have an accessible and visual label: aria-labelledby (`@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9`)
+
+<!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.
 
