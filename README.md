@@ -51,17 +51,20 @@ yo eslint:rule
 
 ## Installation
 
-Before installing, make sure to authenticate with GitHub Package Registry or using a `.npmrc` file. See "[Configuring npm for use with GitHub Package Registry](https://help.github.com/en/articles/configuring-npm-for-use-with-github-package-registry#authenticating-to-github-package-registry)."
-
-`$ npm install -D @microsoft/fluentui-eslint-plugin-jsx-a11y`
+`$ nnpm i -D @microsoft/eslint-plugin-fluentui-jsx-a11y`
 
 Or add this package to your `package.json` file:
 
 ```sh
 "devDependencies": {
-    "@microsoft/fluentui-eslint-plugin-jsx-a11y": "1.0.0"
+    "@microsoft/microsoft/eslint-plugin-fluentui-jsx-a11y": "1.0.0"
   }
+  
+  npm install
 ```
+
+### Configuration
+Please see this readme for the recommended setup.
 
 ## Trademarks
 
