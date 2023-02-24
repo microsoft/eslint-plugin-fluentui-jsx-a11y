@@ -1,4 +1,4 @@
-# fluentui-eslint-plugin-jsx-a11y
+# eslint-plugin-fluentui-jsx-a11y
 
 A set of eslint rules against [FluentUI](https://github.com/microsoft/fluentui) to prevent common accessibility issues.
 
