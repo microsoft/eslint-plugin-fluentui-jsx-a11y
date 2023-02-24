@@ -8,6 +8,79 @@ Rules for v8 have no ending.
 
 Developed and maintained by the [MWT Dublin Accessibility V-Team](https://domoreexp.visualstudio.com/Teamspace/_wiki/wikis/Teamspace.wiki/28464/Accessibility-Contacts).
 
+## Installation
+
+You'll first need to install [ESLint](https://eslint.org/):
+
+```sh
+# npm
+npm install eslint --save-dev
+
+# yarn
+yarn add eslint --dev
+```
+
+Next, install @microsoft/eslint-plugin-fluentui-jsx-a11y:
+
+```sh
+# npm
+npm install @microsoft/eslint-plugin-fluentui-jsx-a11y --save-dev
+
+# yarn
+yarn add @microsoft/eslint-plugin-fluentui-jsx-a11y --dev
+```
+
+Or add this package to your `package.json` file:
+
+```sh
+"devDependencies": {
+    "@microsoft/eslint-plugin-fluentui-jsx-a11y": "1.0.0"
+  }
+```
+
+And then you can run 
+
+```sh
+  npm install
+```
+
+## Usage
+
+You will need to add the plugin to your `.eslintrc` configuration file.
+As we support both v8 and v9 right now, you will need to add the rules individually to the rules section.
+
+Example:
+
+```json
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks",
+    "@microsoft/fluentui-jsx-a11y"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off",
+    "@microsoft/fluentui-jsx-a11y/no-empty-buttons": "error"
+  },
+ 
+```
+
+
+
 ## Why?
 
 This plugin does a static code analysis of the React JSX to spot accessibility issues in apps built with FluentUI. That way, common accessibility issues are detected before the pull request stage and will be prevented from being checked into a code base.
@@ -49,22 +122,7 @@ If you want to create a new ESLint rule, make sure you're in the top-level direc
 yo eslint:rule
 ```
 
-## Installation
 
-`$ nnpm i -D @microsoft/eslint-plugin-fluentui-jsx-a11y`
-
-Or add this package to your `package.json` file:
-
-```sh
-"devDependencies": {
-    "@microsoft/microsoft/eslint-plugin-fluentui-jsx-a11y": "1.0.0"
-  }
-  
-  npm install
-```
-
-### Configuration
-Please see this readme for the recommended setup.
 
 ## Trademarks
 
