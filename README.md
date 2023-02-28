@@ -6,7 +6,7 @@ Rules for FluentUI v9 end in `-v9`. [Fluent UI React v9](https://react.fluentui.
 
 Rules for v8 have no ending.
 
-Developed and maintained by the [MWT Dublin Accessibility V-Team](https://domoreexp.visualstudio.com/Teamspace/_wiki/wikis/Teamspace.wiki/28464/Accessibility-Contacts).
+Developed and maintained by the MSTeams Accessibility V-Team, Dublin Chapter.
 
 ## Installation
 
