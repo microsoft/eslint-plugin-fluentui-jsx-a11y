@@ -49,7 +49,7 @@ And then you can run
 You will need to add the plugin to your `.eslintrc` configuration file.
 As we support both v8 and v9 right now, you will need to add the rules individually to the rules section.
 
-Example:
+V9 Suggested Configuration:
 
 ```json
 {
@@ -74,12 +74,15 @@ Example:
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": "off",
-    "@microsoft/fluentui-jsx-a11y/no-empty-buttons": "error"
+    "@microsoft/fluentui-jsx-a11y/no-empty-buttons": "error",
+    "@microsoft/fluentui-jsx-a11y/checkbox-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/image-link-missing-aria-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/input-missing-label-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9": "error"
   },
  
 ```
-
-
 
 ## Why?
 
