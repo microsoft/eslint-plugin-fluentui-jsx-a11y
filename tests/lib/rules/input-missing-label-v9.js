@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-
-
 "use strict";
 
 //------------------------------------------------------------------------------
@@ -22,42 +20,40 @@ RuleTester.setDefaultConfig({
     }
 });
 
-
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
-ruleTester.run("input-missing-label", rule, {
-  valid: [
-    '<><Label htmlFor="some-id">Some Label</Label><Input id="some-id"/></>',
-    '<><Label htmlFor="some-id">Some Label<Input id="some-id"/></Label></>',
-    '<><Input id="some-id" aria-label="Test"/></>',
-    '<><Span id="test-span">Some Label</Span><Input id="some-id" aria-labelledby="test-span"/></>',
-    '<><Input id="some-id" label="Test"/></>',
-  ],
+ruleTester.run("input-missing-label-v9", rule, {
+    valid: [
+        '<><Label htmlFor="some-id">Some Label</Label><Input id="some-id"/></>',
+        '<><Label id="test-span">Some Label</Label><Input id="some-id" aria-labelledby="test-span"/></>',
+        "<Label>test</Label>",
+        "<Label>test<Input/></Label>",
+        "<Label>test<SomeNesting><Input/></SomeNesting></Label>"
+    ],
 
-  invalid: [
-    {
-      code: "<><Input/></>",
-      errors: [{ messageId: "missingLabelOnInput" }],
-    },
-    {
-      code: "<><Label/><Input/></>",
-      errors: [{ messageId: "missingLabelOnInput" }],
-    },
-    {
-      code: '<><Label htmlFor="id"/><Input /></>',
-      errors: [{ messageId: "missingLabelOnInput" }],
-    },
-    {
-      code: '<Input id="some-id"/>',
-      errors: [{ messageId: "missingLabelOnInput" }],
-    },
-    {
-      code: '<><Label>Some Label</Label><Input id="some-id"/></>',
-      errors: [{ messageId: "missingLabelOnInput" }],
-    }
-  ],
+    invalid: [
+        {
+            code: "<><Input/></>",
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: "<><Label/><Input/></>",
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: '<><Label htmlFor="id"/><Input /></>',
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: '<Input id="some-id"/>',
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: '<><Label>Some Label</Label><Input id="some-id"/></>',
+            errors: [{ messageId: "missingLabelOnInput" }]
+        }
+    ]
 });

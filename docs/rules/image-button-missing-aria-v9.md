@@ -17,6 +17,9 @@ Examples of **incorrect** code for this rule:
 ```jsx
 <Button icon={<CalendarMonthRegular />} />
 <Button icon={<CalendarMonthRegular />}></Button>
+
+<Label>Start date</Label>
+<Button icon={<CalendarMonthRegular />} />
 ```
 
 Examples of **correct** code for this rule:

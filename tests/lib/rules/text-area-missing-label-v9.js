@@ -25,7 +25,7 @@ RuleTester.setDefaultConfig({
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
-ruleTester.run("text-area-missing-label", rule, {
+ruleTester.run("text-area-missing-label-v9", rule, {
     valid: [
         '<><Label htmlFor="some-id">Some Label</Label><Textarea id="some-id"/></>',
         '<><Label htmlFor="some-id">Some Label</Label><SomeNesting><Textarea id="some-id"/></SomeNesting></>',

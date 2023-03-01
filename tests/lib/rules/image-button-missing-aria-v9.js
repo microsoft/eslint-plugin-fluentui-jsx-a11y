@@ -25,9 +25,9 @@ ruleTester.run("image-button-missing-aria-v9", rule, {
         "<Button icon={<CloseIcon />}>Close</Button>",
         "<Image />",
         '<Datepicker daysToSelectInDayView={0} popup="Compress program" />',
-        // '<Tooltip content="With calendar icon only" relationship="label"><Button icon={<CalendarMonthRegular />} /></Tooltip>'
-        // '<Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-4"></Button>',
-        '<Button icon={<CloseIcon />} aria-describedby="label-id-4"></Button>'
+        '<Tooltip content="With calendar icon only" relationship="label"><Button icon={<CalendarMonthRegular />} /></Tooltip>',
+        '<><Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-4"></Button></>',
+        '<><Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-4" /></>'
     ],
     invalid: [
         {
@@ -39,11 +39,15 @@ ruleTester.run("image-button-missing-aria-v9", rule, {
             errors: [{ messageId: "missingAriaLabel" }]
         },
         {
-            code: "<Button></Button>",
+            code: '<Button icon={<CloseIcon />} aria-labelledby="label-id-4"></Button>',
             errors: [{ messageId: "missingAriaLabel" }]
         },
         {
-            code: '<Button icon={<CloseIcon />} aria-labelledby="label-id-4"></Button>',
+            code: '<><Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-5" /></>',
+            errors: [{ messageId: "missingAriaLabel" }]
+        },
+        {
+            code: "<><Label>Close</Label><Button icon={<CloseIcon />} /></>",
             errors: [{ messageId: "missingAriaLabel" }]
         }
     ]
