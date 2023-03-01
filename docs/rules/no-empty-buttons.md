@@ -2,8 +2,6 @@
 
 <!-- end auto-generated rule header -->
 
-<!-- end auto-generated rule header -->
-
 Buttons must either have text, content or accessible labelling
 
 <https://www.w3.org/TR/html-aria/>

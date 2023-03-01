@@ -2,8 +2,6 @@
 
 <!-- end auto-generated rule header -->
 
-<!-- end auto-generated rule header -->
-
 Accessibility: an image button with content prop does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users.
 All interactive elements must have an accessible name.
 

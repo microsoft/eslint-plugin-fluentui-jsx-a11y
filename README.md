@@ -1,8 +1,88 @@
-# fluentui-eslint-plugin-jsx-a11y
+# eslint-plugin-fluentui-jsx-a11y
 
-A set of eslint rules against [FluentUI](https://fluentsite.z22.web.core.windows.net/0.64.0) to prevent common accessibility issues.
+A set of eslint rules against [FluentUI](https://github.com/microsoft/fluentui) to prevent common accessibility issues.
 
-Developed and maintained by the [MWT Dublin Accessibility V-Team](https://domoreexp.visualstudio.com/Teamspace/_wiki/wikis/Teamspace.wiki/28464/Accessibility-Contacts).
+Rules for FluentUI v9 end in `-v9`. [Fluent UI React v9](https://react.fluentui.dev/?path=/docs/concepts-introduction--page)
+
+Rules for v8 have no ending.
+
+Developed and maintained by the Microsoft Research Ireland Accessibility V-Team.
+
+## Installation
+
+You'll first need to install [ESLint](https://eslint.org/):
+
+```sh
+# npm
+npm install eslint --save-dev
+
+# yarn
+yarn add eslint --dev
+```
+
+Next, install @microsoft/eslint-plugin-fluentui-jsx-a11y:
+
+```sh
+# npm
+npm install @microsoft/eslint-plugin-fluentui-jsx-a11y --save-dev
+
+# yarn
+yarn add @microsoft/eslint-plugin-fluentui-jsx-a11y --dev
+```
+
+Or add this package to your `package.json` file:
+
+```sh
+"devDependencies": {
+    "@microsoft/eslint-plugin-fluentui-jsx-a11y": "1.0.0"
+  }
+```
+
+And then you can run 
+
+```sh
+  npm install
+```
+
+## Usage
+
+You will need to add the plugin to your `.eslintrc` configuration file.
+As we support both v8 and v9 right now, you will need to add the rules individually to the rules section.
+
+V9 Suggested Configuration:
+
+```json
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks",
+    "@microsoft/fluentui-jsx-a11y"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/prop-types": "off",
+    "@microsoft/fluentui-jsx-a11y/no-empty-buttons": "error",
+    "@microsoft/fluentui-jsx-a11y/checkbox-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/image-link-missing-aria-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/input-missing-label-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9": "error"
+  },
+ 
+```
 
 ## Why?
 
@@ -45,19 +125,7 @@ If you want to create a new ESLint rule, make sure you're in the top-level direc
 yo eslint:rule
 ```
 
-## Installation
 
-Before installing, make sure to authenticate with GitHub Package Registry or using a `.npmrc` file. See "[Configuring npm for use with GitHub Package Registry](https://help.github.com/en/articles/configuring-npm-for-use-with-github-package-registry#authenticating-to-github-package-registry)."
-
-`$ npm install -D @microsoft/fluentui-eslint-plugin-jsx-a11y`
-
-Or add this package to your `package.json` file:
-
-```sh
-"devDependencies": {
-    "@microsoft/fluentui-eslint-plugin-jsx-a11y": "1.0.0"
-  }
-```
 
 ## Trademarks
 
@@ -74,6 +142,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 
 | Name                                                                                                         | Description                                                                                                                                                                                                            | 🔧 |
 | :----------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :- |
+| [checkbox-needs-labelling-v9](docs/rules/checkbox-needs-labelling-v9.md)                                     | Accessibility: Checkbox without label must have an accessible and visual label: aria-labelledby                                                                                                                        |    |
 | [icon-text-content-button-does-not-need-aria](docs/rules/icon-text-content-button-does-not-need-aria.md)     | Accessibility: an image button with text content does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users. |    |
 | [image-button-missing-aria](docs/rules/image-button-missing-aria.md)                                         | Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                                             |    |
 | [image-button-prefer-aria-over-title-attribute](docs/rules/image-button-prefer-aria-over-title-attribute.md) | Accessibility: prefer wai-aria over title or placeholder attributes. Title/placeholder can be used in addition to wai-aria. aria-label, aria-labelledby, aria-describedby                                              |    |
@@ -81,6 +150,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 | [input-missing-label-v9](docs/rules/input-missing-label-v9.md)                                               | Accessibility: Inputs must have accessible labelling: aria-label, aria-labelledby or an associated label                                                                                                               |    |
 | [no-empty-buttons](docs/rules/no-empty-buttons.md)                                                           | Accessibility: buttons must either text content or accessible labelling                                                                                                                                                |    |
 | [object-literal-button-no-missing-aria](docs/rules/object-literal-button-no-missing-aria.md)                 | Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                              |    |
+| [switch-needs-labelling-v9](docs/rules/switch-needs-labelling-v9.md)                                         | Accessibility: Switch without label must have an accessible and visual label: aria-labelledby                                                                                                                          |    |
 | [text-area-missing-label-v9](docs/rules/text-area-missing-label-v9.md)                                       | Accessibility: Textarea must have an accessible name                                                                                                                                                                   |    |
 | [text-content-button-does-not-need-aria](docs/rules/text-content-button-does-not-need-aria.md)               | Accessibility: a button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users.                           |    |
 

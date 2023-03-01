@@ -20,6 +20,8 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 
 ## Dev Environment
 
+* Install [Visual Studio Code](https://code.visualstudio.com/).
+
 * Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm).
 
 * [Fork the repo and clone your fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
