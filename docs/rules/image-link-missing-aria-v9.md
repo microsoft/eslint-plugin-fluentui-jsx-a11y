@@ -4,14 +4,16 @@
 
 <!-- end auto-generated rule header -->
 
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
 All interactive elements must have an accessible name.
 
 Links that contain Images without additional text content lack an accessible name.
 
 Ways to fix:
 
-1) Add a title, aria-label or aria-labelledby attribute or text content to the Link tag.
-2) Add a title, aria-label or aria-labelledby attribute to the Image tag.
+1. Add a title, aria-label or aria-labelledby attribute or text content to the Link tag.
+2. Add a title, aria-label or aria-labelledby attribute to the Image tag.
 
 <https://www.w3.org/WAI/standards-guidelines/act/rules/c487ae/>
 

@@ -1,0 +1,43 @@
+# Coverage
+
+We currently cover the following components:
+
+    -   [] Accordion
+    -   [] Avatar
+    -   [] AvatarGroup
+    -   [] Badge
+    -   [x] Button
+    -   [] CompoundButton
+    -   [] MenuButton
+    -   [] SplitButton
+    -   [] ToggleButton
+    -   [x] Checkbox
+    -   [] Combobox
+    -   [] DataGrid
+    -   [] Dialog
+    -   [] Divider
+    -   [] Dropdown
+    -   [] FluentProvider
+    -   [] Image
+    -   [x] Input
+    -   [] Label
+    -   [] Link
+    -   [] Menu
+    -   [] Overflow
+    -   [] Persona
+    -   [] Popover
+    -   [] Portal
+    -   [] ProgressBar
+    -   [] Radio
+    -   [] RadioGroup
+    -   [] Select
+    -   [] Slider
+    -   [] SpinButton
+    -   [] Spinner
+    -   [x] Switch
+    -   [] Table
+    -   [] TabList
+    -   [] Text
+    -   [x] TextArea
+    -   [] Toolbar
+    -   [] Tooltip

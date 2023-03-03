@@ -27,5 +27,5 @@ Examples of **correct** code for this rule:
 ```
 
 ```jsx
-<Button icon={<CloseIcon />} iconOnly aria-describedby="label-id-4"/>
+<Button icon={<CloseIcon />} iconOnly aria-describedby="label-id-4" />
 ```

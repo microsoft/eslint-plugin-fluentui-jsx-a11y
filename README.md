@@ -38,7 +38,7 @@ Or add this package to your `package.json` file:
   }
 ```
 
-And then you can run 
+And then you can run
 
 ```sh
   npm install
@@ -79,9 +79,10 @@ V9 Suggested Configuration:
     "@microsoft/fluentui-jsx-a11y/image-link-missing-aria-v9": "error",
     "@microsoft/fluentui-jsx-a11y/input-missing-label-v9": "error",
     "@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9": "error",
-    "@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9": "error"
+    "@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/image-button-missing-aria-v9": "error"
   },
- 
+
 ```
 
 ## Why?
@@ -96,14 +97,14 @@ Example:
 
 ```json
 {
-  "settings": {
-    "jsx-a11y": {
-      "components": {
-        "Button": "button",
-        "Image": "img"
-      }
+    "settings": {
+        "jsx-a11y": {
+            "components": {
+                "Button": "button",
+                "Image": "img"
+            }
+        }
     }
-  }
 }
 ```
 
@@ -125,8 +126,6 @@ If you want to create a new ESLint rule, make sure you're in the top-level direc
 yo eslint:rule
 ```
 
-
-
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
@@ -136,6 +135,7 @@ Use of Microsoft trademarks or logos in modified versions of this project must n
 Any use of third-party trademarks or logos are subject to those third-party's policies.
 
 ## Rules
+
 <!-- begin auto-generated rules list -->
 
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
@@ -145,12 +145,13 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 | [checkbox-needs-labelling-v9](docs/rules/checkbox-needs-labelling-v9.md)                                     | Accessibility: Checkbox without label must have an accessible and visual label: aria-labelledby                                                                                                                        |    |
 | [icon-text-content-button-does-not-need-aria](docs/rules/icon-text-content-button-does-not-need-aria.md)     | Accessibility: an image button with text content does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users. |    |
 | [image-button-missing-aria](docs/rules/image-button-missing-aria.md)                                         | Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                                             |    |
+| [image-button-missing-aria-v9](docs/rules/image-button-missing-aria-v9.md)                                   | Accessibility: Image buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby                                                                                                      |    |
 | [image-button-prefer-aria-over-title-attribute](docs/rules/image-button-prefer-aria-over-title-attribute.md) | Accessibility: prefer wai-aria over title or placeholder attributes. Title/placeholder can be used in addition to wai-aria. aria-label, aria-labelledby, aria-describedby                                              |    |
 | [image-link-missing-aria-v9](docs/rules/image-link-missing-aria-v9.md)                                       | Accessibility: Image links must have an accessible name                                                                                                                                                                | 🔧 |
 | [input-missing-label-v9](docs/rules/input-missing-label-v9.md)                                               | Accessibility: Inputs must have accessible labelling: aria-label, aria-labelledby or an associated label                                                                                                               |    |
 | [no-empty-buttons](docs/rules/no-empty-buttons.md)                                                           | Accessibility: buttons must either text content or accessible labelling                                                                                                                                                |    |
 | [object-literal-button-no-missing-aria](docs/rules/object-literal-button-no-missing-aria.md)                 | Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                              |    |
-| [switch-needs-labelling-v9](docs/rules/switch-needs-labelling-v9.md)                                         | Accessibility: Switch without label must have an accessible and visual label: aria-labelledby                                                                                                                          |    |
+| [switch-needs-labelling-v9](docs/rules/switch-needs-labelling-v9.md)                                         | Accessibility: Switch must have an accessible label                                                                                                                                                                    |    |
 | [text-area-missing-label-v9](docs/rules/text-area-missing-label-v9.md)                                       | Accessibility: Textarea must have an accessible name                                                                                                                                                                   |    |
 | [text-content-button-does-not-need-aria](docs/rules/text-content-button-does-not-need-aria.md)               | Accessibility: a button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users.                           |    |
 

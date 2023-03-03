@@ -17,8 +17,10 @@ const rule = require("../../../lib/rules/switch-needs-labelling-v9"),
 const ruleTester = new RuleTester();
 ruleTester.run("switch-needs-labelling-v9", rule, {
     valid: [
+        "<><Label>This is a Switch<Switch checked={true} /></Label></>",
         `<Switch label="This is a switch" checked={true} />`,
         `<Switch label="This is a switch" checked={true}></Switch>`,
+        `<><Label htmlFor="my-label-1">This is a switch</Label><Switch id="my-label-1" checked={true} /></>`,
         `<><Label id="my-label-1">This is a switch</Label><Switch aria-labelledby="my-label-1" checked={true} /></>`,
         `<><Label id="my-label-1">This is a switch</Label><Switch aria-labelledby="my-label-1" checked={true}></Switch></>`,
         `<><Label id="my-label-1">This is a switch</Label><Label id="my-label-3">This is a switch</Label><Switch aria-labelledby="my-label-1" checked={true}></Switch></>`,
@@ -43,4 +45,3 @@ ruleTester.run("switch-needs-labelling-v9", rule, {
         }
     ]
 });
-

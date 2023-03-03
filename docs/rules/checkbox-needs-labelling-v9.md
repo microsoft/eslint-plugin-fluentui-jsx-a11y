@@ -10,7 +10,7 @@ Checkboxes without a label or accessible labelling lack an accessible name.
 
 ## Ways to fix
 
-- Add a label, aria-label or aria-labelledby attribute or text content to the Checkbox tag.
+-   Add a label, aria-label or aria-labelledby attribute or text content to the Checkbox tag.
 
 ## Rule Details
 

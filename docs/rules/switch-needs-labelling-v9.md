@@ -1,4 +1,4 @@
-# Accessibility: Switch without label must have an accessible and visual label: aria-labelledby (`@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9`)
+# Accessibility: Switch must have an accessible label (`@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9`)
 
 <!-- end auto-generated rule header -->
 
@@ -17,11 +17,7 @@ This rule aims to...
 Examples of **incorrect** code for this rule:
 
 ```jsx
-    <Switch
-      checked={checked}
-      onChange={onChange}
-    />
-
+<Switch checked={checked} onChange={onChange} />
 ```
 
 ```jsx
@@ -37,13 +33,7 @@ Examples of **incorrect** code for this rule:
 Examples of **correct** code for this rule:
 
 ```jsx
-
-    <Switch
-      checked={checked}
-      onChange={onChange}
-      label={checked ? "Checked" : "Unchecked"}
-    />
-
+<Switch checked={checked} onChange={onChange} label={checked ? "Checked" : "Unchecked"} />
 ```
 
 ```jsx
