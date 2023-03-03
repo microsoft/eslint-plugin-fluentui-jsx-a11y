@@ -27,7 +27,7 @@ or
 Examples of **correct** code for this rule:
 
 ```jsx
-<Input aria-label="Sample input"/>
+<Input aria-label="Sample input" />
 ```
 
 or

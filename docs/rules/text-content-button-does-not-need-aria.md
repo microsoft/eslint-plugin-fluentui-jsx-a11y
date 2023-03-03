@@ -13,19 +13,25 @@ This rule aims to get the object literal props.
 Examples of **incorrect** code for this rule:
 
 ```tsx
-const props = { icon: <CloseIcon />, iconOnly: true}
+const props = { icon: <CloseIcon />, iconOnly: true };
 ```
 
 Examples of **correct** code for this rule:
 
 ```jsx
-const props = { icon: <CloseIcon />, iconOnly: true, 'aria-label': 'Close' }
+const props = { icon: <CloseIcon />, iconOnly: true, "aria-label": "Close" };
 ```
 
 ```jsx
-<Dialog headerAction={{icon: <CloseIcon />, 'aria-labelledby': 'label-id-4', title: 'Close', onClick: ''}} footerAction={{icon: <CancelIcon />, content: 'Close'}} />
+<Dialog
+    headerAction={{ icon: <CloseIcon />, "aria-labelledby": "label-id-4", title: "Close", onClick: "" }}
+    footerAction={{ icon: <CancelIcon />, content: "Close" }}
+/>
 ```
 
 ```jsx
-<Dialog headerAction={{icon: <CloseIcon />, 'aria-describedby': 'label-id-4', title: 'Close', onClick: ''}} footerAction={{icon: <CancelIcon />, content: 'Close'}} />
+<Dialog
+    headerAction={{ icon: <CloseIcon />, "aria-describedby": "label-id-4", title: "Close", onClick: "" }}
+    footerAction={{ icon: <CancelIcon />, content: "Close" }}
+/>
 ```

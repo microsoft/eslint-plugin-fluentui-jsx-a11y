@@ -13,15 +13,15 @@ This rule aims to prevent duplicates of aria label.
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<Button content='Submit' aria-label='Close button'></Button>
+<Button content="Submit" aria-label="Close button"></Button>
 ```
 
 ```jsx
-<Button content='Submit' aria-labelledby='Close button'></Button>
+<Button content="Submit" aria-labelledby="Close button"></Button>
 ```
 
 Examples of **correct** code for this rule:
 
 ```jsx
-<Button content='Submit'></Button>
+<Button content="Submit"></Button>
 ```

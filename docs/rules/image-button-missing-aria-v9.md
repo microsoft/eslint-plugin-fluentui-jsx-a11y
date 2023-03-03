@@ -1,4 +1,6 @@
-# Accessibility: Image buttons must have an accessible name (`image-button-missing-aria-v9`)
+# Accessibility: Image buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/image-button-missing-aria-v9`)
+
+<!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.
 

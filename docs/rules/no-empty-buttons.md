@@ -13,7 +13,7 @@ This rule aims to make a button to have something to generate an aria-label.
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<Button/> 
+<Button />
 ```
 
 Examples of **correct** code for this rule:

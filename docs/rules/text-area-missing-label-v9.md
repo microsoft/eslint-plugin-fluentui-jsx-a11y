@@ -26,7 +26,7 @@ Examples of **correct** code for this rule:
 <Label>
     Label name
     <SomeNesting>
-        <Textarea/>
+        <Textarea />
     </SomeNesting>
 </Label>
 ```

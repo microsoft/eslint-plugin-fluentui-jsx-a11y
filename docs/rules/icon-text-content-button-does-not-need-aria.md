@@ -14,11 +14,11 @@ This rule aims to overwrite the auto generated aria label of content prop.
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<Button content='Close' aria-label='Submit' icon={<CloseIcon />}></Button>
+<Button content="Close" aria-label="Submit" icon={<CloseIcon />}></Button>
 ```
 
 ```jsx
-<Button content='Close' aria-labelledby='label-id-2' icon={<CloseIcon />}></Button>
+<Button content="Close" aria-labelledby="label-id-2" icon={<CloseIcon />}></Button>
 ```
 
 Examples of **correct** code for this rule:
