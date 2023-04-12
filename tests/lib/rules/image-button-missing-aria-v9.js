@@ -26,12 +26,17 @@ ruleTester.run("image-button-missing-aria-v9", rule, {
         "<Image />",
         '<Datepicker daysToSelectInDayView={0} popup="Compress program" />',
         '<Tooltip content="With calendar icon only" relationship="label"><Button icon={<CalendarMonthRegular />} /></Tooltip>',
+        '<Tooltip content="With calendar icon only" relationship="label"><ToggleButton icon={<CalendarMonthRegular />} /></Tooltip>',
         '<><Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-4"></Button></>',
         '<><Label id="label-id-4">Close</Label><Button icon={<CloseIcon />} aria-labelledby="label-id-4" /></>'
     ],
     invalid: [
         {
             code: "<Button icon={<CloseIcon />}></Button>",
+            errors: [{ messageId: "missingAriaLabel" }]
+        },
+        {
+            code: "<ToggleButton icon={<CloseIcon />}></ToggleButton>",
             errors: [{ messageId: "missingAriaLabel" }]
         },
         {

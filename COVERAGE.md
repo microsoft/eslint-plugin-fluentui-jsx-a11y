@@ -10,7 +10,8 @@ We currently cover the following components:
     -   [] CompoundButton
     -   [] MenuButton
     -   [] SplitButton
-    -   [] ToggleButton
+    -   [x] ToggleButton
+    -   [] ToolbarToggleButton
     -   [x] Checkbox
     -   [] Combobox
     -   [] DataGrid
