@@ -40,5 +40,5 @@ We currently cover the following components:
     -   [] TabList
     -   [] Text
     -   [x] TextArea
-    -   [] Toolbar
+    -   [x] Toolbar
     -   [] Tooltip
