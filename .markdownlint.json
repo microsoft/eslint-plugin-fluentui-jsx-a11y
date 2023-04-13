@@ -1,0 +1,4 @@
+{
+    "extends": "markdownlint/style/prettier",
+	"line-length": false
+}

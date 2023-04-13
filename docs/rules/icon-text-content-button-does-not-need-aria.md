@@ -1,4 +1,4 @@
-# Accessibility: an image button with text content does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users (`@microsoft/fluentui-jsx-a11y/icon-text-content-button-does-not-need-aria`)
+# Accessibility: an image button with text content does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users
 
 <!-- end auto-generated rule header -->
 

@@ -1,4 +1,4 @@
-# Accessibility: Switch must have an accessible label (`@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9`)
+# Accessibility: Switch must have an accessible label
 
 <!-- end auto-generated rule header -->
 

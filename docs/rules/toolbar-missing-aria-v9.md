@@ -1,8 +1,8 @@
-# Accessibility: Toolbars need accessible labelling (`toolbar-missing-aria-v9`)
-
-The toolbar role needs an accessible name, especially if there are multiple toolbars on a screen.
+# Accessibility: Toolbars need accessible labelling (`@microsoft/fluentui-jsx-a11y/toolbar-missing-aria-v9`)
 
 <!-- end auto-generated rule header -->
+
+The toolbar role needs an accessible name, especially if there are multiple toolbars on a screen.
 
 ## Rule Details
 
@@ -30,4 +30,3 @@ Examples of **correct** code for this rule:
     <ToolbarToggleButton appearance="subtle" aria-label="Bold" icon={<TextBold24Regular />} name="textOptions" value="bold" />
 </Toolbar>
 ```
-
