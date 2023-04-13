@@ -1,4 +1,4 @@
-# Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby
+# Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/object-literal-button-no-missing-aria`)
 
 <!-- end auto-generated rule header -->
 

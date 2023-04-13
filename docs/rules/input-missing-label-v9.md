@@ -1,4 +1,4 @@
-# Accessibility: Inputs must have accessible labelling: aria-label, aria-labelledby or an associated label
+# Accessibility: Inputs must have accessible labelling: aria-label, aria-labelledby or an associated label (`@microsoft/fluentui-jsx-a11y/input-missing-label-v9`)
 
 <!-- end auto-generated rule header -->
 

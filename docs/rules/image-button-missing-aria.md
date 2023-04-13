@@ -1,4 +1,4 @@
-# Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby
+# Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/image-button-missing-aria`)
 
 <!-- end auto-generated rule header -->
 

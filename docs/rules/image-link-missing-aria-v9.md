@@ -1,4 +1,4 @@
-# Accessibility: Image links must have an accessible name
+# Accessibility: Image links must have an accessible name (`@microsoft/fluentui-jsx-a11y/image-link-missing-aria-v9`)
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

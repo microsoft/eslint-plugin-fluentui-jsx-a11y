@@ -1,4 +1,4 @@
-# Accessibility: prefer wai-aria over title or placeholder attributes. Title/placeholder can be used in addition to wai-aria. aria-label, aria-labelledby, aria-describedby
+# Accessibility: prefer wai-aria over title or placeholder attributes. Title/placeholder can be used in addition to wai-aria. aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/image-button-prefer-aria-over-title-attribute`)
 
 <!-- end auto-generated rule header -->
 

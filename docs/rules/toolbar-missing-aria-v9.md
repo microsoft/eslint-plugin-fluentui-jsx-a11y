@@ -30,3 +30,4 @@ Examples of **correct** code for this rule:
     <ToolbarToggleButton appearance="subtle" aria-label="Bold" icon={<TextBold24Regular />} name="textOptions" value="bold" />
 </Toolbar>
 ```
+
