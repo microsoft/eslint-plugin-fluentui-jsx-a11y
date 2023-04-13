@@ -1,4 +1,4 @@
-# Accessibility: Toolbars need accessible labelling (`@microsoft/fluentui-jsx-a11y/toolbar-missing-aria-v9`)
+# Accessibility: Toolbars need accessible labelling: aria-label or aria-labelledby (`@microsoft/fluentui-jsx-a11y/toolbar-missing-aria-v9`)
 
 <!-- end auto-generated rule header -->
 
