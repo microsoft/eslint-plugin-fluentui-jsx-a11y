@@ -1,4 +1,4 @@
-# eslint-plugin-fluentui-jsx-a11y
+# eslint-plugin-fluentui-jsx-a11y [![npm version](https://img.shields.io/npm/v/@microsoft/eslint-plugin-fluentui-jsx-a11y.svg?style=flat)](https://www.npmjs.com/package/@microsoft/eslint-plugin-fluentui-jsx-a11y)
 
 A set of eslint rules against [FluentUI](https://github.com/microsoft/fluentui) to prevent common accessibility issues.
 
@@ -80,7 +80,8 @@ V9 Suggested Configuration:
     "@microsoft/fluentui-jsx-a11y/input-missing-label-v9": "error",
     "@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9": "error",
     "@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9": "error",
-    "@microsoft/fluentui-jsx-a11y/image-button-missing-aria-v9": "error"
+    "@microsoft/fluentui-jsx-a11y/image-button-missing-aria-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/toolbar-missing-aria-v9": "error"
   },
 
 ```
@@ -154,5 +155,6 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 | [switch-needs-labelling-v9](docs/rules/switch-needs-labelling-v9.md)                                         | Accessibility: Switch must have an accessible label                                                                                                                                                                    |    |
 | [text-area-missing-label-v9](docs/rules/text-area-missing-label-v9.md)                                       | Accessibility: Textarea must have an accessible name                                                                                                                                                                   |    |
 | [text-content-button-does-not-need-aria](docs/rules/text-content-button-does-not-need-aria.md)               | Accessibility: a button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users.                           |    |
+| [toolbar-missing-aria-v9](docs/rules/toolbar-missing-aria-v9.md)                                             | Accessibility: Toolbars need accessible labelling: aria-label or aria-labelledby                                                                                                                                       |    |
 
 <!-- end auto-generated rules list -->
