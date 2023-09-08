@@ -13,7 +13,7 @@ We currently cover the following components:
     -   [x] ToggleButton
     -   [] ToolbarToggleButton
     -   [x] Checkbox
-    -   [] Combobox
+    -   [x] Combobox
     -   [] DataGrid
     -   [] Dialog
     -   [N/A] Divider
@@ -21,7 +21,7 @@ We currently cover the following components:
     -   [] FluentProvider
     -   [] Image
     -   [x] Input
-    -   [] Label
+    -   [x] Label
     -   [] Link
     -   [] Menu
     -   [] Overflow
@@ -38,7 +38,7 @@ We currently cover the following components:
     -   [x] Switch
     -   [] Table
     -   [] TabList
-    -   [] Text
+    -   [x] Text
     -   [x] TextArea
     -   [x] Toolbar
     -   [] Tooltip
