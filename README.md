@@ -2,6 +2,20 @@
 
 A set of eslint rules against [FluentUI](https://github.com/microsoft/fluentui) to prevent common accessibility issues.
 
+Finally! Lint rules against React props.
+
+Covers hard-coded string props and variables for props.
+
+```jsx
+<Label htmlFor="some-id">Some Label</Label>
+<Input id="some-id" />
+```
+
+```jsx
+<Label htmlFor={someId}>Some Label</Label>
+<Input id={someId} />
+```
+
 Rules for FluentUI v9 end in `-v9`. [Fluent UI React v9](https://react.fluentui.dev/?path=/docs/concepts-introduction--page)
 
 Rules for v8 have no ending.
@@ -144,6 +158,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 | Name                                                                                                         | Description                                                                                                                                                                                                            | 🔧 |
 | :----------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :- |
 | [checkbox-needs-labelling-v9](docs/rules/checkbox-needs-labelling-v9.md)                                     | Accessibility: Checkbox without label must have an accessible and visual label: aria-labelledby                                                                                                                        |    |
+| [combobox-needs-labelling-v9](docs/rules/combobox-needs-labelling-v9.md)                                     | All interactive elements must have an accessible name                                                                                                                                                                  |    |
 | [icon-text-content-button-does-not-need-aria](docs/rules/icon-text-content-button-does-not-need-aria.md)     | Accessibility: an image button with text content does not need aria labelling. The button already has an accessible name and the aria-label or aria-labelledby will override the text content for screen reader users. |    |
 | [image-button-missing-aria](docs/rules/image-button-missing-aria.md)                                         | Accessibility: Image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                                             |    |
 | [image-button-missing-aria-v9](docs/rules/image-button-missing-aria-v9.md)                                   | Accessibility: Image buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby                                                                                                      |    |
@@ -151,6 +166,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 | [image-link-missing-aria-v9](docs/rules/image-link-missing-aria-v9.md)                                       | Accessibility: Image links must have an accessible name                                                                                                                                                                | 🔧 |
 | [input-missing-label-v9](docs/rules/input-missing-label-v9.md)                                               | Accessibility: Inputs must have accessible labelling: aria-label, aria-labelledby or an associated label                                                                                                               |    |
 | [no-empty-buttons](docs/rules/no-empty-buttons.md)                                                           | Accessibility: buttons must either text content or accessible labelling                                                                                                                                                |    |
+| [no-empty-components-v9](docs/rules/no-empty-components-v9.md)                                               | FluentUI components should not be empty                                                                                                                                                                                |    |
 | [object-literal-button-no-missing-aria](docs/rules/object-literal-button-no-missing-aria.md)                 | Accessibility: Object literal image buttons must have accessible labelling: aria-label, aria-labelledby, aria-describedby                                                                                              |    |
 | [switch-needs-labelling-v9](docs/rules/switch-needs-labelling-v9.md)                                         | Accessibility: Switch must have an accessible label                                                                                                                                                                    |    |
 | [text-area-missing-label-v9](docs/rules/text-area-missing-label-v9.md)                                       | Accessibility: Textarea must have an accessible name                                                                                                                                                                   |    |
