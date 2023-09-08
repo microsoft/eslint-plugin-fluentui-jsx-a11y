@@ -1,10 +1,12 @@
-# FluentUI components should not be empty (`no-empty-components-v9`)
+# FluentUI components should not be empty (`@microsoft/fluentui-jsx-a11y/no-empty-components-v9`)
 
-Please describe the origin of the rule here.
+Provide labels to identify all form controls, including text fields, checkboxes, radio buttons, and drop-down menus. In most cases, this is done by using the <label> element.
+
+https://www.w3.org/WAI/tutorials/forms/labels/
 
 ## Rule Details
 
-This rule aims to...
+This rule aims to prevent missing text and info for users.
 
 Examples of **incorrect** code for this rule:
 
