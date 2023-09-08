@@ -1,5 +1,7 @@
 # All interactive elements must have an accessible name (`@microsoft/fluentui-jsx-a11y/combobox-needs-labelling-v9`)
 
+<!-- end auto-generated rule header -->
+
 Provide labels to identify all form controls, including text fields, checkboxes, radio buttons, and drop-down menus. In most cases, this is done by using the <label> element.
 
 https://www.w3.org/WAI/tutorials/forms/labels/
@@ -21,16 +23,4 @@ Examples of **correct** code for this rule:
 ```jsx
 <label id="my-label">Best pet</label><Combobox aria-labelledby="my-label" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox>
 ```
-
-### Options
-
-If there are any options, describe them here. Otherwise, delete this section.
-
-## When Not To Use It
-
-Give a short description of when it would be appropriate to turn off this rule.
-
-## Further Reading
-
-If there are other links that describe the issue this rule addresses, please include them here in a bulleted list.
 
