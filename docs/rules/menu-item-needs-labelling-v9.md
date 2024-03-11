@@ -1,3 +1,4 @@
+# Accessibility: MenuItem without label must have an accessible and visual label: aria-labelledby (`@microsoft/fluentui-jsx-a11y/menu-item-needs-labelling-v9`)
 
 <!-- end auto-generated rule header -->
 
@@ -16,7 +17,6 @@ This rule aims to make MenuItem accessible
 Examples of **incorrect** code for this rule:
 
 ```jsx
-
 <MenuItem />
 <MenuItem icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem>
 <MenuItem aria-labelledby="menu-item-id"></MenuItem>
