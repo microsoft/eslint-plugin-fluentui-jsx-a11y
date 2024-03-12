@@ -27,23 +27,23 @@ const ruleTester = new RuleTester();
 ruleTester.run("menuitem-needs-labelling-v9", rule, {
     valid: [
         // Valid cases
-        '<MenuItem aria-label="Settings" icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem>',
-        '<div><label id="my-label">More option</label><MenuItem aria-labelledby="my-label" icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>',
-        '<div><label htmlFor="my-input">More option</label><MenuItem id="my-input" icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>',
-        "<div><Label htmlFor={myInputId}>More option</Label><MenuItem id={myInputId} icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>"
+        '<MenuItem aria-label="Settings" icon={<SettingsIcon />} onClick={handleClick}></MenuItem>',
+        "<MenuItem>Settings</MenuItem>",
+        '<div><label id="my-label">More option</label><MenuItem aria-labelledby="my-label"></MenuItem></div>',
+        '<div><Label id="my-label">More option</Label><MenuItem aria-labelledby="my-label" icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>'
     ],
     invalid: [
         // Invalid cases
         {
-            code: "<MenuItem icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem>",
+            code: "<MenuItem/>",
             errors: [{ messageId: "noUnlabelledMenuItem" }]
         },
         {
-            code: "<div><label>Settings</label><MenuItem icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>",
+            code: "<MenuItem icon={<SettingsIcon />} onClick={handleClick}></MenuItem>",
             errors: [{ messageId: "noUnlabelledMenuItem" }]
         },
         {
-            code: '<div><label htmlFor="my-label2">Settings</label><MenuItem id="my-menuitem" icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>',
+            code: "<div><label>Settings</label><MenuItem icon={<SettingsIcon />} onClick={handleClick}></MenuItem></div>",
             errors: [{ messageId: "noUnlabelledMenuItem" }]
         }
     ]

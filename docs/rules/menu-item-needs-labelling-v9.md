@@ -18,7 +18,7 @@ Examples of **incorrect** code for this rule:
 
 ```jsx
 <MenuItem />
-<MenuItem icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem>
+<MenuItem icon={<SettingsIcon />} onClick={handleClick}></MenuItem>
 <MenuItem aria-labelledby="menu-item-id"></MenuItem>
 ```
 
@@ -26,9 +26,9 @@ Examples of **correct** code for this rule:
 
 ```jsx
 <>
-<label id="my-label">More option</label>
+<label id="my-label">Settings</label>
 <MenuItem aria-labelledby="my-label" icon={<SettingsIcon />} onClick={handleClick}>
-Settings
 </MenuItem>
+<MenuItem>Settings</MenuItem>
 </>
 ```
