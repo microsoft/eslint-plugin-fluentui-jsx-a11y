@@ -3,12 +3,13 @@
 We currently cover the following components:
 
     -   [] Accordion
-    -   [] Avatar
-    -   [] AvatarGroup
+    -   [x] Avatar
+    -   [x] AvatarGroup
     -   [] Badge
     -   [x] Button
     -   [] CompoundButton
     -   [] MenuButton
+    -   [X] MenuItem
     -   [] SplitButton
     -   [x] ToggleButton
     -   [] ToolbarToggleButton
