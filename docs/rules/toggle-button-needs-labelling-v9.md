@@ -35,6 +35,6 @@ Examples of **correct** code for this rule:
 <ToggleButton aria-labelledby="calendar-1" />
 
 <Tooltip content="Toggle example" relationship="label">
-    <ToggleButton icon={<CalendarMonthRegular />} />
+    <ToggleButton/>
 </Tooltip>
 ```

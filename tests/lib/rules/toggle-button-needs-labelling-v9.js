@@ -21,7 +21,7 @@ ruleTester.run("toggle-button-needs-labelling-v9", rule, {
         '<ToggleButton aria-label="Toggle Example"></ToggleButton>',
         "<ToggleButton>Example</ToggleButton>",
         '<ToggleButton title="Toggle Example"></ToggleButton>',
-        '<Tooltip content="Toggle Example" relationship="label"><ToggleButton />} /></Tooltip>',
+        '<Tooltip content="Toggle Example" relationship="label"><ToggleButton/></Tooltip>',
         '<><Label id="label-id-4">Toggle Example</Label><ToggleButton aria-labelledby="label-id-4"></ToggleButton></>',
         '<><Label id="label-id-4">Toggle Example</Label><ToggleButton aria-labelledby="label-id-4" /></>',
         '<><label id="label-id-4">Toggle Example</label><ToggleButton aria-labelledby="label-id-4"></ToggleButton></>',
