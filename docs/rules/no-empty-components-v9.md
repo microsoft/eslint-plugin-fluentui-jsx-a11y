@@ -20,6 +20,10 @@ Examples of **incorrect** code for this rule:
 <Label></Label>
 ```
 
+```jsx
+<Breadcrumb></Breadcrumb>
+```
+
 Examples of **correct** code for this rule:
 
 ```jsx
@@ -34,3 +38,6 @@ Examples of **correct** code for this rule:
 <Text>This is an example of the Text component's usage.</Text>
 ```
 
+```jsx
+<Breadcrumb><BreadcrumbItem><BreadcrumbButton>Item 1</BreadcrumbButton></BreadcrumbItem></Breadcrumb>
+```
