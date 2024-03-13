@@ -45,6 +45,10 @@ ruleTester.run("menuitem-needs-labelling-v9", rule, {
         {
             code: "<div><label>Settings</label><MenuItem icon={<SettingsIcon />} onClick={handleClick}></MenuItem></div>",
             errors: [{ messageId: "noUnlabelledMenuItem" }]
+        },
+        {
+            code: "<label>Settings<MenuItem icon={<SettingsIcon />} onClick={handleClick}></MenuItem></label>",
+            errors: [{ messageId: "noUnlabelledMenuItem" }]
         }
     ]
 });
