@@ -20,31 +20,41 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 
 ## Dev Environment
 
-* Install [Visual Studio Code](https://code.visualstudio.com/).
+-   Install [Visual Studio Code](https://code.visualstudio.com/).
 
-* Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm).
+-   Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm).
 
-* [Fork the repo and clone your fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+-   [Fork the repo and clone your fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 
-* Install the dependencies
+-   Install the dependencies
 
-  ```sh
-  npm install
-  ```
+    ```sh
+    npm install
+    ```
 
-* Add the upstream source for being able to sync main project changes back into your fork.
+-   Add the upstream source for being able to sync main project changes back into your fork.
 
-  ```sh
-  git remote add upstream git@github.com:microsoft/fluentui-eslint-plugin-jsx-a11y.git 
-  ```
+    ```sh
+    git remote add upstream git@github.com:microsoft/fluentui-eslint-plugin-jsx-a11y.git
+    ```
 
-* Run the tests
+-   Run the tests
 
-  ```sh
-  npm test
-  ```
+    ```sh
+    npm test
+    ```
 
-* Make and submit changes following the [pull request submission workflow](#pull-requests)
+-   Make and submit changes following the [pull request submission workflow](#pull-requests)
+
+## To create a new ESLint rule
+
+### eslint:rule
+
+If you want to create a new ESLint rule, make sure you're in the top-level directory and type:
+
+```sh
+yo eslint:rule
+```
 
 ## Pull requests
 
