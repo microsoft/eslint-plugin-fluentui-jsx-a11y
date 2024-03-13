@@ -4,7 +4,7 @@
 
 All interactive elements must have an accessible name.
 
-Image buttons without additional text content lack an accessible name.
+Toggle buttons without additional text content lack an accessible name.
 
 Please add title, aria-label, aria-labelledby, aria-described by etc.
 
