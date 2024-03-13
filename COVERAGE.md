@@ -43,3 +43,4 @@ We currently cover the following components:
     -   [x] TextArea
     -   [x] Toolbar
     -   [] Tooltip
+    -   [x] Breadcrumb
