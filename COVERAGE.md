@@ -18,7 +18,7 @@ We currently cover the following components:
     -   [] DataGrid
     -   [] Dialog
     -   [N/A] Divider
-    -   [] Dropdown
+    -   [X] Dropdown
     -   [] FluentProvider
     -   [] Image
     -   [x] Input
