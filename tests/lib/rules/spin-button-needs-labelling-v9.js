@@ -18,8 +18,6 @@ const ruleTester = new RuleTester();
 ruleTester.run("spin-button-needs-labelling-v9", rule, {
     valid: [
         "<><Label>This is a SpinButton<SpinButton defaultValue={10} min={0} max={20} /></Label></>",
-        `<SpinButton label="This is a spin button" defaultValue={10} min={0} max={20} />`,
-        `<SpinButton label="This is a spin button" defaultValue={10} min={0} max={20}></SpinButton>`,
         `<><Label htmlFor="my-label-1">This is a spin button</Label><SpinButton id="my-label-1" defaultValue={10} min={0} max={20} /></>`,
         `<><Label id="my-label-1">This is a spin button</Label><SpinButton aria-labelledby="my-label-1" defaultValue={10} min={0} max={20} /></>`,
         `<><Label id="my-label-1">This is a spin button</Label><SpinButton aria-labelledby="my-label-1" defaultValue={10} min={0} max={20}></SpinButton></>`,

@@ -1,4 +1,4 @@
-# Accessibility: SpinButtons must have an accessible label (`@microsoft/fluentui-jsx-a11y/spin-button-needs-labelling-v9`)
+# Accessibility: Unrecommended accessibility labelling - SpinButton (`@microsoft/fluentui-jsx-a11y/spin-button-unrecommended-labelling-v9`)
 
 <!-- end auto-generated rule header -->
 
@@ -6,7 +6,7 @@ All interactive elements must have an accessible name.
 
 Spin Button components need a visual label.
 
-Please add label, aria-labelledby or htmlFor.
+Using aria-label or wrapping the SpinButton in a Tooltip component is not recommended.
 
 <https://www.w3.org/TR/html-aria/>
 
@@ -15,20 +15,21 @@ Please add label, aria-labelledby or htmlFor.
 
 This rule aims to...
 
-Examples of **incorrect** code for this rule:
+Examples of **unrecommended** code for this rule:
 
 ```jsx
-<SpinButton defaultValue={10} min={0} max={20} />
+<SpinButton defaultValue={10} min={0} max={20} aria-label={"my-aria-label-1"} />
 ```
 
 ```jsx
 
-<Label>Default SpinButton</Label>
-<SpinButton
-    defaultValue={10}
-    min={0}
-    max={20}
-/>
+<Tooltip content="Sping Button label" relationship="label">
+    <SpinButton
+        defaultValue={10}
+        min={0}
+        max={20}
+    />
+</Tooltip>
 ```
 
 Examples of **correct** code for this rule:
