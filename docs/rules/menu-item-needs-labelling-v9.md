@@ -18,7 +18,13 @@ Examples of **incorrect** code for this rule:
 
 ```jsx
 <MenuItem />
+```
+
+```jsx
 <MenuItem icon={<SettingsIcon />} onClick={handleClick}></MenuItem>
+```
+
+```jsx
 <MenuItem aria-labelledby="menu-item-id"></MenuItem>
 ```
 

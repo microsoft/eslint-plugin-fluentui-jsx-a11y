@@ -20,7 +20,9 @@ Examples of **incorrect** code for this rule:
 <Tooltip content="menu item" relationship="label">
 <MenuItem/>
 </Tooltip>
+```
 
+```jsx
 <Tooltip content="menu item" relationship="label">
 <SpinButton/>
 </Tooltip>
@@ -33,7 +35,8 @@ Examples of **correct** code for this rule:
 <label id="my-label">More option<label>
 <MenuItem aria-labelledby="my-label"/>
 </div>
-
+```
+```jsx
 <div>
 <label id="my-label">More option<label>
 <SpinButton aria-labelledby="my-label"/>

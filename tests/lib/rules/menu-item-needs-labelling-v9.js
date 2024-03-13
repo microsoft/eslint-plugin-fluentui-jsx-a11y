@@ -30,7 +30,8 @@ ruleTester.run("menuitem-needs-labelling-v9", rule, {
         '<MenuItem aria-label="Settings" icon={<SettingsIcon />} onClick={handleClick}></MenuItem>',
         "<MenuItem>Settings</MenuItem>",
         '<div><label id="my-label">More option</label><MenuItem aria-labelledby="my-label"></MenuItem></div>',
-        '<div><Label id="my-label">More option</Label><MenuItem aria-labelledby="my-label" icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>'
+        '<div><Label id="my-label">More option</Label><MenuItem aria-labelledby="my-label" icon={<SettingsIcon />} onClick={handleClick}>Settings</MenuItem></div>',
+        '<Tooltip content="menu item" relationship="label"><SpinButton/></Tooltip>'
     ],
     invalid: [
         // Invalid cases
