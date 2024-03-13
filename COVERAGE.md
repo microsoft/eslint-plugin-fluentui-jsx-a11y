@@ -9,6 +9,7 @@ We currently cover the following components:
     -   [x] Button
     -   [] CompoundButton
     -   [] MenuButton
+    -   [X] MenuItem
     -   [] SplitButton
     -   [x] ToggleButton
     -   [] ToolbarToggleButton
