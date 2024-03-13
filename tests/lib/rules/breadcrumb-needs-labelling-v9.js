@@ -28,13 +28,16 @@ ruleTester.run("breadcrumb-needs-labelling-v9", rule, {
     valid: [
         // give me some code that won't trigger a warning
         '<Breadcrumb aria-label="Breadcrumb default example"></Breadcrumb>',
-        "<label>Breadcrumb default example<Breadcrumb></Breadcrumb></label>",
         '<div><label id="my-label">Breadcrumb default example</label><Breadcrumb aria-labelledby="my-label"></Breadcrumb></div>',
         '<div><Label id="my-label">Breadcrumb default example</Label><Breadcrumb aria-labelledby="my-label"></Breadcrumb></div>'
     ],
     invalid: [
         {
             code: '<div><Label id="my-label">Breadcrumb default example</Label><Breadcrumb></Breadcrumb></div>',
+            errors: [{ messageId: "noUnlabelledBreadcrumb" }]
+        },
+        {
+            code: "<label>Breadcrumb default example<Breadcrumb></Breadcrumb></label>",
             errors: [{ messageId: "noUnlabelledBreadcrumb" }]
         },
         {

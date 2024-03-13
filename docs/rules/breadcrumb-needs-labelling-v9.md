@@ -19,17 +19,22 @@ Examples of **incorrect** code for this rule:
 <label>Breadcrumb default example<label>
 <Breadcrumb ></BreadCrumb>
 </div>
+```
+
+```jsx
 <Breadcrumb></Breadcrumb>
+<label>Breadcrumb default example<Breadcrumb></Breadcrumb></label>
 ```
 
 Examples of **correct** code for this rule:
 
 ```jsx
 <Breadcrumb aria-label="Breadcrumb default example">
+```
+```jsx
 <div>
 <label id="my-label">Breadcrumb default example<label>
 <Breadcrumb aria-labelledby="my-label"><BreadCrumb>
 </div>
-<label>Breadcrumb default example<Breadcrumb></Breadcrumb></label>
 ```
 
