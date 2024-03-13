@@ -30,7 +30,8 @@ ruleTester.run("dropdown-needs-labelling-v9", rule, {
         `<><Label htmlFor={comboId}>Best pet</Label> <Dropdown id={comboId} multiselect={true} placeholder="Select an animal" {...props} > {options.map((option) => ( <Option key={option} disabled={option === "Ferret"}> {option} </Option> ))}</Dropdown></>`,
         `<><Label id="my-dropdownid" /><Dropdown aria-labelledby="my-dropdownid" /></>`,
         `<><Label id={comboId}>Best pet</Label> <Dropdown aria-labelledby={comboId} multiselect={true} placeholder="Select an animal" {...props} > {options.map((option) => ( <Option key={option} disabled={option === "Ferret"}> {option} </Option> ))}</Dropdown></>`,
-        `<><Label id={comboId2}>This is a Dropdown</Label><Dropdown aria-labelledby={comboId2} /></>`
+        `<><Label id={comboId2}>This is a Dropdown</Label><Dropdown aria-labelledby={comboId2} /></>`,
+        `<Label>This is a Dropdown <Dropdown/> </Label>`
     ],
     invalid: [
         {
