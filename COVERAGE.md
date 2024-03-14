@@ -33,7 +33,7 @@ We currently cover the following components:
     -   [] Radio
     -   [] RadioGroup
     -   [] Select
-    -   [] Slider
+    -   [x] Slider
     -   [x] SpinButton
     -   [] Spinner
     -   [x] Switch

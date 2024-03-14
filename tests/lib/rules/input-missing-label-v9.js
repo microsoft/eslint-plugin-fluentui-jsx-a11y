@@ -31,7 +31,11 @@ ruleTester.run("input-missing-label-v9", rule, {
         '<><Label id="test-span">Some Label</Label><Input id="some-id" aria-labelledby="test-span"/></>',
         "<Label>test</Label>",
         "<Label>test<Input/></Label>",
-        "<Label>test<SomeNesting><Input/></SomeNesting></Label>"
+        "<Label>test<SomeNesting><Input/></SomeNesting></Label>",
+        '<><Label htmlFor="some-id">Some Label</Label><Slider size="medium" defaultValue={20} id="some-id"/></>',
+        '<><Label id="test-span">Some Label</Label><Slider size="medium" defaultValue={20} id="some-id" aria-labelledby="test-span"/></>',
+        '<Label>test<Slider size="medium" defaultValue={20}/></Label>',
+        '<Label>test<SomeNesting><Slider size="medium" defaultValue={20}/></SomeNesting></Label>'
     ],
 
     invalid: [
@@ -53,6 +57,22 @@ ruleTester.run("input-missing-label-v9", rule, {
         },
         {
             code: '<><Label>Some Label</Label><Input id="some-id"/></>',
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: '<><Label/><Slider size="medium" defaultValue={20}/></>',
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: '<><Label htmlFor="id"/><Slider size="medium" defaultValue={20} /></>',
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: '<Slider id="some-id"/>',
+            errors: [{ messageId: "missingLabelOnInput" }]
+        },
+        {
+            code: '<><Label>Some Label</Label><Slider id="some-id"/></>',
             errors: [{ messageId: "missingLabelOnInput" }]
         }
     ]

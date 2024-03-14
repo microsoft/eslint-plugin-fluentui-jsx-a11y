@@ -24,6 +24,19 @@ or
 <Input/>
 ```
 
+or
+
+```jsx
+<Label htmlFor="input-id">Label name</Label>
+<Slider/>
+```
+
+or
+
+```jsx
+<Slider size="medium" defaultValue={20} />
+```
+
 Examples of **correct** code for this rule:
 
 ```jsx
@@ -35,4 +48,11 @@ or
 ```jsx
 <Label htmlFor="input-id">Label name</Label>
 <Textarea id="input-id"/>
+```
+
+or
+
+```jsx
+<Label htmlFor={mediumId}>Medium Slider</Label>
+<Slider size="medium" defaultValue={20} id={mediumId} />
 ```
