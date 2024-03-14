@@ -34,12 +34,18 @@ ruleTester.run("no-empty-components-v9", rule, {
         '<AccordionItem value="1"><NestedComponent /></AccordionItem>',
         '<div className={styles.root}><label id={dropdownId}>Best pet</label><Dropdown aria-labelledby={dropdownId} placeholder="Select an animal" {...props}>{options.map((option) => (<Option key={option} disabled={option === "Ferret"}>{option}</Option>))}</Dropdown></div>',
         "<Accordion collapsible><NestedComponent /></Accordion>",
-        "<AccordionPanel><div>Accordion Panel 1</div></AccordionPanel>"
+        "<AccordionPanel><div>Accordion Panel 1</div></AccordionPanel>",
+        "<Breadcrumb><BreadcrumbItem><BreadcrumbButton>Item 1</BreadcrumbButton></BreadcrumbItem></Breadcrumb>",
+        '<Combobox aria-labelledby={comboId} placeholder="Select an animal" {...props}>{options.map((option) => (<Option key={option} disabled={option === "Ferret"}>{option}</Option>))}</Combobox>'
     ],
 
     invalid: [
         {
             code: "<Text></Text>",
+            errors: [{ messageId: "noEmptyComponents" }]
+        },
+        {
+            code: "<Breadcrumb></Breadcrumb>",
             errors: [{ messageId: "noEmptyComponents" }]
         },
         {
