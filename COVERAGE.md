@@ -3,12 +3,13 @@
 We currently cover the following components:
 
     -   [] Accordion
-    -   [] Avatar
-    -   [] AvatarGroup
+    -   [x] Avatar
+    -   [x] AvatarGroup
     -   [] Badge
     -   [x] Button
     -   [] CompoundButton
     -   [] MenuButton
+    -   [X] MenuItem
     -   [] SplitButton
     -   [x] ToggleButton
     -   [] ToolbarToggleButton
@@ -17,7 +18,7 @@ We currently cover the following components:
     -   [] DataGrid
     -   [] Dialog
     -   [N/A] Divider
-    -   [] Dropdown
+    -   [X] Dropdown
     -   [] FluentProvider
     -   [] Image
     -   [x] Input
@@ -33,7 +34,7 @@ We currently cover the following components:
     -   [x] RadioGroup
     -   [] Select
     -   [] Slider
-    -   [] SpinButton
+    -   [x] SpinButton
     -   [] Spinner
     -   [x] Switch
     -   [] Table
@@ -42,3 +43,4 @@ We currently cover the following components:
     -   [x] TextArea
     -   [x] Toolbar
     -   [] Tooltip
+    -   [x] Breadcrumb
