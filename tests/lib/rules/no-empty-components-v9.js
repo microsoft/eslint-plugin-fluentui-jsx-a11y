@@ -30,12 +30,17 @@ ruleTester.run("no-empty-components-v9", rule, {
         "<Label>Hello</Label>",
         '<Text font="base">This is the default font</Text>',
         '<Label size="small">Small</Label>',
+        "<Breadcrumb><BreadcrumbItem><BreadcrumbButton>Item 1</BreadcrumbButton></BreadcrumbItem></Breadcrumb>",
         '<Combobox aria-labelledby={comboId} placeholder="Select an animal" {...props}>{options.map((option) => (<Option key={option} disabled={option === "Ferret"}>{option}</Option>))}</Combobox>'
     ],
 
     invalid: [
         {
             code: "<Text></Text>",
+            errors: [{ messageId: "noEmptyComponents" }]
+        },
+        {
+            code: "<Breadcrumb></Breadcrumb>",
             errors: [{ messageId: "noEmptyComponents" }]
         },
         {

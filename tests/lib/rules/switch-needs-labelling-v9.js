@@ -45,3 +45,4 @@ ruleTester.run("switch-needs-labelling-v9", rule, {
         }
     ]
 });
+
