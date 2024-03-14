@@ -17,23 +17,26 @@ Examples of **incorrect** code for this rule:
 <CompoundButton/>
 <CompoundButton></CompoundButton>
 
+<CompoundButton icon={<CalendarMonthRegular />}></CompoundButton>
+
 <Label id="calendar-2">Start date</Label>
 <CompoundButton aria-labelledby="calendar" />
 ```
 
 Examples of **correct** code for this rule:
+Please note that without an icon, these buttons are actually not accessible for sighted users
 
 ```jsx
 <CompoundButton title="Compound example" />
-<CompoundButton aria-label="Compound example" />
+<CompoundButton icon={<CalendarMonthRegular />} aria-label="Compound example" />
 <CompoundButton>Compound example</CompoundButton>
-<CompoundButton secondaryContent="Compound example" />
+<CompoundButton icon={<CalendarMonthRegular />} secondaryContent="Compound example" />
 <>
     <Label id="calendar-1">Compound example</Label>
-    <CompoundButton aria-labelledby="calendar-1" />
+    <CompoundButton aria-labelledby="calendar-1" icon={<CalendarMonthRegular />} />
 </>
 
 <Tooltip content="Compound example" relationship="label">
-    <CompoundButton/>
+    <CompoundButton icon={<CalendarMonthRegular />}/>
 </Tooltip>
 ```
