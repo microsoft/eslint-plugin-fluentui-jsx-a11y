@@ -30,7 +30,11 @@ ruleTester.run("no-empty-components-v9", rule, {
         "<Label>Hello</Label>",
         '<Text font="base">This is the default font</Text>',
         '<Label size="small">Small</Label>',
-        '<Combobox aria-labelledby={comboId} placeholder="Select an animal" {...props}>{options.map((option) => (<Option key={option} disabled={option === "Ferret"}>{option}</Option>))}</Combobox>'
+        '<Combobox aria-labelledby={comboId} placeholder="Select an animal" {...props}>{options.map((option) => (<Option key={option} disabled={option === "Ferret"}>{option}</Option>))}</Combobox>',
+        '<AccordionItem value="1"><NestedComponent /></AccordionItem>',
+        '<div className={styles.root}><label id={dropdownId}>Best pet</label><Dropdown aria-labelledby={dropdownId} placeholder="Select an animal" {...props}>{options.map((option) => (<Option key={option} disabled={option === "Ferret"}>{option}</Option>))}</Dropdown></div>',
+        "<Accordion collapsible><NestedComponent /></Accordion>",
+        "<AccordionPanel><div>Accordion Panel 1</div></AccordionPanel>"
     ],
 
     invalid: [
@@ -60,6 +64,26 @@ ruleTester.run("no-empty-components-v9", rule, {
         },
         {
             code: '<Combobox aria-labelledby={comboId} placeholder="Select an animal" {...props}></Combobox>',
+            errors: [{ messageId: "noEmptyComponents" }]
+        },
+        {
+            code: "<Accordion collapsible></Accordion>",
+            errors: [{ messageId: "noEmptyComponents" }]
+        },
+        {
+            code: '<AccordionItem value="1"></AccordionItem>',
+            errors: [{ messageId: "noEmptyComponents" }]
+        },
+        {
+            code: '<div className={styles.root}><label id={dropdownId}>Best pet</label><Dropdown aria-labelledby={dropdownId} placeholder="Select an animal" {...props} ></Dropdown></div>',
+            errors: [{ messageId: "noEmptyComponents" }]
+        },
+        {
+            code: "<AccordionPanel></AccordionPanel>",
+            errors: [{ messageId: "noEmptyComponents" }]
+        },
+        {
+            code: "<AccordionPanel/>",
             errors: [{ messageId: "noEmptyComponents" }]
         }
     ]
