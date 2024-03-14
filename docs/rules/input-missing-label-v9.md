@@ -1,4 +1,4 @@
-# Accessibility: Inputs must have accessible labelling: aria-label, aria-labelledby or an associated label (`@microsoft/fluentui-jsx-a11y/input-missing-label-v9`)
+# Accessibility: Input fields must have accessible labelling: aria-label, aria-labelledby or an associated label (`@microsoft/fluentui-jsx-a11y/input-missing-label-v9`)
 
 <!-- end auto-generated rule header -->
 
@@ -24,6 +24,19 @@ or
 <Input/>
 ```
 
+or
+
+```jsx
+<Label htmlFor="input-id">Label name</Label>
+<Slider/>
+```
+
+or
+
+```jsx
+<Slider size="medium" defaultValue={20} />
+```
+
 Examples of **correct** code for this rule:
 
 ```jsx
@@ -35,4 +48,11 @@ or
 ```jsx
 <Label htmlFor="input-id">Label name</Label>
 <Textarea id="input-id"/>
+```
+
+or
+
+```jsx
+<Label htmlFor={mediumId}>Medium Slider</Label>
+<Slider size="medium" defaultValue={20} id={mediumId} />
 ```

@@ -34,9 +34,9 @@ We currently cover the following components:
     -   [] Radio
     -   [] RadioGroup
     -   [] Select
+    -   [x] Slider
     -   [N/A] Skeleton
     -   [N/A] SkeletonItem
-    -   [] Slider
     -   [x] SpinButton
     -   [] Spinner
     -   [x] Switch
