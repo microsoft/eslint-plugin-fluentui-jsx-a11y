@@ -23,7 +23,7 @@ Examples of **unrecommended** code for this rule:
 
 ```jsx
 
-<Tooltip content="Sping Button label" relationship="label">
+<Tooltip content="Spin Button label" relationship="label">
     <SpinButton
         defaultValue={10}
         min={0}
