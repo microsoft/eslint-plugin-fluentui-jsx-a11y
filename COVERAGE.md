@@ -7,7 +7,7 @@ We currently cover the following components:
     -   [x] AvatarGroup
     -   [] Badge
     -   [x] Button
-    -   [] CompoundButton
+    -   [X] CompoundButton
     -   [] MenuButton
     -   [X] MenuItem
     -   [] SplitButton
