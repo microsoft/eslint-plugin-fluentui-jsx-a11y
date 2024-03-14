@@ -31,19 +31,20 @@ ruleTester.run("no-empty-buttons-v9", rule, {
         "<Button>Example</Button>",
         '<Button title="Toggle Example">Example</Button>',
         '<Button icon={<CloseIcon />} aria-label="Close" />',
-        '<Button icon={<CloseIcon />} aria-label="Close">Button</Button>',
+        "<Button icon={<CloseIcon />}>Button</Button>",
         "<ToggleButton>Example</ToggleButton>",
         '<ToggleButton title="Toggle Example">Example</ToggleButton>',
         '<ToggleButton icon={<CloseIcon />} aria-label="Close" />',
-        '<ToggleButton icon={<CloseIcon />} aria-label="Close">ToggleButton</ToggleButton>',
+        "<ToggleButton icon={<CloseIcon />}>ToggleButton</ToggleButton>",
         "<CompoundButton>Example</CompoundButton>",
         '<CompoundButton title="Toggle Example">Example</CompoundButton>',
+        '<CompoundButton icon={<CloseIcon />} secondaryContent="Close" />',
         '<CompoundButton icon={<CloseIcon />} aria-label="Close" />',
-        '<CompoundButton icon={<CloseIcon />} aria-label="Close">CompoundButton</CompoundButton>',
+        "<CompoundButton icon={<CloseIcon />}>CompoundButton</CompoundButton>",
         "<SplitButton>Example</SplitButton>",
         '<SplitButton title="Toggle Example">Example</SplitButton>',
         '<SplitButton icon={<CloseIcon />} aria-label="Close" />',
-        '<SplitButton icon={<CloseIcon />} aria-label="Close">SplitButton</SplitButton>'
+        "<SplitButton icon={<CloseIcon />}>SplitButton</SplitButton>"
     ],
     invalid: [
         {
@@ -87,11 +88,15 @@ ruleTester.run("no-empty-buttons-v9", rule, {
             errors: [{ messageId: "noEmptyButtons" }]
         },
         {
-            code: '<CompoundButton title="Toggle Example"></CompoundButton>',
+            code: '<CompoundButton secondaryContent=""></CompoundButton>',
             errors: [{ messageId: "noEmptyButtons" }]
         },
         {
-            code: '<CompoundButton aria-label="Toggle Example"></CompoundButton>',
+            code: '<CompoundButton title="Compound Button Example"></CompoundButton>',
+            errors: [{ messageId: "noEmptyButtons" }]
+        },
+        {
+            code: '<CompoundButton aria-label="Compound Button Example"></CompoundButton>',
             errors: [{ messageId: "noEmptyButtons" }]
         },
         {

@@ -1,4 +1,4 @@
-# Accessibility: buttons must either text content or icon or child component (`@microsoft/fluentui-jsx-a11y/no-empty-buttons-v9`)
+# Accessibility: Button, ToggleButton, SplitButton, MenuButton, CompoundButton must either text content or icon or child component (`@microsoft/fluentui-jsx-a11y/no-empty-buttons-v9`)
 
 <!-- end auto-generated rule header -->
 
@@ -42,5 +42,5 @@ Examples of **correct** code for this rule:
 <Button icon={<CloseIcon />} aria-label="Close" />
 ```
 ```jsx
-<Button icon={<CloseIcon />} aria-label="Close">Button</Button>
+<Button icon={<CloseIcon />}>Button</Button>
 ```
