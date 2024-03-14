@@ -2,7 +2,7 @@
 
 We currently cover the following components:
 
-    -   [] Accordion
+    -   [x] Accordion
     -   [x] Avatar
     -   [x] AvatarGroup
     -   [] Badge
