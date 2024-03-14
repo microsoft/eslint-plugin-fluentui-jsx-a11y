@@ -29,8 +29,8 @@ We currently cover the following components:
     -   [] Popover
     -   [] Portal
     -   [] ProgressBar
-    -   [] Radio
-    -   [] RadioGroup
+    -   [x] Radio
+    -   [x] RadioGroup
     -   [] Select
     -   [] Slider
     -   [] SpinButton
