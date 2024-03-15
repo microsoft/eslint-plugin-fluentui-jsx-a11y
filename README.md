@@ -95,7 +95,19 @@ V9 Suggested Configuration:
     "@microsoft/fluentui-jsx-a11y/switch-needs-labelling-v9": "error",
     "@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9": "error",
     "@microsoft/fluentui-jsx-a11y/image-button-missing-aria-v9": "error",
-    "@microsoft/fluentui-jsx-a11y/toolbar-missing-aria-v9": "error"
+    "@microsoft/fluentui-jsx-a11y/toolbar-missing-aria-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/avatar-needs-name-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/breadcrumb-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/no-empty-buttons-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/dropdown-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/spin-button-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/combobox-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/compound-button-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/no-empty-components-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/accordion-header-needs-labelling-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/accordion-item-needs-header-and-panel-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/tooltip-not-recommended-v9": "error",
+    "@microsoft/fluentui-jsx-a11y/spin-button-unrecommended-labelling-v9": "error"
   },
 
 ```
