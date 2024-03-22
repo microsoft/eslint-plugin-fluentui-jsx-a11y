@@ -2,12 +2,12 @@
 
 We currently cover the following components:
 
-    -   [] Accordion
+    -   [x] Accordion
     -   [x] Avatar
     -   [x] AvatarGroup
     -   [] Badge
     -   [x] Button
-    -   [] CompoundButton
+    -   [X] CompoundButton
     -   [] MenuButton
     -   [X] MenuItem
     -   [] SplitButton
@@ -19,21 +19,24 @@ We currently cover the following components:
     -   [] Dialog
     -   [N/A] Divider
     -   [X] Dropdown
-    -   [] FluentProvider
+    -   [] Field
+    -   [N/A] FluentProvider
     -   [] Image
     -   [x] Input
     -   [x] Label
     -   [] Link
     -   [] Menu
-    -   [] Overflow
+    -   [N/A] Overflow
     -   [] Persona
     -   [] Popover
-    -   [] Portal
+    -   [N/A] Portal
     -   [] ProgressBar
     -   [x] Radio
     -   [x] RadioGroup
     -   [] Select
-    -   [] Slider
+    -   [x] Slider
+    -   [N/A] Skeleton
+    -   [N/A] SkeletonItem
     -   [x] SpinButton
     -   [] Spinner
     -   [x] Switch
@@ -43,4 +46,5 @@ We currently cover the following components:
     -   [x] TextArea
     -   [x] Toolbar
     -   [] Tooltip
+    -   [] Tree
     -   [x] Breadcrumb
