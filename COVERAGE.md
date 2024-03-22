@@ -31,8 +31,8 @@ We currently cover the following components:
     -   [] Popover
     -   [N/A] Portal
     -   [] ProgressBar
-    -   [] Radio
-    -   [] RadioGroup
+    -   [x] Radio
+    -   [x] RadioGroup
     -   [] Select
     -   [x] Slider
     -   [N/A] Skeleton
