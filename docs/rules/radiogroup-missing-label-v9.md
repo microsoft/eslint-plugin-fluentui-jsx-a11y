@@ -1,4 +1,4 @@
-# Accessibility: Radio without label must have an accessible and visual label: aria-labelledby (`@microsoft/fluentui-jsx-a11y/radiogroup-missing-label-v9`)
+# Accessibility: RadioGroup without label must have an accessible and visual label: aria-labelledby (`@microsoft/fluentui-jsx-a11y/radiogroup-missing-label-v9`)
 
 <!-- end auto-generated rule header -->
 

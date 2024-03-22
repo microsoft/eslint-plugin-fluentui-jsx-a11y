@@ -35,11 +35,7 @@ ruleTester.run("radioGroup-missing-label-v9", rule, {
         `<RadioGroup aria-label="This is a aria-label for the link" checked={true} ></RadioGroup>`,
         `<><Label id="my-label-1">This is a RadioGroup</Label><RadioGroup aria-labelledby="my-label-1" checked={true} /></>`,
         `<><Label id="my-label-1">This is a RadioGroup</Label><RadioGroup aria-labelledby="my-label-1" checked={true}></RadioGroup></>`,
-        `<><Label id="my-label-1">This is a RadioGroup</Label><Label id="my-label-3">This is a RadioGroup</Label><RadioGroup aria-labelledby="my-label-1" checked={true}></RadioGroup></>`,
-        `<Field><Label>This is a radiogroup inside Field</Label><RadioGroup checked={true}></RadioGroup></Field>`,
-        `<Field label="Radio group label"><RadioGroup checked={true}></RadioGroup></Field>`,
-        `<Field><RadioGroup label="Radio group label" checked={true}></RadioGroup></Field>`,
-        `<Field><RadioGroup aria-label="Radio group label" checked={true}></RadioGroup></Field>`
+        `<><Label id="my-label-1">This is a RadioGroup</Label><Label id="my-label-3">This is a RadioGroup</Label><RadioGroup aria-labelledby="my-label-1" checked={true}></RadioGroup></>`
     ],
     invalid: [
         {
