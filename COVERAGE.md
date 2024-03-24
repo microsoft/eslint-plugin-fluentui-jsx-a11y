@@ -5,7 +5,7 @@ We currently cover the following components:
     -   [] Accordion
     -   [x] Avatar
     -   [x] AvatarGroup
-    -   [] Badge
+    -   [x] Badge
     -   [x] Button
     -   [] CompoundButton
     -   [] MenuButton
