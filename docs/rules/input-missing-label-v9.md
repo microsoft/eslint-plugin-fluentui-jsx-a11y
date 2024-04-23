@@ -37,6 +37,13 @@ or
 <Slider size="medium" defaultValue={20} />
 ```
 
+or
+
+```jsx
+<Field label="Input" />
+<Input />
+```
+
 Examples of **correct** code for this rule:
 
 ```jsx
@@ -55,4 +62,12 @@ or
 ```jsx
 <Label htmlFor={mediumId}>Medium Slider</Label>
 <Slider size="medium" defaultValue={20} id={mediumId} />
+```
+
+or
+
+```jsx
+<Field label="Input">
+    <Input />
+</Field>
 ```
