@@ -46,3 +46,10 @@ Examples of **correct** code for this rule:
     />
 
 ```
+
+````jsx
+    <Field label="Switch">
+      <Switch />
+    </Field>
+    ```
+````

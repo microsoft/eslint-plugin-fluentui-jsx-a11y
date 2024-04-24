@@ -45,3 +45,9 @@ Examples of **correct** code for this rule:
       aria-labelledby="my-label-1"
     />
 ```
+
+```jsx
+<Field hint="Checkboxes use their own label instead of the Field label.">
+    <Checkbox label="Checkbox" />
+</Field>
+```

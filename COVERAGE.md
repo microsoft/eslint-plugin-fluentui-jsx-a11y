@@ -7,32 +7,46 @@ We currently cover the following components:
     -   [x] AvatarGroup
     -   [] Badge
     -   [x] Button
-    -   [X] CompoundButton
-    -   [] MenuButton
-    -   [X] MenuItem
-    -   [] SplitButton
-    -   [x] ToggleButton
-    -   [] ToolbarToggleButton
+        -   [x] Button
+        -   [X] CompoundButton
+        -   [] MenuButton
+        -   [X] MenuItem
+        -   [] SplitButton
+        -   [x] ToggleButton
+        -   [] ToolbarToggleButton
+    -   [] Card
+        -   [] Card
+        -   [] CardFooter
+        -   [] CardHeader
+        -   [] CardPreview
     -   [x] Checkbox
     -   [x] Combobox
     -   [] DataGrid
     -   [] Dialog
     -   [N/A] Divider
+    -   [] Drawer
     -   [X] Dropdown
     -   [] Field
     -   [N/A] FluentProvider
     -   [] Image
+    -   [] InfoLabel
     -   [x] Input
     -   [x] Label
     -   [] Link
     -   [] Menu
+        -   [] Menu
+        -   [] MenuList
+    -   [] MessageBar
     -   [N/A] Overflow
     -   [] Persona
     -   [] Popover
     -   [N/A] Portal
     -   [] ProgressBar
+    -   [] Rating
+    -   [] RatingDisplay
     -   [x] Radio
     -   [x] RadioGroup
+    -   [] SearchBox
     -   [] Select
     -   [x] Slider
     -   [N/A] Skeleton
@@ -42,9 +56,14 @@ We currently cover the following components:
     -   [x] Switch
     -   [] Table
     -   [] TabList
+    -   [] Tag
+    -   [] TeachingPopover
     -   [x] Text
     -   [x] TextArea
     -   [x] Toolbar
-    -   [] Tooltip
+    -   [x] Tooltip
     -   [] Tree
     -   [x] Breadcrumb
+    -   [x] Datepicker
+    -   [] Calendar
+    -   [] Timepicker

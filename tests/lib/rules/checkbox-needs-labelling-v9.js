@@ -34,7 +34,8 @@ ruleTester.run("checkbox-needs-labelling-v9", rule, {
         `<><Label id="my-label-1">This is a Checkbox</Label><Checkbox aria-labelledby="my-label-1" checked={true} /></>`,
         `<><Label id="my-label-1">This is a Checkbox</Label><Checkbox aria-labelledby="my-label-1" checked={true}></Checkbox></>`,
         `<><Label id="my-label-1">This is a Checkbox</Label><Label id="my-label-3">This is a Checkbox</Label><Checkbox aria-labelledby="my-label-1" checked={true}></Checkbox></>`,
-        `<><Label id="my-label-1">This is a Checkbox</Label><Image src={"https://msn.com"} /><Checkbox aria-labelledby="my-label-1" checked={true}></Checkbox></>`
+        `<><Label id="my-label-1">This is a Checkbox</Label><Image src={"https://msn.com"} /><Checkbox aria-labelledby="my-label-1" checked={true}></Checkbox></>`,
+        '<Field label="Input"><Checkbox /></Field>'
     ],
     invalid: [
         {
@@ -51,6 +52,10 @@ ruleTester.run("checkbox-needs-labelling-v9", rule, {
         },
         {
             code: `<><Label id="my-label-1">This is a Checkbox</Label><Label id="my-label-3">This is a Checkbox</Label><Checkbox aria-labelledby="my-label-4" checked={true}></Checkbox></>`,
+            errors: [{ messageId: "noUnlabelledCheckbox" }]
+        },
+        {
+            code: "<><Field></Field><Checkbox /></>",
             errors: [{ messageId: "noUnlabelledCheckbox" }]
         }
     ]

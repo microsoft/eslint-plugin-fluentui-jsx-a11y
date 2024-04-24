@@ -44,6 +44,17 @@ Examples of **correct** code for this rule:
       aria-labelledby="my-label-1"
     />
 ```
+
 ```jsx
 <RadioGroup aria-label="anything" checked={true} />
+```
+
+```jsx
+<Field label="RadioGroup">
+    <RadioGroup>
+        <Radio label="Option 1" />
+        <Radio label="Option 2" />
+        <Radio label="Option 3" />
+    </RadioGroup>
+</Field>
 ```

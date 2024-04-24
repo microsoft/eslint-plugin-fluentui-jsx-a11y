@@ -28,3 +28,12 @@ Examples of **correct** code for this rule:
 </Combobox>
 ```
 
+```jsx
+<Field label="Combobox">
+    <Combobox>
+        <Option>Option 1</Option>
+        <Option>Option 2</Option>
+        <Option>Option 3</Option>
+    </Combobox>
+</Field>
+```
