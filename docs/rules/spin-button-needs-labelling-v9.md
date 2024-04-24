@@ -10,7 +10,6 @@ Please add label, aria-labelledby or htmlFor.
 
 <https://www.w3.org/TR/html-aria/>
 
-
 ## Rule Details
 
 This rule aims to...
@@ -37,11 +36,7 @@ Examples of **correct** code for this rule:
 <Label>
     Default SpinButton
     <SomethingNesting>
-        <SpinButton
-            defaultValue={10}
-            min={0}
-            max={20}
-        />
+        <SpinButton defaultValue={10} min={0} max={20} />
     </SomethingNesting>
 </Label>
 ```
@@ -64,4 +59,10 @@ Examples of **correct** code for this rule:
     max={20}
     aria-labelledby={id}
 />
+```
+
+```jsx
+<Field label="SpinButton">
+    <SpinButton />
+</Field>
 ```

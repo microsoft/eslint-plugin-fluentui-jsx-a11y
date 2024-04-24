@@ -35,7 +35,8 @@ ruleTester.run("combobox-needs-labelling-v9", rule, {
         // '<div><Label id={"my-label"}>Best pet</Label><Combobox aria-labelledby={"my-label"} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>', // TODO: modify regular expression
         '<div><label htmlFor="my-input">Best pet</label><Combobox id="my-input" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
         '<div><Label htmlFor="my-input">Best pet</Label><Combobox id="my-input" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
-        '<div><Label htmlFor={myInputId}>Best pet</Label><Combobox id={myInputId} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>'
+        '<div><Label htmlFor={myInputId}>Best pet</Label><Combobox id={myInputId} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
+        '<Field label="Slider"><Combobox /></Field>'
     ],
     invalid: [
         {
@@ -44,6 +45,10 @@ ruleTester.run("combobox-needs-labelling-v9", rule, {
         },
         {
             code: '<div><label htmlFor="my-label2">Best pet</label><Combobox id="my-combobox" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
+            errors: [{ messageId: "noUnlabelledCombobox" }]
+        },
+        {
+            code: "<><Field></Field><Combobox /></>",
             errors: [{ messageId: "noUnlabelledCombobox" }]
         }
     ]

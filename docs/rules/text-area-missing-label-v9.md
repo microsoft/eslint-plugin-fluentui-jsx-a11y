@@ -37,3 +37,9 @@ or
 <Label htmlFor="text-area-id">Label name</Label>
 <Textarea id="text-area-id"/>
 ```
+
+```jsx
+<Field label="Textarea">
+    <Textarea />
+</Field>
+```
