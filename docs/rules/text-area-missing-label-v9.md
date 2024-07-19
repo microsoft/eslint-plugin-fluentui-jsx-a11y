@@ -1,5 +1,7 @@
 # Accessibility: Textarea must have an accessible name (`@microsoft/fluentui-jsx-a11y/text-area-missing-label-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 ## Rule Details

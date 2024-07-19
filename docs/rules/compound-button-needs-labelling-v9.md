@@ -1,5 +1,7 @@
 # Accessibility: Compound buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby (`@microsoft/fluentui-jsx-a11y/compound-button-needs-labelling-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.

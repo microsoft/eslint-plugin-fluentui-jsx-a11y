@@ -1,5 +1,7 @@
 # Accessibility: Checkbox without label must have an accessible and visual label: aria-labelledby (`@microsoft/fluentui-jsx-a11y/checkbox-needs-labelling-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.

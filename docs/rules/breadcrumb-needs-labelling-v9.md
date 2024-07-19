@@ -1,5 +1,7 @@
 # All interactive elements must have an accessible name (`@microsoft/fluentui-jsx-a11y/breadcrumb-needs-labelling-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 Provide labels to identify all form controls, including text fields, checkboxes, radio buttons, and drop-down menus. In most cases, this is done by using the label element.
@@ -31,10 +33,10 @@ Examples of **correct** code for this rule:
 ```jsx
 <Breadcrumb aria-label="Breadcrumb default example">
 ```
+
 ```jsx
 <div>
 <label id="my-label">Breadcrumb default example<label>
 <Breadcrumb aria-labelledby="my-label"><BreadCrumb>
 </div>
 ```
-

@@ -1,5 +1,7 @@
 # Accessibility: Prefer text content or aria over a tooltip for these components MenuItem, SpinButton (`@microsoft/fluentui-jsx-a11y/tooltip-not-recommended-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.
@@ -18,13 +20,13 @@ Examples of **incorrect** code for this rule:
 
 ```jsx
 <Tooltip content="menu item" relationship="label">
-<MenuItem/>
+    <MenuItem />
 </Tooltip>
 ```
 
 ```jsx
 <Tooltip content="menu item" relationship="label">
-<SpinButton/>
+    <SpinButton />
 </Tooltip>
 ```
 
@@ -36,6 +38,7 @@ Examples of **correct** code for this rule:
 <MenuItem aria-labelledby="my-label"/>
 </div>
 ```
+
 ```jsx
 <div>
 <label id="my-label">More option<label>

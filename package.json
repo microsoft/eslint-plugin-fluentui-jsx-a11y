@@ -1,6 +1,6 @@
 {
     "name": "@microsoft/eslint-plugin-fluentui-jsx-a11y",
-    "version": "1.0.0-alpha.16",
+    "version": "2.0.0-alpha.1",
     "description": "Static AST checker for accessibility rules on FluentUI JSX elements.",
     "keywords": [
         "eslint",

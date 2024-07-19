@@ -1,5 +1,7 @@
 # Accessibility: SpinButtons must have an accessible label (`@microsoft/fluentui-jsx-a11y/spin-button-needs-labelling-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.

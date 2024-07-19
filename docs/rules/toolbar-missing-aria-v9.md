@@ -1,5 +1,7 @@
 # Accessibility: Toolbars need accessible labelling: aria-label or aria-labelledby (`@microsoft/fluentui-jsx-a11y/toolbar-missing-aria-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 <!-- end auto-generated rule header -->
@@ -32,4 +34,3 @@ Examples of **correct** code for this rule:
     <ToolbarToggleButton appearance="subtle" aria-label="Bold" icon={<TextBold24Regular />} name="textOptions" value="bold" />
 </Toolbar>
 ```
-

@@ -1,5 +1,7 @@
 # Accessibility: Button, ToggleButton, SplitButton, MenuButton, CompoundButton must either text content or icon or child component (`@microsoft/fluentui-jsx-a11y/no-empty-buttons-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 Buttons must either have text, content or accessible labelling
@@ -13,11 +15,11 @@ This rule aims to make a button to have something to generate an aria-label.
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<Button></Button> 
+<Button></Button>
 ```
 
 ```jsx
-<Button /> 
+<Button />
 ```
 
 ```jsx
@@ -28,19 +30,20 @@ Examples of **incorrect** code for this rule:
 <Button aria-label="Toggle Example"></Button>
 ```
 
-
-
 Examples of **correct** code for this rule:
 
 ```jsx
 <Button>Example</Button>
 ```
+
 ```jsx
 <Button title="Toggle Example">Example</Button>
-``` 
+```
+
 ```jsx
 <Button icon={<CloseIcon />} aria-label="Close" />
 ```
+
 ```jsx
 <Button icon={<CloseIcon />}>Button</Button>
 ```

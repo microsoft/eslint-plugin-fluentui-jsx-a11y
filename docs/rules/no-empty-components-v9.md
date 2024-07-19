@@ -1,5 +1,7 @@
 # FluentUI components should not be empty (`@microsoft/fluentui-jsx-a11y/no-empty-components-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 Provide labels to identify all form controls, including text fields, checkboxes, radio buttons, and drop-down menus. In most cases, this is done by using the label element.
@@ -39,5 +41,9 @@ Examples of **correct** code for this rule:
 ```
 
 ```jsx
-<Breadcrumb><BreadcrumbItem><BreadcrumbButton>Item 1</BreadcrumbButton></BreadcrumbItem></Breadcrumb>
+<Breadcrumb>
+    <BreadcrumbItem>
+        <BreadcrumbButton>Item 1</BreadcrumbButton>
+    </BreadcrumbItem>
+</Breadcrumb>
 ```
