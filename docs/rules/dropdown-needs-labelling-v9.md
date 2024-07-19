@@ -1,5 +1,7 @@
 # Accessibility: Dropdown menu must have an id and it needs to be linked via htmlFor of a Label (`@microsoft/fluentui-jsx-a11y/dropdown-needs-labelling-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 Accessibility: Dropdown menu must have a visual label and it needs to be linked via htmlFor aria-labelledby of Label Or Dropdown mush have aria-label

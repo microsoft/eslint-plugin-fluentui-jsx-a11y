@@ -1,5 +1,7 @@
 # The accordion header is a button and it needs an accessibile name e.g. text content, aria-label, aria-labelledby (`@microsoft/fluentui-jsx-a11y/accordion-header-needs-labelling-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 The ESLint rule is designed to enforce accessibility standards in React components, specifically ensuring an accordion header is accessible to screen reader users.

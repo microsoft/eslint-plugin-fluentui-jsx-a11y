@@ -1,5 +1,7 @@
 # Accessibility: a button with text content does not need aria labelling. The button already has an accessible name and the aria-label will override the text content for screen reader users (`@microsoft/fluentui-jsx-a11y/text-content-button-does-not-need-aria`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 Object literal image buttons must have accessible labelling: aria-label

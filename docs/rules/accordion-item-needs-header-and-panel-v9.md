@@ -1,5 +1,7 @@
 # An AccordionItem needs exactly one header and one panel (`@microsoft/fluentui-jsx-a11y/accordion-item-needs-header-and-panel-v9`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 The ESLint rule is designed to enforce accessibility standards in React components, specifically ensuring an accordion component has one button (as a header) which controls one panel region.
@@ -58,4 +60,3 @@ Examples of **correct** code for this rule:
 ## Further Reading
 
 [ARIA Patterns](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
-
