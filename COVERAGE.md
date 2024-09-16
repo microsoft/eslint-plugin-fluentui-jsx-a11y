@@ -53,13 +53,19 @@ We currently cover the following components:
     -   [N/A] SkeletonItem
     -   [x] SpinButton
     -   [] Spinner
+    -   [] SwatchPicker
     -   [x] Switch
     -   [] Table
     -   [] TabList
     -   [] Tag
+        -   [] InteractionTag
+        -   [] Tag
+        -   [] TagGroup
+    -   [] TagPicker
     -   [] TeachingPopover
     -   [x] Text
     -   [x] TextArea
+    -   [] Toast
     -   [x] Toolbar
     -   [x] Tooltip
     -   [] Tree
