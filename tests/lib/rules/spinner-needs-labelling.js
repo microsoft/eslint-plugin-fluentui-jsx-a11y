@@ -17,9 +17,8 @@ const rule = require("../../../lib/rules/spinner-needs-labelling"),
 const ruleTester = new RuleTester();
 ruleTester.run("spinner-needs-labelling", rule, {
     valid: [
-        `<Spinner aria-label="screen reader text"/>`,
         `<Spinner aria-label="my screen reader text" aria-live="polite"/>`,
-        `<Spinner appearance="primary" label="Primary Spinner" aria-label="my screen reader text"/>`
+        `<Spinner appearance="primary" label="Primary Spinner" aria-label="my screen reader text" aria-live="polite"/>`
     ],
     invalid: [
         {

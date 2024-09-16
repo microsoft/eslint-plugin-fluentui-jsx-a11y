@@ -26,6 +26,20 @@ Examples of **incorrect** code for this rule:
 <Spinner {...props} />
 ```
 
+```jsx
+<Spinner 
+    {...props} 
+    aria-label="some text"
+/>
+```
+
+```jsx
+<Spinner 
+    {...props} 
+    aria-live="polite"
+/>
+```
+
 Examples of **correct** code for this rule:
 
 ```jsx
@@ -33,14 +47,5 @@ Examples of **correct** code for this rule:
     {...props} 
     aria-label="my screen reader text"
     aria-live="polite"
-/>
-```
-
-If aria-live has defaut value
-
-```jsx
-<Spinner
-    {...props} 
-    aria-label="my screen reader text"
 />
 ```
