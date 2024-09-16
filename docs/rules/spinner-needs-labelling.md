@@ -1,5 +1,7 @@
 # Accessibility: Spinner must have aria-label and aria-live (`@microsoft/fluentui-jsx-a11y/spinner-needs-labelling`)
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
 <!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.
