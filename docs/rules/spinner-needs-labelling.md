@@ -1,12 +1,10 @@
-# Accessibility: Spinner must have aria-label and aria-live (`@microsoft/fluentui-jsx-a11y/spinner-needs-labelling`)
+# Accessibility: Spinner must have either aria-label or label, aria-live and aria-busy attributes (`@microsoft/fluentui-jsx-a11y/spinner-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
 <!-- end auto-generated rule header -->
 
-All interactive elements must have an accessible name.
-
-Spinner must have aria-label and aria-live.
+Spinner must have either aria-label or label, aria-live and aria-busy attributes.
 
 <https://www.w3.org/TR/html-aria/>
 
@@ -16,7 +14,10 @@ Spinner must have aria-label and aria-live.
 
 ## Ways to fix
 
--   Make sure that Spinner component has aria-live attribute and add aria-label attribute for screen reader text.
+-   Make sure that Spinner component has following attributes:
+    -   aria-live
+    -   aria-busy
+    -   either label or aria-label
 
 ## Rule Details
 
@@ -42,6 +43,22 @@ Examples of **incorrect** code for this rule:
 />
 ```
 
+```jsx
+<Spinner
+    size="large"
+    label="Large Spinner"
+    aria-live="polite"
+/>
+```
+
+```jsx
+<Spinner
+    size="large"
+    label="Large Spinner"
+    aria-busy="true"
+/>
+```
+
 Examples of **correct** code for this rule:
 
 ```jsx
@@ -49,5 +66,24 @@ Examples of **correct** code for this rule:
     {...props} 
     aria-label="my screen reader text"
     aria-live="polite"
+    aria-busy="false"
+/>
+```
+
+```jsx
+<Spinner
+    {...props} 
+    aria-label="my screen reader text"
+    aria-live="polite"
+    aria-busy="true"
+/>
+```
+
+```jsx
+<Spinner
+    {...props} 
+    label="my text"
+    aria-live="polite"
+    aria-busy="true"
 />
 ```
