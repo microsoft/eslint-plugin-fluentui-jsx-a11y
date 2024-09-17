@@ -6,6 +6,10 @@ We currently cover the following components:
     -   [x] Avatar
     -   [x] AvatarGroup
     -   [] Badge
+        -   [] Badge
+        -   [] CompoundButton
+        -   [] MenuButton
+    -   [x] Breadcrumb
     -   [x] Button
         -   [x] Button
         -   [X] CompoundButton
@@ -69,7 +73,6 @@ We currently cover the following components:
     -   [x] Toolbar
     -   [x] Tooltip
     -   [] Tree
-    -   [x] Breadcrumb
     -   [x] Datepicker
     -   [] Calendar
     -   [] Timepicker
