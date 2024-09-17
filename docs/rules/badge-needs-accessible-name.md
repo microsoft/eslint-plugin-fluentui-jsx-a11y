@@ -1,35 +1,46 @@
-# Badge information should be surfaced as part of the control that it is associated with, because, badges themselves do not receive focus meaning they are not directly accessible by screen readers. If the combination of icon and badge communicates some meaningful information, that information should be surfaced in another way through screenreader or tooltip on the component the badge is associated with. (`badge-needs-accessible-name`)
+# Badge information should be surfaced as part of the control that it is associated with. (`badge-needs-accessible-name`)
 
-Please describe the origin of the rule here.
+Badge information should be surfaced as part of the control that it is associated with, because, badges themselves do not receive focus meaning they are not directly accessible by screen readers. If the combination of icon and badge communicates some meaningful information, that information should be surfaced in another way through screenreader or tooltip on the component the badge is associated with.
+
+Badge content is exposed as text, and is treated by screen readers as if it were inline content of the control it is associated with.
 
 ## Rule Details
 
-This rule aims to...
+Ensure that the `Badge` component is accessible.
 
 Examples of **incorrect** code for this rule:
 
-```js
+```jsx
+<Badge icon={<PasteIcon />} />
+```
 
-// fill me in
+```jsx
+<Badge appearance="filled" color="brand" />} />
+```
 
+```jsx
+<Badge size="extra-large" />
 ```
 
 Examples of **correct** code for this rule:
 
-```js
+If the badge contains a custom icon, that icon must be given alternative text with aria-label, unless it is purely presentational:
 
-// fill me in
-
+```jsx
+<Badge icon={<PasteIcon aria-label="paste" />} />
 ```
 
-### Options
+Badge shouldn't rely only on color information. Include meaningful descriptions when using color to represent meaning in a badge. If relying on color only ensure that non-visual information is included in the parent's label or description. Alternatively, mark up the Badge as an image with a label:
 
-If there are any options, describe them here. Otherwise, delete this section.
+```jsx
+<Badge role="img" aria-label="Active" appearance="filled" color="brand" />} />
+```
 
-## When Not To Use It
-
-Give a short description of when it would be appropriate to turn off this rule.
+```jsx
+<Badge appearance="tint">999+</Badge>
+```
 
 ## Further Reading
 
-If there are other links that describe the issue this rule addresses, please include them here in a bulleted list.
+<https://react.fluentui.dev/?path=/docs/components-badge-badge--docs>
+
