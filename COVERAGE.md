@@ -7,8 +7,8 @@ We currently cover the following components:
     -   [x] AvatarGroup
     -   [] Badge
         -   [] Badge
-        -   [] CompoundButton
-        -   [] MenuButton
+        -   [] CounterBadge
+        -   [N/A] PresenceBadge
     -   [x] Breadcrumb
     -   [x] Button
         -   [x] Button
