@@ -6,7 +6,7 @@ We currently cover the following components:
     -   [x] Avatar
     -   [x] AvatarGroup
     -   [] Badge
-        -   [] Badge
+        -   [x] Badge
         -   [] CounterBadge
         -   [N/A] PresenceBadge
     -   [x] Breadcrumb
