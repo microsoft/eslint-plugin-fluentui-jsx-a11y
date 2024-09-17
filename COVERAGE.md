@@ -22,7 +22,7 @@ We currently cover the following components:
     -   [x] Checkbox
     -   [x] Combobox
     -   [] DataGrid
-    -   [] Dialog
+    -   [x] Dialog
     -   [N/A] Divider
     -   [] Drawer
     -   [X] Dropdown
