@@ -52,7 +52,7 @@ We currently cover the following components:
     -   [N/A] Skeleton
     -   [N/A] SkeletonItem
     -   [x] SpinButton
-    -   [] Spinner
+    -   [x] Spinner
     -   [] SwatchPicker
     -   [x] Switch
     -   [] Table
