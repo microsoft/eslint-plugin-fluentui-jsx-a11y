@@ -1,4 +1,10 @@
-# Badge information should be surfaced as part of the control that it is associated with. (`badge-needs-accessible-name`)
+# @microsoft/fluentui-jsx-a11y/badge-needs-accessible-name
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 Badge information should be surfaced as part of the control that it is associated with, because, badges themselves do not receive focus meaning they are not directly accessible by screen readers. If the combination of icon and badge communicates some meaningful information, that information should be surfaced in another way through screenreader or tooltip on the component the badge is associated with.
 
