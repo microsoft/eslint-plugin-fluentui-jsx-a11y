@@ -7,7 +7,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require("../../../lib/rules/compound-button-needs-labelling"),
+const rule = require("../../../../lib/rules/buttons/compound-button-needs-labelling"),
     RuleTester = require("eslint").RuleTester;
 
 //------------------------------------------------------------------------------
