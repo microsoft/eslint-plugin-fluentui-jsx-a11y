@@ -50,7 +50,7 @@ We currently cover the following components:
     -   [] RatingDisplay
     -   [x] Radio
     -   [x] RadioGroup
-    -   [] SearchBox
+    -   [x] SearchBox
     -   [] Select
     -   [x] Slider
     -   [N/A] Skeleton
