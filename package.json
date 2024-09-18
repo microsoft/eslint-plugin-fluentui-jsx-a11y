@@ -33,7 +33,7 @@
         },
         "./package.json": "./package.json"
     },
-    "main": "./lib/index.js",
+    "main": "./dist/lib/index.js",
     "scripts": {
         "build": "tsc",
         "lint": "npm-run-all \"lint:*\"",
