@@ -38,7 +38,12 @@ module.exports = {
         "avatar-needs-name": require("./rules/avatar-needs-name"),
         "radio-button-missing-label": require("./rules/radio-button-missing-label"),
         "radiogroup-missing-label": require("./rules/radiogroup-missing-label"),
-        "prefer-aria-over-title-attribute": prefer_aria_over_title_attribute_1.default
+        "prefer-aria-over-title-attribute": prefer_aria_over_title_attribute_1.default,
+        "avoid-using-aria-describedby-for-primary-labelling": require("./rules/avoid-using-aria-describedby-for-primary-labelling"),
+        "dialogbody-needs-title-content-and-actions": require("./rules/dialogbody-needs-title-content-and-actions"),
+        "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
+        "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
+        "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name")
     },
     configs: {
         recommended: {

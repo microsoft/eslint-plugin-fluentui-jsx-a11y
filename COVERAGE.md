@@ -6,6 +6,10 @@ We currently cover the following components:
     -   [x] Avatar
     -   [x] AvatarGroup
     -   [] Badge
+        -   [x] Badge
+        -   [] CounterBadge
+        -   [N/A] PresenceBadge
+    -   [x] Breadcrumb
     -   [x] Button
         -   [x] Button
         -   [X] CompoundButton
@@ -22,7 +26,7 @@ We currently cover the following components:
     -   [x] Checkbox
     -   [x] Combobox
     -   [] DataGrid
-    -   [] Dialog
+    -   [x] Dialog
     -   [N/A] Divider
     -   [] Drawer
     -   [X] Dropdown
@@ -52,18 +56,23 @@ We currently cover the following components:
     -   [N/A] Skeleton
     -   [N/A] SkeletonItem
     -   [x] SpinButton
-    -   [] Spinner
+    -   [x] Spinner
+    -   [] SwatchPicker
     -   [x] Switch
     -   [] Table
     -   [] TabList
     -   [] Tag
+        -   [] InteractionTag
+        -   [] Tag
+        -   [] TagGroup
+    -   [] TagPicker
     -   [] TeachingPopover
     -   [x] Text
     -   [x] TextArea
+    -   [] Toast
     -   [x] Toolbar
     -   [x] Tooltip
     -   [] Tree
-    -   [x] Breadcrumb
     -   [x] Datepicker
     -   [] Calendar
-    -   [] Timepicker
+    -   [x] Timepicker

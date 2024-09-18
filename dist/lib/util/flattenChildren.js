@@ -6,7 +6,7 @@ function flattenChildren(node) {
     const flatChildren = [];
     if (node.children && node.children.length > 0) {
         node.children.forEach(child => {
-            if (child.type === "JSXElement" && child.children && child.children.length > 0) {
+            if (child.type === 'JSXElement' && child.children && child.children.length > 0) {
                 flatChildren.push(child, ...flattenChildren(child));
             }
             else {

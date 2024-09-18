@@ -5,6 +5,7 @@ const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
 const { hasToolTipParent } = require("../util/hasTooltipParent");
 const { hasTextContentChild } = require("../util/hasTextContentChild");
 const { hasAssociatedLabelViaAriaLabelledBy } = require("../util/labelUtils");
+const { applicableComponents } = require("../applicableComponents/buttonBasedComponents");
 var hasProp = require("jsx-ast-utils").hasProp;
 var elementType = require("jsx-ast-utils").elementType;
 //------------------------------------------------------------------------------
@@ -33,9 +34,7 @@ module.exports = {
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // if it is not a button, return
-                if (elementType(openingElement) !== "Button" &&
-                    elementType(openingElement) !== "ToggleButton" &&
-                    elementType(openingElement) !== "CompoundButton") {
+                if (!applicableComponents.includes(elementType(openingElement))) {
                     return;
                 }
                 // if it is not an icon button, return

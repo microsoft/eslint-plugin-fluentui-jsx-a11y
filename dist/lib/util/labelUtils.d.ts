@@ -47,4 +47,26 @@ export function hasAssociatedLabelViaAriaLabelledBy(openingElement: any, context
  * @returns boolean for match found or not.
  */
 export function hasAssociatedLabelViaHtmlFor(openingElement: any, context: any): boolean;
+/**
+ * Determines if the element has a label with the matching id associated with it via aria-describedby.
+ * e.g.
+ * <Label id={labelId}>Sample input</Label>
+ * <Input aria-describedby={labelId} />
+ * @param {*} openingElement
+ * @param {*} context
+ * @returns boolean for match found or not.
+ */
+export function hasAssociatedLabelViaAriaDescribedby(openingElement: any, context: any): boolean;
+/**
+ * Determines if the element has a node with the matching id associated with it via the aria-attribute e.g. aria-describedby/aria-labelledby.
+ * e.g.
+ * <span id={labelI1}>Sample input Description</Label>
+ * <Label id={labelId2}>Sample input label</Label>
+ * <Input aria-describedby={labelId1} aria-labelledby={labelId2}/>
+ * @param {*} openingElement
+ * @param {*} context
+ * @param {*} ariaAttribute
+ * @returns boolean for match found or not.
+ */
+export function hasAssociatedAriaText(openingElement: any, context: any, ariaAttribute: any): boolean;
 //# sourceMappingURL=labelUtils.d.ts.map
