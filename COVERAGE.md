@@ -74,5 +74,5 @@ We currently cover the following components:
     -   [x] Tooltip
     -   [] Tree
     -   [x] Datepicker
-    -   [] Calendar
+    -   [x] Calendar
     -   [x] Timepicker
