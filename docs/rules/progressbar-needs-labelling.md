@@ -1,4 +1,4 @@
-# Accessibility: Spinner must have either aria-label or label, aria-live and aria-busy attributes (`@microsoft/fluentui-jsx-a11y/spinner-needs-labelling`)
+# Accessibility: Progressbar must have aria-valuemin, aria-valuemax, aria-valuenow, and aria-describedby attributes (`@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
