@@ -24,5 +24,6 @@ module.exports = {
     ],
     rules: {
         "header/header": [2, "line", [" Copyright (c) Microsoft Corporation.", " Licensed under the MIT License."], 2]
-    }
+    },
+    ignore: ["**/node_modules/**, **/dist/**"]
 };
