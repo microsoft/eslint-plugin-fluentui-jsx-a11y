@@ -1,23 +1,17 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
-"use strict";
-
-const { elementType } = require("jsx-ast-utils");
-const { hasAssociatedLabelViaAriaLabelledBy } = require("../util/labelUtils");
-var hasProp = require("jsx-ast-utils").hasProp;
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
-const { hasToolTipParent } = require("../util/hasTooltipParent");
-const { hasTextContentChild } = require("../util/hasTextContentChild");
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const labelUtils_1 = require("../util/labelUtils");
+const hasNonEmptyProp_1 = require("../util/hasNonEmptyProp");
+const hasTooltipParent_1 = require("../util/hasTooltipParent");
+const hasTextContentChild_1 = require("../util/hasTextContentChild");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-
 const applicableComponents = ["Button"];
-
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule = {
     meta: {
         // possible error messages for the rule
         messages: {
@@ -25,47 +19,39 @@ module.exports = {
         },
         type: "suggestion", // `problem`, `suggestion`, or `layout`
         docs: {
-            description:
-                "The title attribute is not consistently read by screen readers, and its behavior can vary depending on the screen reader and the user's settings.",
-            recommended: true,
-            url: null // URL to the documentation page for this rule
+            description: "The title attribute is not consistently read by screen readers, and its behavior can vary depending on the screen reader and the user's settings.",
+            recommended: true
         },
         fixable: "code", // Or `code` or `whitespace`
         schema: [] // Add a schema if the rule has options
     },
-
     create(context) {
         return {
             // visitor functions for different types of nodes
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // if it is not a listed component, return
-                if (!applicableComponents.includes(elementType(openingElement))) {
+                if (!applicableComponents.includes((0, jsx_ast_utils_1.elementType)(openingElement))) {
                     return;
                 }
                 // if it is not an icon button, return
-                if (!hasProp(openingElement.attributes, "icon")) {
+                if (!(0, jsx_ast_utils_1.hasProp)(openingElement.attributes, "icon")) {
                     return;
                 }
-
                 // if it has a tooltip parent, return
-                if (hasToolTipParent(context)) {
+                if ((0, hasTooltipParent_1.hasToolTipParent)(context)) {
                     return;
                 }
-
                 // if it has text content, return
-                if (hasTextContentChild(node)) {
+                if ((0, hasTextContentChild_1.hasTextContentChild)(node)) {
                     return;
                 }
-
                 // the button has an associated label
-                if (hasAssociatedLabelViaAriaLabelledBy(openingElement, context)) {
+                if ((0, labelUtils_1.hasAssociatedLabelViaAriaLabelledBy)(openingElement, context)) {
                     return;
                 }
-
-                const hasAria = hasNonEmptyProp(openingElement.attributes, "aria-label");
-                const hasTitle = hasNonEmptyProp(openingElement.attributes, "title");
-
+                const hasAria = (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "aria-label");
+                const hasTitle = (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "title");
                 // if it has no accessible name, report error
                 if (hasTitle && !hasAria) {
                     context.report({
@@ -75,13 +61,14 @@ module.exports = {
                             const attributes = openingElement.attributes;
                             const titleAttribute = attributes.find(attr => attr.name && attr.name.name === "title");
                             // Generate the aria-label attribute
-                            const ariaLabel = ` aria-label="${titleAttribute.value.value}"`;
-
+                            const ariaLabel = titleAttribute && titleAttribute.value && ` aria-label="${titleAttribute.value.value}"`;
                             // Find the location to insert the new attribute
                             const lastAttribute = attributes[attributes.length - 1];
-                            const insertPosition = lastAttribute.range[1];
-
-                            return fixer.insertTextAfterRange([insertPosition, insertPosition], ariaLabel);
+                            const insertPosition = lastAttribute.range?.[1];
+                            if (insertPosition) {
+                                return fixer.insertTextAfterRange([insertPosition, insertPosition], ariaLabel ?? "");
+                            }
+                            return null;
                         }
                     });
                 }
@@ -89,4 +76,4 @@ module.exports = {
         };
     }
 };
-
+exports.default = rule;

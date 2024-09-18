@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 "use strict";
+import preferAriaOverTitleAttribute from "./rules/prefer-aria-over-title-attribute";
 console.log("Loading my-eslint-plugin");
 //------------------------------------------------------------------------------
 // Requirements
@@ -36,7 +37,7 @@ module.exports = {
         "avatar-needs-name": require("./rules/avatar-needs-name"),
         "radio-button-missing-label": require("./rules/radio-button-missing-label"),
         "radiogroup-missing-label": require("./rules/radiogroup-missing-label"),
-        "prefer-aria-over-title-attribute": require("./rules/prefer-aria-over-title-attribute")
+        "prefer-aria-over-title-attribute": preferAriaOverTitleAttribute
     },
     configs: {
         recommended: {
