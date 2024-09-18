@@ -9,7 +9,7 @@
 
 const RuleTester = require("eslint").RuleTester;
 
-const rule = require("../../../lib/rules/no-empty-buttons");
+const rule = require("../../../../lib/rules/buttons/no-empty-buttons");
 
 RuleTester.setDefaultConfig({
     parserOptions: {
