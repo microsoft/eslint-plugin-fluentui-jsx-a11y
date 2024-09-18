@@ -34,14 +34,8 @@ ruleTester.run("progressbar-needs-labelling", rule, {
         `<Field
             label="Example field"
             validationState="success"
-            hint="my hint"
-        >
-            <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc2"/>
-        </Field>`,
-        `<Field
-            label="Example field"
-            validationState="success"
             validationMessage="This is a warning message."
+            hint="other hint"
         >
             <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc3"/>
         </Field>`
@@ -93,6 +87,10 @@ ruleTester.run("progressbar-needs-labelling", rule, {
                 > 
                     <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} />
                 </Field>`,
+            errors: [{ messageId: "noUnlabelledProgressbar" }]
+        },
+        {
+            code: `<ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} />`,
             errors: [{ messageId: "noUnlabelledProgressbar" }]
         }
     ]
