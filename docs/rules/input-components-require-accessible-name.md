@@ -1,4 +1,4 @@
-# Accessibility: Input fields must have accessible labelling: aria-label, aria-labelledby or an associated label (`@microsoft/fluentui-jsx-a11y/input-missing-label`)
+# Accessibility: Input fields must have accessible labelling: aria-label, aria-labelledby or an associated label (`@microsoft/fluentui-jsx-a11y/input-components-require-accessible-name`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
