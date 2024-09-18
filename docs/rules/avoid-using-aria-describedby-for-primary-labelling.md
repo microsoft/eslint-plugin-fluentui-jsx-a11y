@@ -1,4 +1,8 @@
-# aria-describedby provides additional context and is not meant for primary labeling. (`avoid-using-aria-describedby-for-primary-labelling`)
+# Aria-describedby provides additional context and is not meant for primary labeling (`@microsoft/fluentui-jsx-a11y/avoid-using-aria-describedby-for-primary-labelling`)
+
+⚠️ This rule _warns_ in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 You should avoid using `aria-describedby` as a primary labeling mechanism because it is intended to provide supplementary or additional information, not to act as the main label for an element.
 
