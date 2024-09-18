@@ -22,14 +22,14 @@ ruleTester.run("progressbar-needs-labelling", rule, {
             validationState="success"
             validationMessage="This is a success message."
         >
-            <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" />
+            <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" aria-label="label1"/>
         </Field>`,
         `<Field
             label="Example field"
             validationState="success"
             hint="my hint"
         >
-            <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" />
+            <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" aria-labelledby="color"/>
         </Field>`,
         `<Field
             label="Example field"
@@ -37,7 +37,7 @@ ruleTester.run("progressbar-needs-labelling", rule, {
             validationMessage="This is a warning message."
             hint="other hint"
         >
-            <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc3"/>
+            <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc3" aria-label="label2"/>
         </Field>`
     ],
     invalid: [

@@ -1,4 +1,4 @@
-# Accessibility: Progressbar must have aria-valuemin, aria-valuemax, aria-valuenow, and aria-describedby attributes (`@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling`)
+# Accessibility: Progressbar must have aria-valuemin, aria-valuemax, aria-valuenow, aria-describedby and either aria-label or aria-labelledby attributes (`@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
@@ -19,7 +19,8 @@ ProgressBar must have aria-valuemin, aria-valuemax, aria-valuenow, and aria-desc
     -   aria-valuemax
     -   aria-valuenow
     -   aria-describedby
-- aria-labelledby is derived from parent Field component.
+    -   either aria-label or aria-labelledby
+- aria-labelledby can also be derived from parent Field component.
 - aria-describedby is appended to parent Field component's validationMessage and hint props.
 - Make sure that the parent Field components is also accessible.
 
@@ -85,7 +86,7 @@ Examples of **correct** code for this rule:
     validationState="success"
     validationMessage="This is a success message."
 >
-    <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" />
+    <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" aria-label="label1"/>
 </Field>
 ```
 
@@ -95,7 +96,7 @@ Examples of **correct** code for this rule:
     validationState="success"
     hint="my hint"
 >
-    <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" />
+    <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc1" aria-labelledby="color"/>
 </Field>
 ```
 
@@ -106,6 +107,6 @@ Examples of **correct** code for this rule:
     validationMessage="This is a warning message."
     hint="other hint"
 >
-    <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc3"/>
+    <ProgressBar value={0.5} aria-valuemin={0} aria-valuemax={1} aria-valuenow={0.5} aria-describedby="desc3" aria-label="label2"/>
 </Field>
 ```
