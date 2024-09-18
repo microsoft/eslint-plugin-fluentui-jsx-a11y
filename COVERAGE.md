@@ -51,7 +51,7 @@ We currently cover the following components:
     -   [x] Radio
     -   [x] RadioGroup
     -   [x] SearchBox
-    -   [] Select
+    -   [x] Select
     -   [x] Slider
     -   [N/A] Skeleton
     -   [N/A] SkeletonItem
