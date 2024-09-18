@@ -1,5 +1,7 @@
 # Accessibility: Spinner must have either aria-label or label, aria-live and aria-busy attributes (`@microsoft/fluentui-jsx-a11y/spinner-needs-labelling`)
 
+<!-- end auto-generated rule header -->
+
 💼 This rule is enabled in the ✅ `recommended` config.
 
 <!-- end auto-generated rule header -->

@@ -4,6 +4,10 @@
 
 <!-- end auto-generated rule header -->
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
+
 The ESLint rule is designed to enforce accessibility standards in React components, specifically ensuring an accordion header is accessible to screen reader users.
 
 ## Rule Details

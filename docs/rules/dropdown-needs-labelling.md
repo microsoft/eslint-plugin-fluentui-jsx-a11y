@@ -4,6 +4,10 @@
 
 <!-- end auto-generated rule header -->
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
+
 Accessibility: Dropdown menu must have a visual label and it needs to be linked via htmlFor aria-labelledby of Label Or Dropdown mush have aria-label
 Dropdown having label linked via htmlFor in Label is recommended
 

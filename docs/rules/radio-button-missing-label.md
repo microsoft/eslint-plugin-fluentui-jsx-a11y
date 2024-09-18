@@ -4,6 +4,10 @@
 
 <!-- end auto-generated rule header -->
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
+
 All interactive elements must have an accessible name.
 
 Radio button without a label or accessible labeling lack an accessible name.

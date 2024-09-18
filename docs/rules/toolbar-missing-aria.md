@@ -4,6 +4,10 @@
 
 <!-- end auto-generated rule header -->
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
+
 <!-- end auto-generated rule header -->
 
 The toolbar role needs an accessible name, especially if there are multiple toolbars on a screen.

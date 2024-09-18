@@ -4,6 +4,10 @@
 
 <!-- end auto-generated rule header -->
 
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
+
 The ESLint rule is designed to enforce accessibility standards in React components, specifically ensuring an accordion component has one button (as a header) which controls one panel region.
 
 ## Rule Details

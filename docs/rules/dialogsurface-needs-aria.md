@@ -1,5 +1,7 @@
 # DialogueSurface need accessible labelling: aria-describedby on DialogueSurface and aria-label or aria-labelledby(if DialogueTitle is missing) (`@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria`)
 
+<!-- end auto-generated rule header -->
+
 💼 This rule is enabled in the ✅ `recommended` config.
 
 <!-- end auto-generated rule header -->

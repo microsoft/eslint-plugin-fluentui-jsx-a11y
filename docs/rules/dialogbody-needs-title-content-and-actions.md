@@ -1,5 +1,7 @@
 # A DialogBody should have a header(DialogTitle), content(DialogContent), and footer(DialogActions) (`@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions`)
 
+<!-- end auto-generated rule header -->
+
 💼 This rule is enabled in the ✅ `recommended` config.
 
 <!-- end auto-generated rule header -->
