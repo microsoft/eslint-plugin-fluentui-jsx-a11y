@@ -33,6 +33,10 @@ If the badge contains a custom icon, that icon must be given alternative text wi
 <CounterBadge dot />
 ```
 
+```jsx
+<CounterBadge>5</CounterBadge>
+```
+
 ## Further Reading
 
 <https://react.fluentui.dev/?path=/docs/components-badge-badge--docs>
