@@ -7,7 +7,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require("../../../lib/rules/image-button-missing-aria"),
+const rule = require("../../../../lib/rules/buttons/image-button-missing-aria"),
     RuleTester = require("eslint").RuleTester;
 
 //------------------------------------------------------------------------------
