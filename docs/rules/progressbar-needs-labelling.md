@@ -8,10 +8,6 @@ ProgressBar must have `max` or `aria-valuemin`, `aria-valuemax` and `aria-valuen
 
 <https://www.w3.org/TR/html-aria/>
 
-<https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-live>
-
-<https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label>
-
 ## Ways to fix
 
 -   Make sure that ProgressBar component has following attributes:
@@ -81,7 +77,7 @@ Missing `aria-describedby` and `aria-label`/`aria-labelledby`
 Examples of **correct** code for this rule:
 
 ```jsx
-`<Field
+<Field
     label="Example field"
     validationState="success"
     validationMessage="This is a success message."
