@@ -41,7 +41,7 @@ module.exports = {
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
         "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
         "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling"),
-        "visual-lable-better-than-ariaLabel-suggestion-v9": require("./rules/visual-label-better-than-aria-suggestion-v9.js")
+        "visual-label-better-than-aria-suggestion-v9": require("./rules/visual-label-better-than-aria-suggestion-v9")
     },
     configs: {
         recommended: {
