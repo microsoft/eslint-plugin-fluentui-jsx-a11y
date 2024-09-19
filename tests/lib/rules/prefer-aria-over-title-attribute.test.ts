@@ -1,28 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-"use strict";
-
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require("../../../lib/rules/prefer-aria-over-title-attribute"),
-    RuleTester = require("eslint").RuleTester;
-RuleTester.setDefaultConfig({
-    parserOptions: {
-        ecmaVersion: 6,
-        ecmaFeatures: {
-            jsx: true
-        }
-    }
-});
+import { RuleTester } from "eslint";
+import rule from "../../../lib/rules/prefer-aria-over-title-attribute";
+
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-const ruleTester = new RuleTester();
-ruleTester.run("prefer-aria-over-title-attribute", rule, {
+const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } } });
+ruleTester.run("prefer-aria-over-title-attribute", rule as any, {
     valid: [
         // give me some code that won't trigger a warning
         '<Button title="hello" icon={<CloseIcon />} aria-label="Close" />',

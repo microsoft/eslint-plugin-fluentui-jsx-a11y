@@ -1,16 +1,18 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
-"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 console.log("Loading my-eslint-plugin");
+const prefer_aria_over_title_attribute_1 = __importDefault(require("./rules/prefer-aria-over-title-attribute"));
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
-
 //------------------------------------------------------------------------------
 // Plugin Definition
 //------------------------------------------------------------------------------
-
 // import all rules in lib/rules
 module.exports = {
     rules: {
@@ -35,12 +37,12 @@ module.exports = {
         "avatar-needs-name": require("./rules/avatar-needs-name"),
         "radio-button-missing-label": require("./rules/radio-button-missing-label"),
         "radiogroup-missing-label": require("./rules/radiogroup-missing-label"),
-        "prefer-aria-over-title-attribute": require("./rules/prefer-aria-over-title-attribute"),
-        "avoid-using-aria-describedby-for-primary-labelling": require("./rules/avoid-using-aria-describedby-for-primary-labelling"),
+        "prefer-aria-over-title-attribute": prefer_aria_over_title_attribute_1.default,
         "dialogbody-needs-title-content-and-actions": require("./rules/dialogbody-needs-title-content-and-actions"),
         "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
-        "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name")
+        "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
+        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling")
     },
     configs: {
         recommended: {
@@ -67,16 +69,15 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/radio-button-missing-label": "error",
                 "@microsoft/fluentui-jsx-a11y/radiogroup-missing-label": "error",
                 "@microsoft/fluentui-jsx-a11y/prefer-aria-over-title-attribute": "warn",
-                "@microsoft/fluentui-jsx-a11y/avoid-using-aria-describedby-for-primary-labelling": "warn",
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
-                "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error"
             }
         }
     }
 };
-
 // import processors
 module.exports.processors = {
-    // add your processors here
+// add your processors here
 };
