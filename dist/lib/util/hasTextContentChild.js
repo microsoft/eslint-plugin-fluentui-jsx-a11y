@@ -14,7 +14,7 @@ function hasTextContentChild(node) {
     const result = node.children.filter(element => {
         return element.type === "JSXText" && element.value.trim().length > 0;
     });
-    return result != null;
+    return result.length !== 0;
 }
 module.exports = {
     hasTextContentChild
