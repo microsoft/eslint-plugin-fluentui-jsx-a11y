@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-"use strict";
-
-const { elementType } = require("jsx-ast-utils");
-const { hasAssociatedLabelViaAriaLabelledBy } = require("../util/labelUtils");
-var hasProp = require("jsx-ast-utils").hasProp;
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
-const { hasToolTipParent } = require("../util/hasTooltipParent");
-const { hasTextContentChild } = require("../util/hasTextContentChild");
+import { ESLintUtils } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/types";
+import { elementType, hasProp } from "jsx-ast-utils";
+import { hasAssociatedLabelViaAriaLabelledBy } from "../util/labelUtils";
+import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
+import { hasToolTipParent } from "../util/hasTooltipParent";
+import { hasTextContentChild } from "../util/hasTextContentChild";
+import { JSXAttribute, JSXOpeningElement, Literal } from "estree-jsx";
 
 //------------------------------------------------------------------------------
 // Rule Definition
@@ -16,8 +16,8 @@ const { hasTextContentChild } = require("../util/hasTextContentChild");
 
 const applicableComponents = ["Button"];
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule = ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -27,8 +27,7 @@ module.exports = {
         docs: {
             description:
                 "The title attribute is not consistently read by screen readers, and its behavior can vary depending on the screen reader and the user's settings.",
-            recommended: true,
-            url: null // URL to the documentation page for this rule
+            recommended: "warn"
         },
         fixable: "code", // Or `code` or `whitespace`
         schema: [] // Add a schema if the rule has options
@@ -37,14 +36,14 @@ module.exports = {
     create(context) {
         return {
             // visitor functions for different types of nodes
-            JSXElement(node) {
+            JSXElement(node: TSESTree.JSXElement) {
                 const openingElement = node.openingElement;
                 // if it is not a listed component, return
-                if (!applicableComponents.includes(elementType(openingElement))) {
+                if (!applicableComponents.includes(elementType(openingElement as JSXOpeningElement))) {
                     return;
                 }
                 // if it is not an icon button, return
-                if (!hasProp(openingElement.attributes, "icon")) {
+                if (!hasProp(openingElement.attributes as JSXAttribute[], "icon")) {
                     return;
                 }
 
@@ -73,9 +72,15 @@ module.exports = {
                         messageId: `preferAria`,
                         fix(fixer) {
                             const attributes = openingElement.attributes;
-                            const titleAttribute = attributes.find(attr => attr.name && attr.name.name === "title");
+                            const titleAttribute = attributes.find(
+                                attr => attr.type === AST_NODE_TYPES.JSXAttribute && attr.name && attr.name.name === "title"
+                            );
                             // Generate the aria-label attribute
-                            const ariaLabel = ` aria-label="${titleAttribute.value.value}"`;
+                            const ariaLabel = ` aria-label="${
+                                titleAttribute && titleAttribute.type === AST_NODE_TYPES.JSXAttribute && titleAttribute.value
+                                    ? (titleAttribute.value as Literal).value
+                                    : ""
+                            }"`;
 
                             // Find the location to insert the new attribute
                             const lastAttribute = attributes[attributes.length - 1];
@@ -88,5 +93,6 @@ module.exports = {
             }
         };
     }
-};
+});
 
+export default rule;

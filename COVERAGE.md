@@ -45,7 +45,7 @@ We currently cover the following components:
     -   [] Persona
     -   [] Popover
     -   [N/A] Portal
-    -   [] ProgressBar
+    -   [x] ProgressBar
     -   [] Rating
     -   [] RatingDisplay
     -   [x] Radio
