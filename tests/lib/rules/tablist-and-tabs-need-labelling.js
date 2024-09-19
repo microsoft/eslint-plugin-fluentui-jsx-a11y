@@ -1,7 +1,6 @@
-/**
- * @fileoverview This rule aims to ensure that Tabs with icons but no text labels have an accessible name and that Tablist is properly labeled.
- * @author t-ivasylenko
- */
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 "use strict";
 
 //------------------------------------------------------------------------------
