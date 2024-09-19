@@ -2,43 +2,77 @@
 
 We currently cover the following components:
 
-    -   [] Accordion
-    -   [] Avatar
-    -   [] AvatarGroup
+    -   [x] Accordion
+    -   [x] Avatar
+    -   [x] AvatarGroup
     -   [] Badge
+        -   [x] Badge
+        -   [] CounterBadge
+        -   [N/A] PresenceBadge
+    -   [x] Breadcrumb
     -   [x] Button
-    -   [] CompoundButton
-    -   [] MenuButton
-    -   [] SplitButton
-    -   [x] ToggleButton
-    -   [] ToolbarToggleButton
+        -   [x] Button
+        -   [X] CompoundButton
+        -   [] MenuButton
+        -   [X] MenuItem
+        -   [] SplitButton
+        -   [x] ToggleButton
+        -   [] ToolbarToggleButton
+    -   [] Card
+        -   [] Card
+        -   [] CardFooter
+        -   [] CardHeader
+        -   [] CardPreview
     -   [x] Checkbox
     -   [x] Combobox
     -   [] DataGrid
-    -   [] Dialog
+    -   [x] Dialog
     -   [N/A] Divider
-    -   [] Dropdown
-    -   [] FluentProvider
+    -   [] Drawer
+    -   [X] Dropdown
+    -   [] Field
+    -   [N/A] FluentProvider
     -   [] Image
+    -   [] InfoLabel
     -   [x] Input
     -   [x] Label
     -   [] Link
     -   [] Menu
-    -   [] Overflow
+        -   [] Menu
+        -   [] MenuList
+    -   [] MessageBar
+    -   [N/A] Overflow
     -   [] Persona
     -   [] Popover
-    -   [] Portal
-    -   [] ProgressBar
-    -   [] Radio
-    -   [] RadioGroup
-    -   [] Select
-    -   [] Slider
-    -   [] SpinButton
-    -   [] Spinner
+    -   [N/A] Portal
+    -   [x] ProgressBar
+    -   [] Rating
+    -   [] RatingDisplay
+    -   [x] Radio
+    -   [x] RadioGroup
+    -   [x] SearchBox
+    -   [x] Select
+    -   [x] Slider
+    -   [N/A] Skeleton
+    -   [N/A] SkeletonItem
+    -   [x] SpinButton
+    -   [x] Spinner
+    -   [] SwatchPicker
     -   [x] Switch
     -   [] Table
     -   [] TabList
+    -   [] Tag
+        -   [] InteractionTag
+        -   [] Tag
+        -   [] TagGroup
+    -   [] TagPicker
+    -   [] TeachingPopover
     -   [x] Text
     -   [x] TextArea
+    -   [] Toast
     -   [x] Toolbar
-    -   [] Tooltip
+    -   [x] Tooltip
+    -   [] Tree
+    -   [x] Datepicker
+    -   [N/A] Calendar
+    -   [x] Timepicker
