@@ -3,6 +3,7 @@
 
 console.log("Loading my-eslint-plugin");
 import preferAriaOverTitleAttribute from "./rules/prefer-aria-over-title-attribute";
+import fieldNeedsLabelling from "./rules/field-needs-labelling";
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -40,7 +41,8 @@ module.exports = {
         "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
         "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
-        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling")
+        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling"),
+        "field-needs-labelling": fieldNeedsLabelling
     },
     configs: {
         recommended: {
@@ -70,7 +72,8 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
             }
         }
     }
@@ -80,3 +83,4 @@ module.exports = {
 module.exports.processors = {
     // add your processors here
 };
+

@@ -7,6 +7,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 console.log("Loading my-eslint-plugin");
 const prefer_aria_over_title_attribute_1 = __importDefault(require("./rules/prefer-aria-over-title-attribute"));
+const field_needs_labelling_1 = __importDefault(require("./rules/field-needs-labelling"));
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -42,7 +43,8 @@ module.exports = {
         "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
         "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
-        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling")
+        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling"),
+        "field-needs-labelling": field_needs_labelling_1.default
     },
     configs: {
         recommended: {
@@ -72,7 +74,8 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
             }
         }
     }
