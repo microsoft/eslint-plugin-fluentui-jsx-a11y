@@ -36,7 +36,7 @@ We currently cover the following components:
     -   [] InfoLabel
     -   [x] Input
     -   [x] Label
-    -   [] Link
+    -   [x] Link
     -   [] Menu
         -   [] Menu
         -   [] MenuList
