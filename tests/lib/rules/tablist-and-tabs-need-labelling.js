@@ -25,7 +25,7 @@ RuleTester.setDefaultConfig({
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
-ruleTester.run("tablist-and-tabs-needs-labelling", rule, {
+ruleTester.run("tablist-and-tabs-need-labelling", rule, {
     valid: [
         // Valid cases for Tablist
         '<Tablist aria-label="settings"><Tab>Settings Tab</Tab></Tablist>',
