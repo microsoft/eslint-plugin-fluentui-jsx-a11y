@@ -37,16 +37,16 @@ We currently cover the following components:
     -   [x] Input
     -   [x] Label
     -   [x] Link
-    -   [] Menu
-        -   [] Menu
-        -   [] MenuList
-    -   [] MessageBar
+    -   [x] Menu
+        -   [x] Menu
+        -   [x] MenuList
+    -   [x] MessageBar
     -   [N/A] Overflow
     -   [] Persona
     -   [] Popover
     -   [N/A] Portal
     -   [x] ProgressBar
-    -   [] Rating
+    -   [x] Rating
     -   [] RatingDisplay
     -   [x] Radio
     -   [x] RadioGroup
