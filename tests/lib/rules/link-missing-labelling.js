@@ -68,7 +68,6 @@ function generateTestCases(componentName, imageName) {
 // Define N sets of component and image names for generating test sets
 //------------------------------------------------------------------------------
 // Collect all test cases for link components and image components
-// Collect all test cases for link components and image components
 function generateAllTestCases() {
     const testSets = [];
 
