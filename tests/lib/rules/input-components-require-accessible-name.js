@@ -11,7 +11,7 @@ const { applicableComponents } = require("../../../lib/applicableComponents/inpu
 
 const RuleTester = require("eslint").RuleTester;
 
-const rule = require("../../../lib/rules/input-missing-label");
+const rule = require("../../../lib/rules/input-components-require-accessible-name");
 
 RuleTester.setDefaultConfig({
     parserOptions: {
