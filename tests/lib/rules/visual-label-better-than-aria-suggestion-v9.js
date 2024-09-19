@@ -3,12 +3,47 @@
 
 "use strict";
 
+const { applicableComponents } = require("../../../lib/applicableComponents/buttonBasedComponents");
+
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require("../../../lib/rules/visual-label-better-than-aria-suggestion-v9"),
-    RuleTester = require("eslint").RuleTester;
+const RuleTester = require("eslint").RuleTester;
+
+const rule = require("../../../lib/rules/visual-label-better-than-aria-suggestion-v9");
+
+RuleTester.setDefaultConfig({
+    parserOptions: {
+        ecmaVersion: 6,
+        ecmaFeatures: {
+            jsx: true
+        }
+    }
+});
+
+//------------------------------------------------------------------------------
+// Helper function to generate test cases
+//------------------------------------------------------------------------------
+function generateTestCases(componentName) {
+    return {
+        valid: [
+            `<><Label htmlFor="some-id">Some Label</Label><${componentName} id="some-id"/></>`,
+            `<><Label id="test-span">Some Label</Label><${componentName} id="some-id" aria-labelledby="test-span"/></>`,
+            `<Label>test<${componentName} /></Label>`,
+            `<><Label id="id1">This is the visual label</Label><${componentName} aria-labelledby="id1" /></>`
+        ],
+        invalid: [
+            {
+                code: `<${componentName} aria-label="This is a component with aria-label" />`,
+                errors: [{ messageId: "visualLabelSuggestion" }]
+            }
+        ]
+    };
+}
+
+// Collect all test cases for all applicable components
+const allTestCases = applicableComponents.flatMap(component => generateTestCases(component));
 
 //------------------------------------------------------------------------------
 // Tests
@@ -16,24 +51,6 @@ const rule = require("../../../lib/rules/visual-label-better-than-aria-suggestio
 
 const ruleTester = new RuleTester();
 ruleTester.run("visual-label-better-than-aria-suggestion-v9", rule, {
-    valid: [
-        `<><Label id="my-dropdownid">This is the visual label</Label><Dropdown aria-labelledby="my-dropdownid" /></>`,
-        `<><Label id="id2">This is the visual label<SpinButton aria-labelledby="id2" /></Label></>`,
-        `<><Label id="id3">This is the visual label</Label><CompoundButton aria-labelledby="id3" /></>`
-    ],
-
-    invalid: [
-        {
-            code: '<Dropdown aria-label="This is a Dropdown" />',
-            errors: [{ messageId: "visualLabelSuggestion" }]
-        },
-        {
-            code: '<SpinButton aria-label="This is a Dropdown" />',
-            errors: [{ messageId: "visualLabelSuggestion" }]
-        },
-        {
-            code: '<CompoundButton aria-label="This is a Dropdown" />',
-            errors: [{ messageId: "visualLabelSuggestion" }]
-        }
-    ]
+    valid: allTestCases.flatMap(test => test.valid),
+    invalid: allTestCases.flatMap(test => test.invalid)
 });
