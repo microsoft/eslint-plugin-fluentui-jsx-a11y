@@ -30,7 +30,7 @@ We currently cover the following components:
     -   [N/A] Divider
     -   [] Drawer
     -   [X] Dropdown
-    -   [] Field
+    -   [x] Field
     -   [N/A] FluentProvider
     -   [] Image
     -   [] InfoLabel

@@ -18,16 +18,16 @@ const ruleTester = new RuleTester();
 ruleTester.run("field-needs-labelling", rule, {
     valid: [
         `<Field
-                label="Example field"
-                validationState="success"
-                validationMessage="This is a success message."
+            label="Example field"
+            validationState="success"
+            validationMessage="This is a success message."
         >
             <ProgressBar value={0.5} max={1} />
         </Field>`,
         `<Field
-                label="Example field"
-                validationState="success"
-                hint="This is a hint."
+            label="Example field"
+            validationState="success"
+            hint="This is a hint."
         >
             <ProgressBar value={0.5} max={1} />
         </Field>`
