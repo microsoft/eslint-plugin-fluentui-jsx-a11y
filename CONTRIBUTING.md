@@ -56,6 +56,12 @@ If you want to create a new ESLint rule, make sure you're in the top-level direc
 yo eslint:rule
 ```
 
+After adding a new rules, ensure to run the build command to generate the respective output file in the dist folder:
+
+```sh
+npm run build
+```
+
 ## Pull requests
 
 First, create a new branch
