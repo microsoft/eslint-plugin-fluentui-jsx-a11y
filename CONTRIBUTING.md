@@ -64,6 +64,12 @@ First, create a new branch
 git checkout -b users/<username or alias>/bug1234
 ```
 
+Post change, ensure to run the build command to generate the respective output file in the dist folder:
+
+```sh
+npm run build
+```
+
 Commit the changes to your branch, including a descriptive commit message.
 
 ```sh

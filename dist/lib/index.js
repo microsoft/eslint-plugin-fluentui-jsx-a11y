@@ -1,16 +1,18 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
-"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 console.log("Loading my-eslint-plugin");
+const prefer_aria_over_title_attribute_1 = __importDefault(require("./rules/prefer-aria-over-title-attribute"));
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
-
 //------------------------------------------------------------------------------
 // Plugin Definition
 //------------------------------------------------------------------------------
-
 // import all rules in lib/rules
 module.exports = {
     rules: {
@@ -35,7 +37,7 @@ module.exports = {
         "avatar-needs-name": require("./rules/avatar-needs-name"),
         "radio-button-missing-label": require("./rules/radio-button-missing-label"),
         "radiogroup-missing-label": require("./rules/radiogroup-missing-label"),
-        "prefer-aria-over-title-attribute": require("./rules/prefer-aria-over-title-attribute"),
+        "prefer-aria-over-title-attribute": prefer_aria_over_title_attribute_1.default,
         "dialogbody-needs-title-content-and-actions": require("./rules/dialogbody-needs-title-content-and-actions"),
         "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
@@ -75,8 +77,7 @@ module.exports = {
         }
     }
 };
-
 // import processors
 module.exports.processors = {
-    // add your processors here
+// add your processors here
 };
