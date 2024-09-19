@@ -5,7 +5,7 @@
 
 const { linkBasedComponents } = require("../../../lib/applicableComponents/linkBasedComponents");
 const RuleTester = require("eslint").RuleTester;
-const rule = require("../../../lib/rules/input-components-require-accessible-name");
+const rule = require("../../../lib/rules/link-missing-labelling");
 const { fluentImageComponents, imageDomNodes } = require("../../../lib/applicableComponents/imageBasedComponents");
 
 RuleTester.setDefaultConfig({
@@ -37,29 +37,29 @@ function generateTestCases(componentName, imageName) {
         invalid: [
             // Invalid cases
             {
-                code: "<${componentName} />".replace("${componentName}", componentName),
+                code: `<${componentName} />`,
                 errors: [{ messageId: "missingHref" }, { messageId: "missingAriaLabel" }]
-            } //,
-            // {
-            //     code: `<${componentName}><${imageName} src="img_girl.jpg" alt="The girl with the dog." /></${componentName}>`,
-            //     errors: [{ messageId: "missingHref" }]
-            // },
-            // {
-            //     code: `<${componentName} href="https://www.bing.com"><${imageName} src="img_girl.jpg" /></${componentName}>`,
-            //     errors: [{ messageId: "missingAriaLabel" }]
-            // },
-            // {
-            //     code: `<${componentName}><${imageName} src="img_girl.jpg" /></${componentName}>`,
-            //     errors: [{ messageId: "missingHref" }, { messageId: "missingAriaLabel" }]
-            // },
-            // {
-            //     code: `<${componentName} href="https://www.bing.com"><${imageName} src="img_girl.jpg" alt="" aria-hidden="true" /></${componentName}>`,
-            //     errors: [{ messageId: "missingAriaLabel" }]
-            // },
-            // {
-            //     code: `<${componentName} href="https://www.bing.com"><${imageName} src="img1.jpg" /><${imageName} src="img2.jpg" /></${componentName}>`,
-            //     errors: [{ messageId: "missingAriaLabel" }]
-            // }
+            },
+            {
+                code: `<${componentName}><${imageName} src="img_girl.jpg" alt="The girl with the dog." /></${componentName}>`,
+                errors: [{ messageId: "missingHref" }]
+            },
+            {
+                code: `<${componentName} href="https://www.bing.com"><${imageName} src="img_girl.jpg" /></${componentName}>`,
+                errors: [{ messageId: "missingAriaLabel" }]
+            },
+            {
+                code: `<${componentName}><${imageName} src="img_girl.jpg" /></${componentName}>`,
+                errors: [{ messageId: "missingHref" }, { messageId: "missingAriaLabel" }]
+            },
+            {
+                code: `<${componentName} href="https://www.bing.com"><${imageName} src="img_girl.jpg" alt="" aria-hidden="true" /></${componentName}>`,
+                errors: [{ messageId: "missingAriaLabel" }]
+            },
+            {
+                code: `<${componentName} href="https://www.bing.com"><${imageName} src="img1.jpg" /><${imageName} src="img2.jpg" /></${componentName}>`,
+                errors: [{ messageId: "missingAriaLabel" }]
+            }
         ]
     };
 }
@@ -68,14 +68,35 @@ function generateTestCases(componentName, imageName) {
 // Define N sets of component and image names for generating test sets
 //------------------------------------------------------------------------------
 // Collect all test cases for link components and image components
-const testCases = generateTestCases("Link", "Image");
+// Collect all test cases for link components and image components
+function generateAllTestCases() {
+    const testSets = [];
+
+    // For each link-based component, generate test cases for each fluent image component
+    linkBasedComponents.forEach(linkComponent => {
+        fluentImageComponents.forEach(imageComponent => {
+            testSets.push(generateTestCases(linkComponent, imageComponent));
+        });
+
+        // Also generate test cases for each native DOM image node (e.g., img, svg)
+        imageDomNodes.forEach(imageComponent => {
+            testSets.push(generateTestCases(linkComponent, imageComponent));
+        });
+    });
+
+    return testSets;
+}
+
+const allTestCases = generateAllTestCases();
 
 //------------------------------------------------------------------------------
 // Run tests for each test set
 //------------------------------------------------------------------------------
 const ruleTester = new RuleTester();
 
-ruleTester.run("link-missing-labelling", rule, {
-    valid: testCases.valid,
-    invalid: testCases.invalid
+allTestCases.forEach((testCaseSet, index) => {
+    ruleTester.run(`link-missing-labelling test set ${index + 1}`, rule, {
+        valid: testCaseSet.valid,
+        invalid: testCaseSet.invalid
+    });
 });
