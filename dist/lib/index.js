@@ -42,7 +42,8 @@ module.exports = {
         "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
         "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
-        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling")
+        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling"),
+        "tablist-and-tabs-needs-labelling": require("./rules/tablist-and-tabs-need-labelling"),
     },
     configs: {
         recommended: {
@@ -72,7 +73,8 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-needs-labelling": "error",
             }
         }
     }
