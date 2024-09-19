@@ -69,4 +69,3 @@ export function hasAssociatedLabelViaAriaDescribedby(openingElement: any, contex
  * @returns boolean for match found or not.
  */
 export function hasAssociatedAriaText(openingElement: any, context: any, ariaAttribute: any): boolean;
-//# sourceMappingURL=labelUtils.d.ts.map

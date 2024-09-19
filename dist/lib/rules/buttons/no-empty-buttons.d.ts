@@ -13,4 +13,3 @@ export namespace meta {
 export function create(context: any): {
     JSXElement(node: any): any;
 };
-//# sourceMappingURL=no-empty-buttons.d.ts.map

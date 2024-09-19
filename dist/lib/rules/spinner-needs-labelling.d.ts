@@ -13,4 +13,3 @@ export namespace meta {
 export function create(context: any): {
     JSXOpeningElement(node: any): void;
 };
-//# sourceMappingURL=spinner-needs-labelling.d.ts.map

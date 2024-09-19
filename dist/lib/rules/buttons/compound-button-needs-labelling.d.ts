@@ -13,4 +13,3 @@ export namespace meta {
 export function create(context: any): {
     JSXElement(node: any): void;
 };
-//# sourceMappingURL=compound-button-needs-labelling.d.ts.map

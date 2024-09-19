@@ -5,4 +5,3 @@
  * @returns boolean
  */
 export function hasNonEmptyProp(attributes: any, name: any): boolean;
-//# sourceMappingURL=hasNonEmptyProp.d.ts.map

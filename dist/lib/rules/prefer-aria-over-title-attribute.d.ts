@@ -1,3 +1,5 @@
-declare const _exports: import("eslint").Rule.RuleModule;
-export = _exports;
-//# sourceMappingURL=prefer-aria-over-title-attribute.d.ts.map
+import { TSESTree } from "@typescript-eslint/types";
+declare const rule: import("@typescript-eslint/utils/dist/ts-eslint").RuleModule<"preferAria", [], {
+    JSXElement(node: TSESTree.JSXElement): void;
+}>;
+export default rule;

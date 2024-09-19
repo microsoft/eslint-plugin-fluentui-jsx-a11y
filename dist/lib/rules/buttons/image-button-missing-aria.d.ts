@@ -13,4 +13,3 @@ export namespace meta {
 export function create(context: any): {
     JSXElement(node: any): void;
 };
-//# sourceMappingURL=image-button-missing-aria.d.ts.map

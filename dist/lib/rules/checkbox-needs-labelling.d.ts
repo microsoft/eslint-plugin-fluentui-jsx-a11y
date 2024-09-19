@@ -13,4 +13,3 @@ export namespace meta {
 export function create(context: any): {
     JSXOpeningElement(node: any): void;
 };
-//# sourceMappingURL=checkbox-needs-labelling.d.ts.map

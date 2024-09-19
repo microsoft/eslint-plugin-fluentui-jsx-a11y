@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-"use strict";
 console.log("Loading my-eslint-plugin");
+import preferAriaOverTitleAttribute from "./rules/prefer-aria-over-title-attribute";
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ module.exports = {
         "avatar-needs-name": require("./rules/avatar-needs-name"),
         "radio-button-missing-label": require("./rules/radio-button-missing-label"),
         "radiogroup-missing-label": require("./rules/radiogroup-missing-label"),
-        "prefer-aria-over-title-attribute": require("./rules/prefer-aria-over-title-attribute"),
+        "prefer-aria-over-title-attribute": preferAriaOverTitleAttribute,
         "dialogbody-needs-title-content-and-actions": require("./rules/dialogbody-needs-title-content-and-actions"),
         "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
@@ -80,4 +80,3 @@ module.exports = {
 module.exports.processors = {
     // add your processors here
 };
-
