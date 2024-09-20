@@ -11,7 +11,7 @@ const { applicableComponents } = require("../../../lib/applicableComponents/butt
 
 const RuleTester = require("eslint").RuleTester;
 
-const rule = require("../../../lib/rules/visual-label-better-than-aria-suggestion-v9");
+const rule = require("../../../lib/rules/visual-label-better-than-aria-suggestion");
 
 RuleTester.setDefaultConfig({
     parserOptions: {
@@ -50,7 +50,7 @@ const allTestCases = applicableComponents.flatMap(component => generateTestCases
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
-ruleTester.run("visual-label-better-than-aria-suggestion-v9", rule, {
+ruleTester.run("visual-label-better-than-aria-suggestion", rule, {
     valid: allTestCases.flatMap(test => test.valid),
     invalid: allTestCases.flatMap(test => test.invalid)
 });

@@ -41,7 +41,7 @@ module.exports = {
         "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
         "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
         "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling"),
-        "visual-label-better-than-aria-suggestion-v9": require("./rules/visual-label-better-than-aria-suggestion-v9")
+        "visual-label-better-than-aria-suggestion": require("./rules/visual-label-better-than-aria-suggestion")
     },
     configs: {
         recommended: {
@@ -72,7 +72,7 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion-v9": "warn"
+                "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion": "warn"
             }
         }
     }
