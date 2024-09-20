@@ -1,15 +1,17 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-const { hasTextContentChild } = require("../../util/hasTextContentChild");
-const { hasNonEmptyProp } = require("../../util/hasNonEmptyProp");
-var elementType = require("jsx-ast-utils").elementType;
-var hasProp = require("jsx-ast-utils").hasProp;
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const hasTextContentChild_1 = require("../../util/hasTextContentChild");
+const hasNonEmptyProp_1 = require("../../util/hasNonEmptyProp");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
 const allowedComponents = ["Button", "ToggleButton", "SplitButton", "MenuButton", "CompoundButton"];
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the lint rule
         messages: {
@@ -20,7 +22,7 @@ module.exports = {
         // docs for the rule
         docs: {
             description: `Accessibility: ${allowedComponents.join(", ")} must either text content or icon or child component`,
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
         schema: [] // no options
@@ -32,18 +34,19 @@ module.exports = {
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // if it is not a button, return
-                if (!allowedComponents.includes(elementType(openingElement))) {
+                if (!allowedComponents.includes((0, jsx_ast_utils_1.elementType)(openingElement))) {
                     return;
                 }
                 // if it has text content, return
-                if (hasTextContentChild(node))
+                if ((0, hasTextContentChild_1.hasTextContentChild)(node))
                     return;
                 // if there is icon prop, return
-                if (hasProp(openingElement.attributes, "icon")) {
+                if ((0, jsx_ast_utils_1.hasProp)(openingElement.attributes, "icon")) {
                     return;
                 }
                 // if split button has secondary content, return
-                if (elementType(openingElement) === "CompoundButton" && hasNonEmptyProp(openingElement.attribute, "secondaryContent")) {
+                if ((0, jsx_ast_utils_1.elementType)(openingElement) === "CompoundButton" &&
+                    (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "secondaryContent")) {
                     return;
                 }
                 const hasChildren = node.children.length > 0;
@@ -57,4 +60,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;
