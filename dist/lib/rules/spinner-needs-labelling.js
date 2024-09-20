@@ -1,12 +1,15 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
-const elementType = require("jsx-ast-utils").elementType;
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const hasNonEmptyProp_1 = require("../util/hasNonEmptyProp");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -17,7 +20,7 @@ module.exports = {
         // docs for the rule
         docs: {
             description: "Accessibility: Spinner must have either aria-label or label, aria-live and aria-busy attributes",
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
         schema: []
@@ -28,12 +31,12 @@ module.exports = {
             // visitor functions for different types of nodes
             JSXOpeningElement(node) {
                 // if it is not a Spinner, return
-                if (elementType(node) !== "Spinner") {
+                if ((0, jsx_ast_utils_1.elementType)(node) !== "Spinner") {
                     return;
                 }
-                if (hasNonEmptyProp(node.attributes, "aria-busy")
-                    && hasNonEmptyProp(node.attributes, "aria-live")
-                    && (hasNonEmptyProp(node.attributes, "label") || hasNonEmptyProp(node.attributes, "aria-label"))) {
+                if ((0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "aria-busy") &&
+                    (0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "aria-live") &&
+                    ((0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "label") || (0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "aria-label"))) {
                     return;
                 }
                 // if it has no visual labelling, report error
@@ -44,4 +47,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;
