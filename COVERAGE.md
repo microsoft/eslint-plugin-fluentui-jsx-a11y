@@ -60,7 +60,7 @@ We currently cover the following components:
     -   [] SwatchPicker
     -   [x] Switch
     -   [] Table
-    -   [] TabList
+    -   [x] TabList
     -   [] Tag
         -   [] InteractionTag
         -   [] Tag
