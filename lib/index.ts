@@ -3,6 +3,32 @@
 
 console.log("Loading my-eslint-plugin");
 import preferAriaOverTitleAttribute from "./rules/prefer-aria-over-title-attribute";
+import checkboxNeedsLabelling from "./rules/checkbox-needs-labelling";
+import imageButtonMissingAria from "./rules/buttons/image-button-missing-aria";
+import linkMissingLabelling from "./rules/link-missing-labelling";
+import inputComponentsRequireAccessibleName from "./rules/input-components-require-accessible-name";
+import menuItemNeedsLabelling from "./rules/menu-item-needs-labelling";
+import switchNeedsLabelling from "./rules/switch-needs-labelling";
+import toolbarMissingAria from "./rules/toolbar-missing-aria";
+import comboboxNeedsLabelling from "./rules/combobox-needs-labelling";
+import noEmptyComponents from "./rules/no-empty-components";
+import accordionHeaderNeedsLabelling from "./rules/accordion-header-needs-labelling";
+import accordionItemNeedsHeaderAndPanel from "./rules/accordion-item-needs-header-and-panel";
+import compoundButtonNeedsLabelling from "./rules/buttons/compound-button-needs-labelling";
+import noEmptyButtons from "./rules/buttons/no-empty-buttons";
+import spinButtonNeedsLabelling from "./rules/spin-button-needs-labelling";
+import spinButtonUnrecommendedLabelling from "./rules/spin-button-unrecommended-labelling";
+import breadcrumbNeedsLabelling from "./rules/breadcrumb-needs-labelling";
+import dropwdonNeedsLabelling from "./rules/dropdown-needs-labelling";
+import tooltipNotRecommended from "./rules/tooltip-not-recommended";
+import avatarNeedsName from "./rules/avatar-needs-name";
+import radioButtonMissingLabel from "./rules/radio-button-missing-label";
+import radiogroupMissingLabel from "./rules/radiogroup-missing-label";
+import dialogbodyNeedsTitleContentAndActions from "./rules/dialogbody-needs-title-content-and-actions";
+import dialogsurfaceNeedsAria from "./rules/dialogsurface-needs-aria";
+import spinnerNeedsLabelling from "./rules/spinner-needs-labelling";
+import badgeNeedsAccessibleName from "./rules/badge-needs-accessible-name";
+import progressbarNeedsLabelling from "./rules/progressbar-needs-labelling";
 import fieldNeedsLabelling from "./rules/field-needs-labelling";
 //------------------------------------------------------------------------------
 // Requirements
@@ -15,33 +41,33 @@ import fieldNeedsLabelling from "./rules/field-needs-labelling";
 // import all rules in lib/rules
 module.exports = {
     rules: {
-        "checkbox-needs-labelling": require("./rules/checkbox-needs-labelling"),
-        "image-button-missing-aria": require("./rules/buttons/image-button-missing-aria"),
-        "link-missing-labelling": require("./rules/link-missing-labelling"),
-        "input-components-require-accessible-name": require("./rules/input-components-require-accessible-name"),
-        "menu-item-needs-labelling": require("./rules/menu-item-needs-labelling"),
-        "switch-needs-labelling": require("./rules/switch-needs-labelling"),
-        "toolbar-missing-aria": require("./rules/toolbar-missing-aria"),
-        "combobox-needs-labelling": require("./rules/combobox-needs-labelling"),
-        "no-empty-components": require("./rules/no-empty-components"),
-        "accordion-header-needs-labelling": require("./rules/accordion-header-needs-labelling"),
-        "accordion-item-needs-header-and-panel": require("./rules/accordion-item-needs-header-and-panel"),
-        "compound-button-needs-labelling": require("./rules/buttons/compound-button-needs-labelling"),
-        "no-empty-buttons": require("./rules/buttons/no-empty-buttons"),
-        "spin-button-needs-labelling": require("./rules/spin-button-needs-labelling"),
-        "spin-button-unrecommended-labelling": require("./rules/spin-button-unrecommended-labelling"),
-        "breadcrumb-needs-labelling": require("./rules/breadcrumb-needs-labelling"),
-        "dropdown-needs-labelling": require("./rules/dropdown-needs-labelling"),
-        "tooltip-not-recommended": require("./rules/tooltip-not-recommended"),
-        "avatar-needs-name": require("./rules/avatar-needs-name"),
-        "radio-button-missing-label": require("./rules/radio-button-missing-label"),
-        "radiogroup-missing-label": require("./rules/radiogroup-missing-label"),
+        "checkbox-needs-labelling": checkboxNeedsLabelling,
+        "image-button-missing-aria": imageButtonMissingAria,
+        "link-missing-labelling": linkMissingLabelling,
+        "input-components-require-accessible-name": inputComponentsRequireAccessibleName,
+        "menu-item-needs-labelling": menuItemNeedsLabelling,
+        "switch-needs-labelling": switchNeedsLabelling,
+        "toolbar-missing-aria": toolbarMissingAria,
+        "combobox-needs-labelling": comboboxNeedsLabelling,
+        "no-empty-components": noEmptyComponents,
+        "accordion-header-needs-labelling": accordionHeaderNeedsLabelling,
+        "accordion-item-needs-header-and-panel": accordionItemNeedsHeaderAndPanel,
+        "compound-button-needs-labelling": compoundButtonNeedsLabelling,
+        "no-empty-buttons": noEmptyButtons,
+        "spin-button-needs-labelling": spinButtonNeedsLabelling,
+        "spin-button-unrecommended-labelling": spinButtonUnrecommendedLabelling,
+        "breadcrumb-needs-labelling": breadcrumbNeedsLabelling,
+        "dropdown-needs-labelling": dropwdonNeedsLabelling,
+        "tooltip-not-recommended": tooltipNotRecommended,
+        "avatar-needs-name": avatarNeedsName,
+        "radio-button-missing-label": radioButtonMissingLabel,
+        "radiogroup-missing-label": radiogroupMissingLabel,
         "prefer-aria-over-title-attribute": preferAriaOverTitleAttribute,
-        "dialogbody-needs-title-content-and-actions": require("./rules/dialogbody-needs-title-content-and-actions"),
-        "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
-        "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
-        "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
-        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling"),
+        "dialogbody-needs-title-content-and-actions": dialogbodyNeedsTitleContentAndActions,
+        "dialogsurface-needs-aria": dialogsurfaceNeedsAria,
+        "spinner-needs-labelling": spinnerNeedsLabelling,
+        "badge-needs-accessible-name": badgeNeedsAccessibleName,
+        "progressbar-needs-labelling": progressbarNeedsLabelling,
         "field-needs-labelling": fieldNeedsLabelling
     },
     configs: {

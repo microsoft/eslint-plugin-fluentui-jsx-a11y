@@ -1,15 +1,5 @@
-export namespace meta {
-    namespace messages {
-        let noUnlabelledCheckbox: string;
-    }
-    let type: string;
-    namespace docs {
-        let description: string;
-        let recommended: boolean;
-        let url: string;
-    }
-    let schema: never[];
-}
-export function create(context: any): {
-    JSXOpeningElement(node: any): void;
-};
+import { TSESTree } from "@typescript-eslint/utils";
+declare const rule: import("@typescript-eslint/utils/dist/ts-eslint").RuleModule<"noUnlabelledCheckbox", [], {
+    JSXOpeningElement(node: TSESTree.JSXOpeningElement): void;
+}>;
+export default rule;

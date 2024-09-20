@@ -1,15 +1,18 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-const { hasNonEmptyProp } = require("../../util/hasNonEmptyProp");
-const { hasToolTipParent } = require("../../util/hasTooltipParent");
-const { hasTextContentChild } = require("../../util/hasTextContentChild");
-const { hasAssociatedLabelViaAriaLabelledBy } = require("../../util/labelUtils");
-var elementType = require("jsx-ast-utils").elementType;
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const hasNonEmptyProp_1 = require("../../util/hasNonEmptyProp");
+const hasTooltipParent_1 = require("../../util/hasTooltipParent");
+const hasTextContentChild_1 = require("../../util/hasTextContentChild");
+const labelUtils_1 = require("../../util/labelUtils");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -20,7 +23,7 @@ module.exports = {
         // docs for the rule
         docs: {
             description: "Accessibility: Compound buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby",
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
         schema: []
@@ -32,17 +35,17 @@ module.exports = {
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // if it is not a Compound button, return
-                if (elementType(openingElement) !== "CompoundButton") {
+                if ((0, jsx_ast_utils_1.elementType)(openingElement) !== "CompoundButton") {
                     return;
                 }
                 // if it has a tooltip parent Or has text content Or has an associated label or has secondaryContent, return
-                if (hasToolTipParent(context) ||
-                    hasTextContentChild(node) ||
-                    hasAssociatedLabelViaAriaLabelledBy(openingElement, context) ||
-                    hasNonEmptyProp(openingElement.attributes, "secondaryContent")) {
+                if ((0, hasTooltipParent_1.hasToolTipParent)(context) ||
+                    (0, hasTextContentChild_1.hasTextContentChild)(node) ||
+                    (0, labelUtils_1.hasAssociatedLabelViaAriaLabelledBy)(openingElement, context) ||
+                    (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "secondaryContent")) {
                     return;
                 }
-                const hasAccessibleLabelling = hasNonEmptyProp(openingElement.attributes, "title") || hasNonEmptyProp(openingElement.attributes, "aria-label");
+                const hasAccessibleLabelling = (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "title") || (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "aria-label");
                 // if it has no accessible name, report error
                 if (!hasAccessibleLabelling) {
                     context.report({
@@ -53,4 +56,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;
