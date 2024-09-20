@@ -29,7 +29,7 @@ import dialogsurfaceNeedsAria from "./rules/dialogsurface-needs-aria";
 import spinnerNeedsLabelling from "./rules/spinner-needs-labelling";
 import badgeNeedsAccessibleName from "./rules/badge-needs-accessible-name";
 import progressbarNeedsLabelling from "./rules/progressbar-needs-labelling";
-
+import fieldNeedsLabelling from "./rules/field-needs-labelling";
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -67,7 +67,8 @@ module.exports = {
         "dialogsurface-needs-aria": dialogsurfaceNeedsAria,
         "spinner-needs-labelling": spinnerNeedsLabelling,
         "badge-needs-accessible-name": badgeNeedsAccessibleName,
-        "progressbar-needs-labelling": progressbarNeedsLabelling
+        "progressbar-needs-labelling": progressbarNeedsLabelling,
+        "field-needs-labelling": fieldNeedsLabelling
     },
     configs: {
         recommended: {
@@ -97,7 +98,8 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
             }
         }
     }
@@ -107,3 +109,4 @@ module.exports = {
 module.exports.processors = {
     // add your processors here
 };
+
