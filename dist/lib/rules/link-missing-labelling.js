@@ -1,22 +1,24 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-const { elementType } = require("jsx-ast-utils");
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
-const { hasTextContentChild } = require("../util/hasTextContentChild");
-const { hasLabelledChildImage } = require("../util/hasLabelledChildImage");
-const { linkBasedComponents } = require("../applicableComponents/linkBasedComponents");
-const { hasAssociatedLabelViaAriaLabelledBy } = require("../util/labelUtils");
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const hasNonEmptyProp_1 = require("../util/hasNonEmptyProp");
+const hasTextContentChild_1 = require("../util/hasTextContentChild");
+const hasLabelledChildImage_1 = require("../util/hasLabelledChildImage");
+const linkBasedComponents_1 = require("../applicableComponents/linkBasedComponents");
+const labelUtils_1 = require("../util/labelUtils");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         type: "problem",
         docs: {
             description: "Accessibility: Image links must have an accessible name. Add either text content, labelling to the image or labelling to the link itself.",
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/WAI/standards-guidelines/act/rules/c487ae/" // URL to the documentation page for this rule
         },
         messages: {
@@ -36,10 +38,10 @@ module.exports = {
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // if it's not a link based component, return
-                if (!linkBasedComponents.includes(elementType(openingElement))) {
+                if (!linkBasedComponents_1.linkBasedComponents.includes((0, jsx_ast_utils_1.elementType)(openingElement))) {
                     return;
                 }
-                const hasHref = hasNonEmptyProp(openingElement.attributes, "href");
+                const hasHref = (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "href");
                 // check if the link has an href
                 if (!hasHref) {
                     context.report({
@@ -48,18 +50,18 @@ module.exports = {
                     });
                 }
                 // if it has text content, return
-                if (hasTextContentChild(node)) {
+                if ((0, hasTextContentChild_1.hasTextContentChild)(node)) {
                     return;
                 }
                 // if there is a containing image and it is labelled correctly, return
-                const hasAccessibleImage = hasLabelledChildImage(node);
+                const hasAccessibleImage = (0, hasLabelledChildImage_1.hasLabelledChildImage)(node);
                 if (hasAccessibleImage) {
                     return;
                 }
                 // Check if there is an accessible link
-                const linkHasAccessibleLabel = hasNonEmptyProp(openingElement.attributes, "title") ||
-                    hasNonEmptyProp(openingElement.attributes, "aria-label") ||
-                    hasAssociatedLabelViaAriaLabelledBy(openingElement, context);
+                const linkHasAccessibleLabel = (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "title") ||
+                    (0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "aria-label") ||
+                    (0, labelUtils_1.hasAssociatedLabelViaAriaLabelledBy)(openingElement, context);
                 if (linkHasAccessibleLabel) {
                     return;
                 }
@@ -73,4 +75,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;

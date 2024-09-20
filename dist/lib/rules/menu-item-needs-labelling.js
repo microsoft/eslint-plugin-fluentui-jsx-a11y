@@ -1,16 +1,18 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
-var elementType = require("jsx-ast-utils").elementType;
-const { hasAssociatedLabelViaAriaLabelledBy } = require("../util/labelUtils");
-const { hasTextContentChild } = require("../util/hasTextContentChild");
-const { hasToolTipParent } = require("../util/hasTooltipParent");
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const hasNonEmptyProp_1 = require("../util/hasNonEmptyProp");
+const labelUtils_1 = require("../util/labelUtils");
+const hasTextContentChild_1 = require("../util/hasTextContentChild");
+const hasTooltipParent_1 = require("../util/hasTooltipParent");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -20,10 +22,9 @@ module.exports = {
         type: "problem",
         docs: {
             description: "Accessibility: MenuItem without label must have an accessible and visual label: aria-labelledby",
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
-        fixable: null, // Or `code` or `whitespace`
         schema: [] // Add a schema if the rule has options
     },
     create(context) {
@@ -32,14 +33,14 @@ module.exports = {
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // if it is not a MenuItem, return
-                if (elementType(openingElement) !== "MenuItem") {
+                if ((0, jsx_ast_utils_1.elementType)(openingElement) !== "MenuItem") {
                     return;
                 }
                 // if the MenuItem has a text, label or an associated label, return
-                if (hasNonEmptyProp(openingElement.attributes, "aria-label") || //aria-label, not recommended but will work for screen reader users
-                    hasAssociatedLabelViaAriaLabelledBy(openingElement, context) || // aria-labelledby
-                    hasTextContentChild(node) || // has text content
-                    hasToolTipParent(context) // has tooltip parent, not recommended but will work for screen reader users
+                if ((0, hasNonEmptyProp_1.hasNonEmptyProp)(openingElement.attributes, "aria-label") || //aria-label, not recommended but will work for screen reader users
+                    (0, labelUtils_1.hasAssociatedLabelViaAriaLabelledBy)(openingElement, context) || // aria-labelledby
+                    (0, hasTextContentChild_1.hasTextContentChild)(node) || // has text content
+                    (0, hasTooltipParent_1.hasToolTipParent)(context) // has tooltip parent, not recommended but will work for screen reader users
                 ) {
                     return;
                 }
@@ -51,4 +52,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;
