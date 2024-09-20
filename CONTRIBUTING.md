@@ -22,9 +22,10 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 
 -   Install [Visual Studio Code](https://code.visualstudio.com/).
 
--   Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm).
+-   Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm). Please use node version 16.
 
--   [Fork the repo and clone your fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
+-   **Internal collaborators:** Please send Aubrey Quinn your email address. After getting `Write` access, you can create branches and directly submit pull requests against this repo.
+-   **External collaborators:** [Fork the repo and clone your fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 
 -   Install the dependencies
 
