@@ -1,14 +1,16 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-var elementType = require("jsx-ast-utils").elementType;
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
 // Define an array of allowed component names
 const allowedComponents = ["Text", "Label", "Combobox", "Breadcrumb", "Dropdown", "Accordion", "AccordionItem", "AccordionPanel"];
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the lint rule
         messages: {
@@ -17,10 +19,8 @@ module.exports = {
         type: "problem", // `problem`, `suggestion`, or `layout`
         docs: {
             description: "FluentUI components should not be empty",
-            recommended: true,
-            url: null // URL to the documentation page for this rule
+            recommended: "strict"
         },
-        fixable: null, // Or `code` or `whitespace`
         schema: [] // Add a schema if the rule has options
     },
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree
@@ -30,7 +30,7 @@ module.exports = {
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // if it is not a listed component, return
-                if (!allowedComponents.includes(elementType(openingElement))) {
+                if (!allowedComponents.includes((0, jsx_ast_utils_1.elementType)(openingElement))) {
                     return;
                 }
                 const hasChildren = node.children.length > 0;
@@ -44,4 +44,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;

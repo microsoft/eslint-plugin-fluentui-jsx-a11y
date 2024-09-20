@@ -1,13 +1,16 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-var elementType = require("jsx-ast-utils").elementType;
-const { hasAssociatedLabelViaAriaLabelledBy, isInsideLabelTag, hasAssociatedLabelViaHtmlFor } = require("../util/labelUtils");
-const { hasFieldParent } = require("../util/hasFieldParent");
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const labelUtils_1 = require("../util/labelUtils");
+const hasFieldParent_1 = require("../util/hasFieldParent");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -18,7 +21,7 @@ module.exports = {
         // docs for the rule
         docs: {
             description: "Accessibility: SpinButtons must have an accessible label",
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
         schema: []
@@ -29,14 +32,14 @@ module.exports = {
             // visitor functions for different types of nodes
             JSXOpeningElement(node) {
                 // if it is not a SpinButton, return
-                if (elementType(node) !== "SpinButton") {
+                if ((0, jsx_ast_utils_1.elementType)(node) !== "SpinButton") {
                     return;
                 }
                 // if the SpinButton has an associated label, return
-                if (hasFieldParent(context) ||
-                    isInsideLabelTag(context) ||
-                    hasAssociatedLabelViaHtmlFor(node, context) ||
-                    hasAssociatedLabelViaAriaLabelledBy(node, context)) {
+                if ((0, hasFieldParent_1.hasFieldParent)(context) ||
+                    (0, labelUtils_1.isInsideLabelTag)(context) ||
+                    (0, labelUtils_1.hasAssociatedLabelViaHtmlFor)(node, context) ||
+                    (0, labelUtils_1.hasAssociatedLabelViaAriaLabelledBy)(node, context)) {
                     return;
                 }
                 // if it has no visual labelling, report error
@@ -47,4 +50,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;
