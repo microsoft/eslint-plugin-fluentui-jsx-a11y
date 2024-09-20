@@ -22,7 +22,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
         docs: {
             description: "",
             recommended: false,
-            url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/img_role" // URL to the documentation page for this rule
+            url: "" // URL to the documentation page for this rule
         },
         fixable: "code", // Or `code` or `whitespace`
         schema: [] // Add a schema if the rule has options
@@ -89,3 +89,4 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
 });
 
 export default rule;
+

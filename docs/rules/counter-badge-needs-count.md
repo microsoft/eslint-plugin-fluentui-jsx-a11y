@@ -1,4 +1,4 @@
-# @microsoft/fluentui-jsx-a11y/counter-badge-needs-count
+# Accessibility: Counter badge must numerical count (`@microsoft/fluentui-jsx-a11y/counter-badge-needs-count`)
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
@@ -39,4 +39,4 @@ If the badge contains a custom icon, that icon must be given alternative text wi
 
 ## Further Reading
 
-<https://react.fluentui.dev/?path=/docs/components-badge-badge--docs>
+<https://react.fluentui.dev/?path=/docs/components-badge-counter-badge--docs>
