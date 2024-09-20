@@ -1,13 +1,16 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-const { hasFieldParent } = require("../util/hasFieldParent");
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
-const elementType = require("jsx-ast-utils").elementType;
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const hasFieldParent_1 = require("../util/hasFieldParent");
+const hasNonEmptyProp_1 = require("../util/hasNonEmptyProp");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -18,7 +21,7 @@ module.exports = {
         // docs for the rule
         docs: {
             description: "Accessibility: Progressbar must have aria-valuemin, aria-valuemax, aria-valuenow, aria-describedby and either aria-label or aria-labelledby attributes",
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
         schema: []
@@ -29,24 +32,24 @@ module.exports = {
             // visitor functions for different types of nodes
             JSXOpeningElement(node) {
                 // if it is not a ProgressBar, return
-                if (elementType(node) !== "ProgressBar") {
+                if ((0, jsx_ast_utils_1.elementType)(node) !== "ProgressBar") {
                     return;
                 }
                 // check if the ProgressBar has a Field parent
-                const hasFieldParentCheck = hasFieldParent(context);
+                const hasFieldParentCheck = (0, hasFieldParent_1.hasFieldParent)(context);
                 // If no Field parent, ensure one of the aria-label or aria-labelledby is provided as well as aria-describedby
-                const hasLabelling = (hasNonEmptyProp(node.attributes, "aria-label") || hasNonEmptyProp(node.attributes, "aria-labelledby")) &&
-                    hasNonEmptyProp(node.attributes, "aria-describedby");
+                const hasLabelling = ((0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "aria-label") || (0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "aria-labelledby")) &&
+                    (0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "aria-describedby");
                 const mandatoryAttributes = [];
                 // Check if max is provided, if not, require aria-valuemax
-                const hasMaxProp = hasNonEmptyProp(node.attributes, "max");
+                const hasMaxProp = (0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, "max");
                 if (!hasMaxProp) {
                     mandatoryAttributes.push("aria-valuemax");
                     mandatoryAttributes.push("aria-valuemin");
                     mandatoryAttributes.push("aria-valuenow");
                 }
                 // If all mandatory attributes (including optional aria-valuemax) are present, return
-                if (mandatoryAttributes.every(attribute => hasNonEmptyProp(node.attributes, attribute)) &&
+                if (mandatoryAttributes.every(attribute => (0, hasNonEmptyProp_1.hasNonEmptyProp)(node.attributes, attribute)) &&
                     (hasFieldParentCheck || hasLabelling)) {
                     return;
                 }
@@ -58,4 +61,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;

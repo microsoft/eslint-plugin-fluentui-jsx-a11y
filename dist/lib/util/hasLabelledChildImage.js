@@ -18,9 +18,7 @@ function hasLabelledChildImage(node) {
     }
     // Check if there is an accessible image
     const hasAccessibleImage = flattenChildren(node).some(child => {
-        console.log("mergedImageComponents.includes(child.openingElement.name.name)::: ", mergedImageComponents.includes(child.openingElement.name.name));
         if (child.type === "JSXElement" && mergedImageComponents.includes(child.openingElement.name.name)) {
-            console.log("here 3");
             return hasProp(child.openingElement.attributes, "aria-hidden") || getPropValue(child.openingElement.attributes, "alt")
                 ? false
                 : hasNonEmptyProp(child.openingElement.attributes, "title") ||

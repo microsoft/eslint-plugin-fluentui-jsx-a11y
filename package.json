@@ -39,7 +39,7 @@
         "lint": "npm-run-all \"lint:*\"",
         "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
         "lint:js": "eslint .",
-        "test": "mocha tests --recursive && jest",
+        "test": "jest",
         "lint:docs": "markdownlint **/*.md",
         "update:eslint-docs": "eslint-doc-generator",
         "fix:md": "npm run lint:docs -- --fix",
@@ -52,9 +52,11 @@
         "requireindex": "^1.2.0"
     },
     "devDependencies": {
+        "@types/chai": "^4.3.19",
         "@types/eslint": "=7.2.10",
         "@types/estree": "^1.0.5",
         "@types/estree-jsx": "^1.0.5",
+        "@types/jest": "^29.5.13",
         "@types/jsx-ast-utils": "^3.3.1",
         "@types/node": "^22.5.5",
         "@typescript-eslint/eslint-plugin": "^8.6.0",
@@ -69,7 +71,6 @@
         "jest": "^29.7.0",
         "markdownlint": "^0.28.1",
         "markdownlint-cli": "^0.33.0",
-        "mocha": "^10.0.0",
         "npm-run-all": "^4.1.5",
         "prettier": "2.8.4",
         "ts-jest": "^29.2.5",

@@ -1,15 +1,16 @@
+"use strict";
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-"use strict";
-var elementType = require("jsx-ast-utils").elementType;
-const { getPropValue, getProp } = require("jsx-ast-utils");
-const { hasTextContentChild } = require("../util/hasTextContentChild");
-var hasProp = require("jsx-ast-utils").hasProp;
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("@typescript-eslint/utils");
+const jsx_ast_utils_1 = require("jsx-ast-utils");
+const jsx_ast_utils_2 = require("jsx-ast-utils");
+const hasTextContentChild_1 = require("../util/hasTextContentChild");
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule = utils_1.ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -32,22 +33,22 @@ module.exports = {
             JSXElement(node) {
                 const openingElement = node.openingElement;
                 // If it's not a Badge component, return early
-                if (elementType(openingElement) !== "Badge") {
+                if ((0, jsx_ast_utils_1.elementType)(openingElement) !== "Badge") {
                     return;
                 }
-                const hasTextContent = hasTextContentChild(node);
+                const hasTextContent = (0, hasTextContentChild_1.hasTextContentChild)(node);
                 // Check if Badge has text content and return early if it does
                 if (hasTextContent) {
                     return;
                 }
                 // Check if Badge has an icon
-                const hasIconProp = hasProp(openingElement.attributes, "icon");
+                const hasIconProp = (0, jsx_ast_utils_1.hasProp)(openingElement.attributes, "icon");
                 if (hasIconProp) {
-                    const iconProp = getProp(openingElement.attributes, "icon");
-                    if (iconProp) {
+                    const iconProp = (0, jsx_ast_utils_2.getProp)(openingElement.attributes, "icon");
+                    if (iconProp && iconProp.value && iconProp.value.type === utils_1.AST_NODE_TYPES.JSXExpressionContainer) {
                         const iconElement = iconProp.value.expression;
                         // Check if the icon has an aria-label
-                        const ariaLabelAttr = hasProp(iconElement.openingElement.attributes, "aria-label");
+                        const ariaLabelAttr = (0, jsx_ast_utils_1.hasProp)(iconElement.openingElement.attributes, "aria-label");
                         // Report an error if aria-label is missing
                         if (!ariaLabelAttr) {
                             context.report({
@@ -62,9 +63,10 @@ module.exports = {
                     }
                 }
                 // Simplified logic to check for a color-only Badge (no icon, no text)
-                const hasColorProp = hasProp(openingElement.attributes, "color");
-                const hasRole = getPropValue(getProp(openingElement.attributes, "role")) === "img";
-                const hasAriaLabel = hasProp(openingElement.attributes, "aria-label");
+                const roleProp = (0, jsx_ast_utils_2.getProp)(openingElement.attributes, "role");
+                const hasColorProp = (0, jsx_ast_utils_1.hasProp)(openingElement.attributes, "color");
+                const hasRole = !!roleProp && (0, jsx_ast_utils_2.getPropValue)(roleProp) === "img";
+                const hasAriaLabel = (0, jsx_ast_utils_1.hasProp)(openingElement.attributes, "aria-label");
                 // If it's color-only, ensure it has role="img" and aria-label
                 if (!hasIconProp && !(hasRole && hasAriaLabel)) {
                     if (hasColorProp) {
@@ -95,4 +97,5 @@ module.exports = {
             }
         };
     }
-};
+});
+exports.default = rule;
