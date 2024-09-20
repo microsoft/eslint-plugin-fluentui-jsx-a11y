@@ -1,22 +1,10 @@
-# Accessibility: Image links must have an accessible name (`@microsoft/fluentui-jsx-a11y/image-link-missing-aria`)
+# Accessibility: Image links must have an accessible name. Add either text content, labelling to the image or labelling to the link itself (`@microsoft/fluentui-jsx-a11y/link-missing-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 <!-- end auto-generated rule header -->
-
-💼 This rule is enabled in the ✅ `recommended` config.
-
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
-
-<!-- end auto-generated rule header -->
-
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
-
-<!-- end auto-generated rule header -->
-
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 All interactive elements must have an accessible name.
 
@@ -24,8 +12,8 @@ Links that contain Images without additional text content lack an accessible nam
 
 Ways to fix:
 
-1. Add a title, aria-label or aria-labelledby attribute or text content to the Link tag.
-2. Add a title, aria-label or aria-labelledby attribute to the Image tag.
+1. Add a title, aria-label or aria-labelledby attribute or text content to the Link element.
+2. Add a alt text, title, aria-label or aria-labelledby attribute to the Image element.
 
 <https://www.w3.org/WAI/standards-guidelines/act/rules/c487ae/>
 
@@ -50,11 +38,3 @@ Examples of **correct** code for this rule:
 <Link href="#test"><Image src="/test.png" aria-label="This is an aria-label for the image link"/></Link>
 <Link href="#test"><Image src="/test.png" aria-labelledby="id1"/></Link>
 ```
-
-## When Not To Use It
-
-Give a short description of when it would be appropriate to turn off this rule.
-
-## Further Reading
-
-If there are other links that describe the issue this rule addresses, please include them here in a bulleted list.
