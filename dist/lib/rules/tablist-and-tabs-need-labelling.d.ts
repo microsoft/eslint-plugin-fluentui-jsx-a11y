@@ -1,6 +1,7 @@
 export namespace meta {
     namespace messages {
-        let noUnlabelledField: string;
+        let missingTabLabel: string;
+        let missingTablistLabel: string;
     }
     let type: string;
     namespace docs {

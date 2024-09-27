@@ -24,12 +24,15 @@ import tooltipNotRecommended from "./rules/tooltip-not-recommended";
 import avatarNeedsName from "./rules/avatar-needs-name";
 import radioButtonMissingLabel from "./rules/radio-button-missing-label";
 import radiogroupMissingLabel from "./rules/radiogroup-missing-label";
+import ratingNeedsName from "./rules/rating-needs-name";
 import dialogbodyNeedsTitleContentAndActions from "./rules/dialogbody-needs-title-content-and-actions";
 import dialogsurfaceNeedsAria from "./rules/dialogsurface-needs-aria";
 import spinnerNeedsLabelling from "./rules/spinner-needs-labelling";
 import badgeNeedsAccessibleName from "./rules/badge-needs-accessible-name";
 import progressbarNeedsLabelling from "./rules/progressbar-needs-labelling";
 import fieldNeedsLabelling from "./rules/field-needs-labelling";
+import tablistAndTabsNeedLabelling from "./rules/tablist-and-tabs-need-labelling";
+import counterBadgeNeedsCount from "./rules/counter-badge-needs-count";
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -62,14 +65,17 @@ module.exports = {
         "avatar-needs-name": avatarNeedsName,
         "radio-button-missing-label": radioButtonMissingLabel,
         "radiogroup-missing-label": radiogroupMissingLabel,
+        "rating-needs-name": ratingNeedsName,
         "prefer-aria-over-title-attribute": preferAriaOverTitleAttribute,
-        "dialogbody-needs-title-content-and-actions": require("./rules/dialogbody-needs-title-content-and-actions"),
-        "dialogsurface-needs-aria": require("./rules/dialogsurface-needs-aria"),
-        "spinner-needs-labelling": require("./rules/spinner-needs-labelling"),
-        "badge-needs-accessible-name": require("./rules/badge-needs-accessible-name"),
-        "progressbar-needs-labelling": require("./rules/progressbar-needs-labelling"),
-        "visual-label-better-than-aria-suggestion": require("./rules/visual-label-better-than-aria-suggestion"),
-        "field-needs-labelling": fieldNeedsLabelling
+        "dialogbody-needs-title-content-and-actions": dialogbodyNeedsTitleContentAndActions,
+        "dialogsurface-needs-aria": dialogsurfaceNeedsAria,
+        "spinner-needs-labelling": spinnerNeedsLabelling,
+        "badge-needs-accessible-name": badgeNeedsAccessibleName,
+        "progressbar-needs-labelling": progressbarNeedsLabelling,
+		    "visual-label-better-than-aria-suggestion": require("./rules/visual-label-better-than-aria-suggestion"),
+        "field-needs-labelling": fieldNeedsLabelling,
+        "tablist-and-tabs-need-labelling": tablistAndTabsNeedLabelling,
+        "counter-badge-needs-count": counterBadgeNeedsCount
     },
     configs: {
         recommended: {
@@ -95,12 +101,14 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/avatar-needs-name": "error",
                 "@microsoft/fluentui-jsx-a11y/radio-button-missing-label": "error",
                 "@microsoft/fluentui-jsx-a11y/radiogroup-missing-label": "error",
+                "@microsoft/fluentui-jsx-a11y/rating-needs-name": "error",
                 "@microsoft/fluentui-jsx-a11y/prefer-aria-over-title-attribute": "warn",
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion": "warn",
+                "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
             }
         }
@@ -111,4 +119,3 @@ module.exports = {
 module.exports.processors = {
     // add your processors here
 };
-

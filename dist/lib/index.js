@@ -34,6 +34,7 @@ const spinner_needs_labelling_1 = __importDefault(require("./rules/spinner-needs
 const badge_needs_accessible_name_1 = __importDefault(require("./rules/badge-needs-accessible-name"));
 const progressbar_needs_labelling_1 = __importDefault(require("./rules/progressbar-needs-labelling"));
 const field_needs_labelling_1 = __importDefault(require("./rules/field-needs-labelling"));
+const tablist_and_tabs_need_labelling = __importDefault(require("./rules/tablist-and-tabs-need-labelling"));
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -70,7 +71,8 @@ module.exports = {
         "spinner-needs-labelling": spinner_needs_labelling_1.default,
         "badge-needs-accessible-name": badge_needs_accessible_name_1.default,
         "progressbar-needs-labelling": progressbar_needs_labelling_1.default,
-        "field-needs-labelling": field_needs_labelling_1.default
+        "field-needs-labelling": field_needs_labelling_1.default,
+        "tablist-and-tabs-need-labelling": tablist_and_tabs_need_labelling.default
     },
     configs: {
         recommended: {
@@ -101,7 +103,8 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error"
             }
         }
     }
