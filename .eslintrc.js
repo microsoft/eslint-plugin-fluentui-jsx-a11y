@@ -12,7 +12,7 @@ module.exports = {
         "prettier",
         "plugin:eslint-plugin/recommended"
     ],
-    plugins: ["header", "sort-imports-es6-autofix", "sort-keys-fix"],
+    plugins: ["header"],
     env: {
         node: true
     },
@@ -23,23 +23,7 @@ module.exports = {
         }
     ],
     rules: {
-        "header/header": [2, "line", [" Copyright (c) Microsoft Corporation.", " Licensed under the MIT License."], 2],
-        "sort-imports-es6-autofix/sort-imports-es6": [
-            "error",
-            {
-                ignoreCase: true,
-                ignoreDeclarationSort: false,
-                ignoreMemberSort: false
-            }
-        ],
-        "sort-keys-fix/sort-keys-fix": [
-            "error",
-            "asc",
-            {
-                caseSensitive: false,
-                natural: true
-            }
-        ]
+        "header/header": [2, "line", [" Copyright (c) Microsoft Corporation.", " Licensed under the MIT License."], 2]
     },
     ignorePatterns: ["node_modules", "dist/"]
 };
