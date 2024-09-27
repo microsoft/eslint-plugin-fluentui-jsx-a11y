@@ -2,8 +2,6 @@
 
 A set of eslint rules against [Fluent UI React v9](https://react.fluentui.dev/?path=/docs/concepts-introduction--page) to prevent common accessibility issues.
 
-Finally! Lint rules against React props.
-
 Covers hard-coded string props and variables for props.
 
 ```jsx
@@ -15,8 +13,6 @@ Covers hard-coded string props and variables for props.
 <Label htmlFor={someId}>Some Label</Label>
 <Input id={someId} />
 ```
-
-Developed and maintained by the Microsoft Research Ireland Accessibility V-Team.
 
 ## Installation
 
@@ -94,41 +90,6 @@ This plugin does a static code analysis of the React JSX to spot accessibility i
 
 As the plugin can only catch errors in static source code, please use it in combination with [@axe-core/react](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/react) to test the accessibility of the rendered DOM. Consider these tools just as one step of a larger a11y testing process and always test your apps with assistive technology.
 
-We also recomend that you use this plugin in conjuction with the [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) plugin. Please configure [eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y) to work with FluentUI components.
-
-Example:
-
-```json
-{
-    "settings": {
-        "jsx-a11y": {
-            "components": {
-                "Button": "button",
-                "Image": "img"
-            }
-        }
-    }
-}
-```
-
-## ESLint
-
-This plugin was generated with The ESLint generator for Yeoman: [eslint/generator-eslint](https://github.com/eslint/generator-eslint).
-
-### eslint:plugin
-
-```sh
-yo eslint:plugin
-```
-
-### eslint:rule
-
-If you want to create a new ESLint rule, make sure you're in the top-level directory of an ESLint repo clone or an ESLint plugin and type:
-
-```sh
-yo eslint:rule
-```
-
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
@@ -146,36 +107,40 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 ✅ Set in the `recommended` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                                                                   | Description                                                                                                                                            | 💼 | ⚠️ | 🔧 |
-| :----------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :- | :- | :- |
-| [accordion-header-needs-labelling](docs/rules/accordion-header-needs-labelling.md)                     | The accordion header is a button and it needs an accessibile name e.g. text content, aria-label, aria-labelledby.                                      | ✅  |    |    |
-| [accordion-item-needs-header-and-panel](docs/rules/accordion-item-needs-header-and-panel.md)           | An AccordionItem needs exactly one header and one panel                                                                                                | ✅  |    |    |
-| [avatar-needs-name](docs/rules/avatar-needs-name.md)                                                   | Accessibility: Avatar must have an accessible labelling: name, aria-label, aria-labelledby                                                             | ✅  |    |    |
-| [badge-needs-accessible-name](docs/rules/badge-needs-accessible-name.md)                               |                                                                                                                                                        |    |    | 🔧 |
-| [breadcrumb-needs-labelling](docs/rules/breadcrumb-needs-labelling.md)                                 | All interactive elements must have an accessible name                                                                                                  | ✅  |    |    |
-| [checkbox-needs-labelling](docs/rules/checkbox-needs-labelling.md)                                     | Accessibility: Checkbox without label must have an accessible and visual label: aria-labelledby                                                        | ✅  |    |    |
-| [combobox-needs-labelling](docs/rules/combobox-needs-labelling.md)                                     | All interactive elements must have an accessible name                                                                                                  | ✅  |    |    |
-| [compound-button-needs-labelling](docs/rules/compound-button-needs-labelling.md)                       | Accessibility: Compound buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby                                   | ✅  |    |    |
-| [dialogbody-needs-title-content-and-actions](docs/rules/dialogbody-needs-title-content-and-actions.md) | A DialogBody should have a header(DialogTitle), content(DialogContent), and footer(DialogActions)                                                      | ✅  |    |    |
-| [dialogsurface-needs-aria](docs/rules/dialogsurface-needs-aria.md)                                     | DialogueSurface need accessible labelling: aria-describedby on DialogueSurface and aria-label or aria-labelledby(if DialogueTitle is missing)          | ✅  |    |    |
-| [dropdown-needs-labelling](docs/rules/dropdown-needs-labelling.md)                                     | Accessibility: Dropdown menu must have an id and it needs to be linked via htmlFor of a Label                                                          | ✅  |    |    |
-| [field-needs-labelling](docs/rules/field-needs-labelling.md)                                           | Accessibility: Field must have either label, validationMessage and hint attributes                                                                     | ✅  |    |    |
-| [image-button-missing-aria](docs/rules/image-button-missing-aria.md)                                   | Accessibility: Image buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby                                      | ✅  |    |    |
-| [input-components-require-accessible-name](docs/rules/input-components-require-accessible-name.md)     | Accessibility: Input fields must have accessible labelling: aria-label, aria-labelledby or an associated label                                         | ✅  |    |    |
-| [link-missing-labelling](docs/rules/link-missing-labelling.md)                                         | Accessibility: Image links must have an accessible name. Add either text content, labelling to the image or labelling to the link itself.              | ✅  |    | 🔧 |
-| [menu-item-needs-labelling](docs/rules/menu-item-needs-labelling.md)                                   | Accessibility: MenuItem without label must have an accessible and visual label: aria-labelledby                                                        | ✅  |    |    |
-| [no-empty-buttons](docs/rules/no-empty-buttons.md)                                                     | Accessibility: Button, ToggleButton, SplitButton, MenuButton, CompoundButton must either text content or icon or child component                       | ✅  |    |    |
-| [no-empty-components](docs/rules/no-empty-components.md)                                               | FluentUI components should not be empty                                                                                                                | ✅  |    |    |
-| [prefer-aria-over-title-attribute](docs/rules/prefer-aria-over-title-attribute.md)                     | The title attribute is not consistently read by screen readers, and its behavior can vary depending on the screen reader and the user's settings.      |    | ✅  | 🔧 |
-| [progressbar-needs-labelling](docs/rules/progressbar-needs-labelling.md)                               | Accessibility: Progressbar must have aria-valuemin, aria-valuemax, aria-valuenow, aria-describedby and either aria-label or aria-labelledby attributes | ✅  |    |    |
-| [radio-button-missing-label](docs/rules/radio-button-missing-label.md)                                 | Accessibility: Radio button without label must have an accessible and visual label: aria-labelledby                                                    | ✅  |    |    |
-| [radiogroup-missing-label](docs/rules/radiogroup-missing-label.md)                                     | Accessibility: RadioGroup without label must have an accessible and visual label: aria-labelledby                                                      | ✅  |    |    |
-| [spin-button-needs-labelling](docs/rules/spin-button-needs-labelling.md)                               | Accessibility: SpinButtons must have an accessible label                                                                                               | ✅  |    |    |
-| [spin-button-unrecommended-labelling](docs/rules/spin-button-unrecommended-labelling.md)               | Accessibility: Unrecommended accessibility labelling - SpinButton                                                                                      | ✅  |    |    |
-| [spinner-needs-labelling](docs/rules/spinner-needs-labelling.md)                                       | Accessibility: Spinner must have either aria-label or label, aria-live and aria-busy attributes                                                        | ✅  |    |    |
-| [switch-needs-labelling](docs/rules/switch-needs-labelling.md)                                         | Accessibility: Switch must have an accessible label                                                                                                    | ✅  |    |    |
-| [tablist-and-tabs-need-labelling](docs/rules/tablist-and-tabs-need-labelling.md)                       | This rule aims to ensure that Tabs with icons but no text labels have an accessible name and that Tablist is properly labeled.                         | ✅  |    |    |
-| [toolbar-missing-aria](docs/rules/toolbar-missing-aria.md)                                             | Accessibility: Toolbars need accessible labelling: aria-label or aria-labelledby                                                                       | ✅  |    |    |
-| [tooltip-not-recommended](docs/rules/tooltip-not-recommended.md)                                       | Accessibility: Prefer text content or aria over a tooltip for these components MenuItem, SpinButton                                                    | ✅  |    |    |
+| Name                                                                                                                   | Description                                                                                                                                            | 💼 | ⚠️ | 🔧 |
+| :--------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :- | :- | :- |
+| [accordion-header-needs-labelling](docs/rules/accordion-header-needs-labelling.md)                                     | The accordion header is a button and it needs an accessibile name e.g. text content, aria-label, aria-labelledby.                                      | ✅  |    |    |
+| [accordion-item-needs-header-and-panel](docs/rules/accordion-item-needs-header-and-panel.md)                           | An AccordionItem needs exactly one header and one panel                                                                                                | ✅  |    |    |
+| [avatar-needs-name](docs/rules/avatar-needs-name.md)                                                                   | Accessibility: Avatar must have an accessible labelling: name, aria-label, aria-labelledby                                                             | ✅  |    |    |
+| [avoid-using-aria-describedby-for-primary-labelling](docs/rules/avoid-using-aria-describedby-for-primary-labelling.md) | aria-describedby provides additional context and is not meant for primary labeling.                                                                    | ✅  |    |    |
+| [badge-needs-accessible-name](docs/rules/badge-needs-accessible-name.md)                                               |                                                                                                                                                        | ✅  |    | 🔧 |
+| [breadcrumb-needs-labelling](docs/rules/breadcrumb-needs-labelling.md)                                                 | All interactive elements must have an accessible name                                                                                                  | ✅  |    |    |
+| [checkbox-needs-labelling](docs/rules/checkbox-needs-labelling.md)                                                     | Accessibility: Checkbox without label must have an accessible and visual label: aria-labelledby                                                        | ✅  |    |    |
+| [combobox-needs-labelling](docs/rules/combobox-needs-labelling.md)                                                     | All interactive elements must have an accessible name                                                                                                  | ✅  |    |    |
+| [compound-button-needs-labelling](docs/rules/compound-button-needs-labelling.md)                                       | Accessibility: Compound buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby                                   | ✅  |    |    |
+| [counter-badge-needs-count](docs/rules/counter-badge-needs-count.md)                                                   |                                                                                                                                                        | ✅  |    | 🔧 |
+| [dialogbody-needs-title-content-and-actions](docs/rules/dialogbody-needs-title-content-and-actions.md)                 | A DialogBody should have a header(DialogTitle), content(DialogContent), and footer(DialogActions)                                                      | ✅  |    |    |
+| [dialogsurface-needs-aria](docs/rules/dialogsurface-needs-aria.md)                                                     | DialogueSurface need accessible labelling: aria-describedby on DialogueSurface and aria-label or aria-labelledby(if DialogueTitle is missing)          | ✅  |    |    |
+| [dropdown-needs-labelling](docs/rules/dropdown-needs-labelling.md)                                                     | Accessibility: Dropdown menu must have an id and it needs to be linked via htmlFor of a Label                                                          | ✅  |    |    |
+| [field-needs-labelling](docs/rules/field-needs-labelling.md)                                                           | Accessibility: Field must have either label, validationMessage and hint attributes                                                                     | ✅  |    |    |
+| [image-button-missing-aria](docs/rules/image-button-missing-aria.md)                                                   | Accessibility: Image buttons must have accessible labelling: title, aria-label, aria-labelledby, aria-describedby                                      | ✅  |    |    |
+| [input-components-require-accessible-name](docs/rules/input-components-require-accessible-name.md)                     | Accessibility: Input fields must have accessible labelling: aria-label, aria-labelledby or an associated label                                         | ✅  |    |    |
+| [link-missing-labelling](docs/rules/link-missing-labelling.md)                                                         | Accessibility: Image links must have an accessible name. Add either text content, labelling to the image or labelling to the link itself.              | ✅  |    | 🔧 |
+| [menu-item-needs-labelling](docs/rules/menu-item-needs-labelling.md)                                                   | Accessibility: MenuItem without label must have an accessible and visual label: aria-labelledby                                                        | ✅  |    |    |
+| [no-empty-buttons](docs/rules/no-empty-buttons.md)                                                                     | Accessibility: Button, ToggleButton, SplitButton, MenuButton, CompoundButton must either text content or icon or child component                       | ✅  |    |    |
+| [no-empty-components](docs/rules/no-empty-components.md)                                                               | FluentUI components should not be empty                                                                                                                | ✅  |    |    |
+| [prefer-aria-over-title-attribute](docs/rules/prefer-aria-over-title-attribute.md)                                     | The title attribute is not consistently read by screen readers, and its behavior can vary depending on the screen reader and the user's settings.      |    | ✅  | 🔧 |
+| [progressbar-needs-labelling](docs/rules/progressbar-needs-labelling.md)                                               | Accessibility: Progressbar must have aria-valuemin, aria-valuemax, aria-valuenow, aria-describedby and either aria-label or aria-labelledby attributes | ✅  |    |    |
+| [radio-button-missing-label](docs/rules/radio-button-missing-label.md)                                                 | Accessibility: Radio button without label must have an accessible and visual label: aria-labelledby                                                    | ✅  |    |    |
+| [radiogroup-missing-label](docs/rules/radiogroup-missing-label.md)                                                     | Accessibility: RadioGroup without label must have an accessible and visual label: aria-labelledby                                                      | ✅  |    |    |
+| [rating-needs-name](docs/rules/rating-needs-name.md)                                                                   | Accessibility: Ratings must have accessible labelling: name, aria-label, aria-labelledby or itemLabel which generates aria-label                       | ✅  |    |    |
+| [spin-button-needs-labelling](docs/rules/spin-button-needs-labelling.md)                                               | Accessibility: SpinButtons must have an accessible label                                                                                               | ✅  |    |    |
+| [spin-button-unrecommended-labelling](docs/rules/spin-button-unrecommended-labelling.md)                               | Accessibility: Unrecommended accessibility labelling - SpinButton                                                                                      | ✅  |    |    |
+| [spinner-needs-labelling](docs/rules/spinner-needs-labelling.md)                                                       | Accessibility: Spinner must have either aria-label or label, aria-live and aria-busy attributes                                                        | ✅  |    |    |
+| [switch-needs-labelling](docs/rules/switch-needs-labelling.md)                                                         | Accessibility: Switch must have an accessible label                                                                                                    | ✅  |    |    |
+| [tablist-and-tabs-need-labelling](docs/rules/tablist-and-tabs-need-labelling.md)                                       | This rule aims to ensure that Tabs with icons but no text labels have an accessible name and that Tablist is properly labeled.                         | ✅  |    |    |
+| [toolbar-missing-aria](docs/rules/toolbar-missing-aria.md)                                                             | Accessibility: Toolbars need accessible labelling: aria-label or aria-labelledby                                                                       | ✅  |    |    |
+| [tooltip-not-recommended](docs/rules/tooltip-not-recommended.md)                                                       | Accessibility: Prefer text content or aria over a tooltip for these components MenuItem, SpinButton                                                    | ✅  |    |    |
+| [visual-label-better-than-aria-suggestion](docs/rules/visual-label-better-than-aria-suggestion.md)                     | Visual label is better than an aria-label                                                                                                              |    | ✅  |    |
 
 <!-- end auto-generated rules list -->

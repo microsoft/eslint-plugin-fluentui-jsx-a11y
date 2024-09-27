@@ -22,9 +22,9 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 
 -   Install [Visual Studio Code](https://code.visualstudio.com/).
 
--   Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm). Please use node version 16.
+-   Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm). Please use Node version 16 and npm v 8.
 
--   **Internal collaborators:** Please send Aubrey Quinn your email address. After getting `Write` access, you can create branches and directly submit pull requests against this repo.
+-   **Internal collaborators:** Please send Aubrey Quinn your email address. After getting `Write` access, you can create branches and directly submit pull requests against this repo. Make and submit changes following the [pull request submission workflow](#pull-requests)
 -   **External collaborators:** [Fork the repo and clone your fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo)
 
 -   Install the dependencies
@@ -49,13 +49,13 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 
 ## To create a new ESLint rule
 
-### eslint:rule
+If you want to create a new ESLint rule:
 
-If you want to create a new ESLint rule, make sure you're in the top-level directory and type:
-
-```sh
-yo eslint:rule
-```
+1. create a rule file under `lib/rules`
+2. create a doc file under `docs`
+3. create a test file under `tests`
+4. add your rule to `lib/rules/index.ts`
+5. add your rule to `index.ts`
 
 ## Pull requests
 

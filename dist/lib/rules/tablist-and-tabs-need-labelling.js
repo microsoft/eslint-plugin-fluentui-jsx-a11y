@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-
 "use strict";
-
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
-
 /** @type {import('eslint').Rule.RuleModule} */
 module.exports = {
     meta: {
@@ -23,54 +20,46 @@ module.exports = {
             missingTablistLabel: 'Accessibility: Tablist must have an accessible label'
         },
     },
-
-  create(context) {
-    const { hasTextContentChild } = require('../util/hasTextContentChild');
-    const { hasNonEmptyProp } = require('../util/hasNonEmptyProp');
-    const { hasAssociatedLabelViaAriaLabelledBy } = require('../util/labelUtils');
-
-    var elementType = require("jsx-ast-utils").elementType;
-
-    return {
-            
-      // visitor functions for different types of nodes
-        JSXOpeningElement(node) {
-            const elementTypeValue = elementType(node);
-
-            // if it is not a Tablist or Tab, return
-            if (elementTypeValue !== 'Tablist' && elementTypeValue !== 'Tab') {
-                return;
-            }
-
-            // Check for Tablist elements
-            if (elementTypeValue === "Tablist") {
-                if (
+    create(context) {
+        const { hasTextContentChild } = require('../util/hasTextContentChild');
+        const { hasNonEmptyProp } = require('../util/hasNonEmptyProp');
+        const { hasAssociatedLabelViaAriaLabelledBy } = require('../util/labelUtils');
+        var elementType = require("jsx-ast-utils").elementType;
+        return {
+            // visitor functions for different types of nodes
+            JSXOpeningElement(node) {
+                const elementTypeValue = elementType(node);
+                // if it is not a Tablist or Tab, return
+                if (elementTypeValue !== 'Tablist' && elementTypeValue !== 'Tab') {
+                    return;
+                }
+                // Check for Tablist elements
+                if (elementTypeValue === "Tablist") {
+                    if (
                     // if the Tablist has a label, if the Tablist has an associated label, return
                     hasNonEmptyProp(node.attributes, 'aria-label') || //aria-label
-                    hasAssociatedLabelViaAriaLabelledBy(node, context) // aria-labelledby
-                ) {
-                    return;
+                        hasAssociatedLabelViaAriaLabelledBy(node, context) // aria-labelledby
+                    ) {
+                        return;
+                    }
+                    context.report({
+                        node,
+                        messageId: 'missingTablistLabel'
+                    });
                 }
-                context.report({
-                    node,
-                    messageId: 'missingTablistLabel'
-                });
-            }
-
-            // Check for Tab elements
-            if (elementTypeValue === 'Tab') {
-                if (
-                    hasTextContentChild(node.parent) || // text content
-                    hasNonEmptyProp(node.attributes, 'aria-label') // aria-label
-                ) {
-                    return;
+                // Check for Tab elements
+                if (elementTypeValue === 'Tab') {
+                    if (hasTextContentChild(node.parent) || // text content
+                        hasNonEmptyProp(node.attributes, 'aria-label') // aria-label
+                    ) {
+                        return;
+                    }
+                    context.report({
+                        node,
+                        messageId: 'missingTabLabel'
+                    });
                 }
-                context.report({
-                    node,
-                    messageId: 'missingTabLabel'
-                });
             }
-        }
-    };
-  },
+        };
+    },
 };
