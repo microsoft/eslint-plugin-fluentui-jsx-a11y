@@ -1,4 +1,4 @@
-# Accessibility: Counter badge must numerical count (`@microsoft/fluentui-jsx-a11y/counter-badge-needs-count`)
+# @microsoft/fluentui-jsx-a11y/counter-badge-needs-count
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
