@@ -7,7 +7,7 @@ We currently cover the following components:
     -   [x] AvatarGroup
     -   [] Badge
         -   [x] Badge
-        -   [] CounterBadge
+        -   [x] CounterBadge
         -   [N/A] PresenceBadge
     -   [x] Breadcrumb
     -   [x] Button
@@ -30,7 +30,7 @@ We currently cover the following components:
     -   [N/A] Divider
     -   [] Drawer
     -   [X] Dropdown
-    -   [] Field
+    -   [x] Field
     -   [N/A] FluentProvider
     -   [] Image
     -   [] InfoLabel

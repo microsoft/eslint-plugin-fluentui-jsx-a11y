@@ -30,7 +30,8 @@ import dialogsurfaceNeedsAria from "./rules/dialogsurface-needs-aria";
 import spinnerNeedsLabelling from "./rules/spinner-needs-labelling";
 import badgeNeedsAccessibleName from "./rules/badge-needs-accessible-name";
 import progressbarNeedsLabelling from "./rules/progressbar-needs-labelling";
-
+import fieldNeedsLabelling from "./rules/field-needs-labelling";
+import counterBadgeNeedsCount from "./rules/counter-badge-needs-count";
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -69,7 +70,9 @@ module.exports = {
         "dialogsurface-needs-aria": dialogsurfaceNeedsAria,
         "spinner-needs-labelling": spinnerNeedsLabelling,
         "badge-needs-accessible-name": badgeNeedsAccessibleName,
-        "progressbar-needs-labelling": progressbarNeedsLabelling
+        "progressbar-needs-labelling": progressbarNeedsLabelling,
+        "field-needs-labelling": fieldNeedsLabelling,
+        "counter-badge-needs-count": counterBadgeNeedsCount
     },
     configs: {
         recommended: {
@@ -100,7 +103,8 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
             }
         }
     }
