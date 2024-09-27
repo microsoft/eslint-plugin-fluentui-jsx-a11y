@@ -72,7 +72,7 @@ module.exports = {
         "spinner-needs-labelling": spinnerNeedsLabelling,
         "badge-needs-accessible-name": badgeNeedsAccessibleName,
         "progressbar-needs-labelling": progressbarNeedsLabelling,
-		    "visual-label-better-than-aria-suggestion": require("./rules/visual-label-better-than-aria-suggestion"),
+        "visual-label-better-than-aria-suggestion": require("./rules/visual-label-better-than-aria-suggestion"),
         "field-needs-labelling": fieldNeedsLabelling,
         "tablist-and-tabs-need-labelling": tablistAndTabsNeedLabelling,
         "counter-badge-needs-count": counterBadgeNeedsCount
