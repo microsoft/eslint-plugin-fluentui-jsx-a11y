@@ -31,6 +31,7 @@ import spinnerNeedsLabelling from "./rules/spinner-needs-labelling";
 import badgeNeedsAccessibleName from "./rules/badge-needs-accessible-name";
 import progressbarNeedsLabelling from "./rules/progressbar-needs-labelling";
 import fieldNeedsLabelling from "./rules/field-needs-labelling";
+import tablistAndTabsNeedLabelling from "./rules/tablist-and-tabs-need-labelling";
 import counterBadgeNeedsCount from "./rules/counter-badge-needs-count";
 //------------------------------------------------------------------------------
 // Requirements
@@ -72,6 +73,7 @@ module.exports = {
         "badge-needs-accessible-name": badgeNeedsAccessibleName,
         "progressbar-needs-labelling": progressbarNeedsLabelling,
         "field-needs-labelling": fieldNeedsLabelling,
+        "tablist-and-tabs-need-labelling": tablistAndTabsNeedLabelling,
         "counter-badge-needs-count": counterBadgeNeedsCount
     },
     configs: {
@@ -104,6 +106,7 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
             }
         }
