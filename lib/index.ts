@@ -1,38 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-console.log("Loading my-eslint-plugin");
-import preferAriaOverTitleAttribute from "./rules/prefer-aria-over-title-attribute";
-import checkboxNeedsLabelling from "./rules/checkbox-needs-labelling";
-import imageButtonMissingAria from "./rules/buttons/image-button-missing-aria";
-import linkMissingLabelling from "./rules/link-missing-labelling";
-import inputComponentsRequireAccessibleName from "./rules/input-components-require-accessible-name";
-import menuItemNeedsLabelling from "./rules/menu-item-needs-labelling";
-import switchNeedsLabelling from "./rules/switch-needs-labelling";
-import toolbarMissingAria from "./rules/toolbar-missing-aria";
-import comboboxNeedsLabelling from "./rules/combobox-needs-labelling";
-import noEmptyComponents from "./rules/no-empty-components";
-import accordionHeaderNeedsLabelling from "./rules/accordion-header-needs-labelling";
-import accordionItemNeedsHeaderAndPanel from "./rules/accordion-item-needs-header-and-panel";
-import compoundButtonNeedsLabelling from "./rules/buttons/compound-button-needs-labelling";
-import noEmptyButtons from "./rules/buttons/no-empty-buttons";
-import spinButtonNeedsLabelling from "./rules/spin-button-needs-labelling";
-import spinButtonUnrecommendedLabelling from "./rules/spin-button-unrecommended-labelling";
-import breadcrumbNeedsLabelling from "./rules/breadcrumb-needs-labelling";
-import dropwdonNeedsLabelling from "./rules/dropdown-needs-labelling";
-import tooltipNotRecommended from "./rules/tooltip-not-recommended";
-import avatarNeedsName from "./rules/avatar-needs-name";
-import radioButtonMissingLabel from "./rules/radio-button-missing-label";
-import radiogroupMissingLabel from "./rules/radiogroup-missing-label";
-import ratingNeedsName from "./rules/rating-needs-name";
-import dialogbodyNeedsTitleContentAndActions from "./rules/dialogbody-needs-title-content-and-actions";
-import dialogsurfaceNeedsAria from "./rules/dialogsurface-needs-aria";
-import spinnerNeedsLabelling from "./rules/spinner-needs-labelling";
-import badgeNeedsAccessibleName from "./rules/badge-needs-accessible-name";
-import progressbarNeedsLabelling from "./rules/progressbar-needs-labelling";
-import fieldNeedsLabelling from "./rules/field-needs-labelling";
-import tablistAndTabsNeedLabelling from "./rules/tablist-and-tabs-need-labelling";
-import counterBadgeNeedsCount from "./rules/counter-badge-needs-count";
+import * as rules from "./rules";
+
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -44,72 +14,76 @@ import counterBadgeNeedsCount from "./rules/counter-badge-needs-count";
 // import all rules in lib/rules
 module.exports = {
     rules: {
-        "checkbox-needs-labelling": checkboxNeedsLabelling,
-        "image-button-missing-aria": imageButtonMissingAria,
-        "link-missing-labelling": linkMissingLabelling,
-        "input-components-require-accessible-name": inputComponentsRequireAccessibleName,
-        "menu-item-needs-labelling": menuItemNeedsLabelling,
-        "switch-needs-labelling": switchNeedsLabelling,
-        "toolbar-missing-aria": toolbarMissingAria,
-        "combobox-needs-labelling": comboboxNeedsLabelling,
-        "no-empty-components": noEmptyComponents,
-        "accordion-header-needs-labelling": accordionHeaderNeedsLabelling,
-        "accordion-item-needs-header-and-panel": accordionItemNeedsHeaderAndPanel,
-        "compound-button-needs-labelling": compoundButtonNeedsLabelling,
-        "no-empty-buttons": noEmptyButtons,
-        "spin-button-needs-labelling": spinButtonNeedsLabelling,
-        "spin-button-unrecommended-labelling": spinButtonUnrecommendedLabelling,
-        "breadcrumb-needs-labelling": breadcrumbNeedsLabelling,
-        "dropdown-needs-labelling": dropwdonNeedsLabelling,
-        "tooltip-not-recommended": tooltipNotRecommended,
-        "avatar-needs-name": avatarNeedsName,
-        "radio-button-missing-label": radioButtonMissingLabel,
-        "radiogroup-missing-label": radiogroupMissingLabel,
-        "rating-needs-name": ratingNeedsName,
-        "prefer-aria-over-title-attribute": preferAriaOverTitleAttribute,
-        "dialogbody-needs-title-content-and-actions": dialogbodyNeedsTitleContentAndActions,
-        "dialogsurface-needs-aria": dialogsurfaceNeedsAria,
-        "spinner-needs-labelling": spinnerNeedsLabelling,
-        "badge-needs-accessible-name": badgeNeedsAccessibleName,
-        "progressbar-needs-labelling": progressbarNeedsLabelling,
-        "visual-label-better-than-aria-suggestion": require("./rules/visual-label-better-than-aria-suggestion"),
-        "field-needs-labelling": fieldNeedsLabelling,
-        "tablist-and-tabs-need-labelling": tablistAndTabsNeedLabelling,
-        "counter-badge-needs-count": counterBadgeNeedsCount
+        "accordion-header-needs-labelling": rules.accordionHeaderNeedsLabelling,
+        "accordion-item-needs-header-and-panel": rules.accordionItemNeedsHeaderAndPanel,
+        "avatar-needs-name": rules.avatarNeedsName,
+        "avoid-using-aria-describedby-for-primary-labelling": rules.avoidUsingAriaDescribedByForPrimaryLabelling,
+        "badge-needs-accessible-name": rules.badgeNeedsAccessibleName,
+        "breadcrumb-needs-labelling": rules.breadcrumbNeedsLabelling,
+        "checkbox-needs-labelling": rules.checkboxNeedsLabelling,
+        "combobox-needs-labelling": rules.comboboxNeedsLabelling,
+        "compound-button-needs-labelling": rules.compoundButtonNeedsLabelling,
+        "counter-badge-needs-count": rules.counterBadgeNeedsCount,
+        "dialogbody-needs-title-content-and-actions": rules.dialogbodyNeedsTitleContentAndActions,
+        "dialogsurface-needs-aria": rules.dialogsurfaceNeedsAria,
+        "dropdown-needs-labelling": rules.dropdownNeedsLabelling,
+        "field-needs-labelling": rules.fieldNeedsLabelling,
+        "image-button-missing-aria": rules.imageButtonMissingAria,
+        "input-components-require-accessible-name": rules.inputComponentsRequireAccessibleName,
+        "link-missing-labelling": rules.linkMissingLabelling,
+        "menu-item-needs-labelling": rules.menuItemNeedsLabelling,
+        "no-empty-buttons": rules.noEmptyButtons,
+        "no-empty-components": rules.noEmptyComponents,
+        "prefer-aria-over-title-attribute": rules.preferAriaOverTitleAttribute,
+        "progressbar-needs-labelling": rules.progressbarNeedsLabelling,
+        "radio-button-missing-label": rules.radioButtonMissingLabel,
+        "radiogroup-missing-label": rules.radiogroupMissingLabel,
+        "rating-needs-name": rules.ratingNeedsName,
+        "spin-button-needs-labelling": rules.spinButtonNeedsLabelling,
+        "spin-button-unrecommended-labelling": rules.spinButtonUnrecommendedLabelling,
+        "spinner-needs-labelling": rules.spinnerNeedsLabelling,
+        "switch-needs-labelling": rules.switchNeedsLabelling,
+        "tablist-and-tabs-need-labelling": rules.tablistAndTabsNeedLabelling,
+        "toolbar-missing-aria": rules.toolbarMissingAria,
+        "tooltip-not-recommended": rules.tooltipNotRecommended,
+        "visual-label-better-than-aria-suggestion": rules.visualLabelBetterThanAriaSuggestion
     },
     configs: {
         recommended: {
             rules: {
-                "@microsoft/fluentui-jsx-a11y/checkbox-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/link-missing-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/input-components-require-accessible-name": "error",
-                "@microsoft/fluentui-jsx-a11y/menu-item-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/switch-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/image-button-missing-aria": "error",
-                "@microsoft/fluentui-jsx-a11y/toolbar-missing-aria": "error",
-                "@microsoft/fluentui-jsx-a11y/combobox-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/no-empty-components": "error",
                 "@microsoft/fluentui-jsx-a11y/accordion-header-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/accordion-item-needs-header-and-panel": "error",
-                "@microsoft/fluentui-jsx-a11y/compound-button-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/no-empty-buttons": "error",
-                "@microsoft/fluentui-jsx-a11y/spin-button-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/spin-button-unrecommended-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/breadcrumb-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/dropdown-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/tooltip-not-recommended": "error",
                 "@microsoft/fluentui-jsx-a11y/avatar-needs-name": "error",
+                "@microsoft/fluentui-jsx-a11y/avoid-using-aria-describedby-for-primary-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/badge-needs-accessible-name": "error",
+                "@microsoft/fluentui-jsx-a11y/breadcrumb-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/checkbox-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/combobox-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/compound-button-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/counter-badge-needs-count": "error",
+                "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
+                "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
+                "@microsoft/fluentui-jsx-a11y/dropdown-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/image-button-missing-aria": "error",
+                "@microsoft/fluentui-jsx-a11y/input-components-require-accessible-name": "error",
+                "@microsoft/fluentui-jsx-a11y/link-missing-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/menu-item-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/no-empty-buttons": "error",
+                "@microsoft/fluentui-jsx-a11y/no-empty-components": "error",
+                "@microsoft/fluentui-jsx-a11y/prefer-aria-over-title-attribute": "warn",
+                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/radio-button-missing-label": "error",
                 "@microsoft/fluentui-jsx-a11y/radiogroup-missing-label": "error",
                 "@microsoft/fluentui-jsx-a11y/rating-needs-name": "error",
-                "@microsoft/fluentui-jsx-a11y/prefer-aria-over-title-attribute": "warn",
-                "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
-                "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
+                "@microsoft/fluentui-jsx-a11y/spin-button-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/spin-button-unrecommended-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion": "warn",
+                "@microsoft/fluentui-jsx-a11y/switch-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
+                "@microsoft/fluentui-jsx-a11y/toolbar-missing-aria": "error",
+                "@microsoft/fluentui-jsx-a11y/tooltip-not-recommended": "error",
+                "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion": "warn"
             }
         }
     }
