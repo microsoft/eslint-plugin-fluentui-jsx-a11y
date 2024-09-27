@@ -13,20 +13,14 @@ This rule aims to enforce that a Rating element must have an accessible label as
 Examples of **incorrect** code for this rule:
 
 ```js
-
 <Rating />
-
 ```
 
 Examples of **correct** code for this rule:
 
 ```js
-
 <Rating itemLabel={number => `Rating of ${number} starts`} />
-
 ```
-
-### Options
 
 FluentUI supports receiving a function that will add the aria-label to the element with the number. This prop is called itemLabel.
 If this is not the desired route, a name, aria-label or aria-labelledby can be added instead.
@@ -37,4 +31,4 @@ You might want to turn this rule off if you don't intend for this component to b
 
 ## Further Reading
 
-- [ARIA in HTML](https://www.w3.org/TR/html-aria/)
+-   [ARIA in HTML](https://www.w3.org/TR/html-aria/)
