@@ -46,7 +46,8 @@
         "update:eslint-docs": "eslint-doc-generator",
         "fix:md": "npm run lint:docs -- --fix",
         "test:new": "jest",
-        "prepare": "husky"
+        "prepare": "husky",
+        "test:coverage": "jest --coverage"
     },
     "dependencies": {
         "eslint-plugin-header": "^3.1.1",

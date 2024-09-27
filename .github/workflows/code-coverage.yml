@@ -17,7 +17,10 @@ jobs:
             - name: npm install, make test-coverage
               run: |
                   npm install
-                  make test-coverage
+                  npm run test:coverage
 
-            - name: Coveralls
-              uses: coverallsapp/github-action@v2.3.0
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@v2.3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage/lcov.info
