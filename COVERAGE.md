@@ -7,7 +7,7 @@ We currently cover the following components:
     -   [x] AvatarGroup
     -   [] Badge
         -   [x] Badge
-        -   [] CounterBadge
+        -   [x] CounterBadge
         -   [N/A] PresenceBadge
     -   [x] Breadcrumb
     -   [x] Button
@@ -30,23 +30,23 @@ We currently cover the following components:
     -   [N/A] Divider
     -   [] Drawer
     -   [X] Dropdown
-    -   [] Field
+    -   [x] Field
     -   [N/A] FluentProvider
     -   [] Image
     -   [] InfoLabel
     -   [x] Input
     -   [x] Label
     -   [x] Link
-    -   [] Menu
-        -   [] Menu
-        -   [] MenuList
-    -   [] MessageBar
+    -   [x] Menu
+        -   [x] Menu
+        -   [x] MenuList
+    -   [x] MessageBar
     -   [N/A] Overflow
     -   [] Persona
     -   [] Popover
     -   [N/A] Portal
     -   [x] ProgressBar
-    -   [] Rating
+    -   [x] Rating
     -   [] RatingDisplay
     -   [x] Radio
     -   [x] RadioGroup
@@ -60,7 +60,7 @@ We currently cover the following components:
     -   [] SwatchPicker
     -   [x] Switch
     -   [] Table
-    -   [] TabList
+    -   [x] TabList
     -   [] Tag
         -   [] InteractionTag
         -   [] Tag

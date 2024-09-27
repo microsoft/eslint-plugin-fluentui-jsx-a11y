@@ -23,7 +23,9 @@
         "url": "https://github.com/microsoft/eslint-plugin-fluentui-jsx-a11y"
     },
     "files": [
-        "dist"
+        "dist",
+        "README.md",
+        "LICENSE"
     ],
     "type": "commonjs",
     "exports": {
