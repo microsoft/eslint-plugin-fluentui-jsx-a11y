@@ -72,6 +72,7 @@ module.exports = {
         "spinner-needs-labelling": spinnerNeedsLabelling,
         "badge-needs-accessible-name": badgeNeedsAccessibleName,
         "progressbar-needs-labelling": progressbarNeedsLabelling,
+		    "visual-label-better-than-aria-suggestion": require("./rules/visual-label-better-than-aria-suggestion"),
         "field-needs-labelling": fieldNeedsLabelling,
         "tablist-and-tabs-need-labelling": tablistAndTabsNeedLabelling,
         "counter-badge-needs-count": counterBadgeNeedsCount
@@ -106,6 +107,7 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/progressbar-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion": "warn",
                 "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/field-needs-labelling": "error"
             }
