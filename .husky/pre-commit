@@ -1,2 +1,4 @@
 npm run build
+npm run update:eslint-docs
+npm run lint
 npm test
