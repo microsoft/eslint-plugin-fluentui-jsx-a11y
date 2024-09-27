@@ -1,6 +1,6 @@
 # Aria-describedby provides additional context and is not meant for primary labeling (`@microsoft/fluentui-jsx-a11y/avoid-using-aria-describedby-for-primary-labelling`)
 
-⚠️ This rule _warns_ in the ✅ `recommended` config.
+💼 This rule is enabled in the ✅ `recommended` config.
 
 <!-- end auto-generated rule header -->
 

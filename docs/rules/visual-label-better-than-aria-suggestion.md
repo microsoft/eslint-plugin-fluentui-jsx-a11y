@@ -1,6 +1,6 @@
-# Accessibility: Visual labels should be preferred over aria-label (`@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion`)
+# Visual label is better than an aria-label (`@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion`)
 
-💼 This rule is enabled in the ✅ `recommended` config.
+⚠️ This rule _warns_ in the ✅ `recommended` config.
 
 <!-- end auto-generated rule header -->
 
