@@ -30,6 +30,7 @@ import spinnerNeedsLabelling from "./rules/spinner-needs-labelling";
 import badgeNeedsAccessibleName from "./rules/badge-needs-accessible-name";
 import progressbarNeedsLabelling from "./rules/progressbar-needs-labelling";
 import fieldNeedsLabelling from "./rules/field-needs-labelling";
+import counterBadgeNeedsCount from "./rules/counter-badge-needs-count";
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
@@ -68,7 +69,8 @@ module.exports = {
         "spinner-needs-labelling": spinnerNeedsLabelling,
         "badge-needs-accessible-name": badgeNeedsAccessibleName,
         "progressbar-needs-labelling": progressbarNeedsLabelling,
-        "field-needs-labelling": fieldNeedsLabelling
+        "field-needs-labelling": fieldNeedsLabelling,
+        "counter-badge-needs-count": counterBadgeNeedsCount
     },
     configs: {
         recommended: {
@@ -109,4 +111,3 @@ module.exports = {
 module.exports.processors = {
     // add your processors here
 };
-
