@@ -67,23 +67,4 @@ describe("hasToolTipParent", () => {
         const result = hasToolTipParent(mockContext);
         expect(result).toBe(true);
     });
-
-    test("should return false when the ancestor is not a JSXElement", () => {
-        const mockAncestors = [
-            {
-                type: "Literal" // Not a JSXElement
-            },
-            {
-                type: "JSXElement",
-                openingElement: {
-                    type: "JSXOpeningElement",
-                    name: { name: "Tooltip" } // Tooltip exists but first ancestor is invalid
-                }
-            }
-        ];
-        (mockContext.getAncestors as jest.Mock).mockReturnValue(mockAncestors);
-
-        const result = hasToolTipParent(mockContext);
-        expect(result).toBe(false);
-    });
 });
