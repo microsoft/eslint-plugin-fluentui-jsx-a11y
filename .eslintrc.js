@@ -14,7 +14,12 @@ module.exports = {
     ],
     plugins: ["header"],
     env: {
-        node: true
+        node: true,
+        es6: true
+    },
+    parserOptions: {
+        ecmaVersion: 2021, // Allows the latest ECMAScript features
+        sourceType: "module" // Ensures `import` and `export` syntax are valid
     },
     overrides: [
         {
@@ -23,7 +28,8 @@ module.exports = {
         }
     ],
     rules: {
-        "header/header": [2, "line", [" Copyright (c) Microsoft Corporation.", " Licensed under the MIT License."], 2]
+        "header/header": [2, "line", [" Copyright (c) Microsoft Corporation.", " Licensed under the MIT License."], 2],
+        "no-console": "warn" // Add this to warn about console statements
     },
-    ignorePatterns: ["node_modules", "dist/"]
+    ignorePatterns: ["node_modules", "dist/", "scripts"]
 };
