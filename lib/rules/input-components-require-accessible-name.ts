@@ -3,7 +3,7 @@
 
 import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 import { elementType } from "jsx-ast-utils";
-import { isInsideLabelTag, hasAssociatedLabelViaHtmlFor, hasAssociatedLabelViaAriaLabelledBy } from "../util/labelUtils";
+import { isInsideLabelTag, hasAssociatedLabelViaHtmlFor, hasAssociatedLabelViaAriaLabelledBy, hasAriaLabel } from "../util/labelUtils";
 import { hasFieldParent } from "../util/hasFieldParent";
 import { applicableComponents } from "../applicableComponents/inputBasedComponents";
 import { JSXOpeningElement } from "estree-jsx";
@@ -41,8 +41,9 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
                     return;
                 }
 
-                // wrapped in Label tag, labelled with htmlFor, labelled with aria-labelledby
+                // wrapped in Label tag, labelled with htmlFor, labelled with aria-labelledby, labelled with aria-label
                 if (
+                    hasAriaLabel(node) ||
                     hasFieldParent(context) ||
                     isInsideLabelTag(context) ||
                     hasAssociatedLabelViaHtmlFor(node, context) ||
