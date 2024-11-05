@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { hasFieldParent } from "../../../../lib/util/hasFieldParent";
 import { TSESTree } from "@typescript-eslint/types";
 import { TSESLint } from "@typescript-eslint/utils";

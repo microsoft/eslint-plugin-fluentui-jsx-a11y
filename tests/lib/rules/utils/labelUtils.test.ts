@@ -1,54 +1,199 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { isInsideLabelTag } from "../../../../lib/util/labelUtils";
+import { hasAssociatedLabelViaAriaLabelledBy, hasAssociatedLabelViaAriaDescribedby } from "../../../../lib/util/labelUtils";
 
-describe("isInsideLabelTag", function () {
-    it("should return true when nested within a Label tag", function () {
-        const context = {
-            getAncestors: () => [
-                {
-                    type: "JSXElement",
-                    openingElement: { name: { name: "Label" } }
-                }
-                // Other ancestors as needed...
-            ]
-        };
+import { TSESTree, TSESLint, AST_NODE_TYPES } from "@typescript-eslint/utils"; // Use TSESTree types consistently
 
-        const result = isInsideLabelTag(context);
+describe("labelUtils", () => {
+    // Mock context with getSourceCode method
+    const mockContext = (): TSESLint.RuleContext<string, unknown[]> => {
+        return {
+            getSourceCode: () => ({
+                getText: () => "mocked text"
+            })
+        } as unknown as TSESLint.RuleContext<string, unknown[]>;
+    };
+    // Define the test suite
+    describe("hasAssociatedLabelViaAriaLabelledBy", () => {
+        let context: TSESLint.RuleContext<string, unknown[]>;
+        let openingElement: TSESTree.JSXOpeningElement;
 
-        expect(result).toBe(true);
+        beforeEach(() => {
+            context = mockContext();
+            openingElement = {
+                attributes: []
+            } as unknown as TSESTree.JSXOpeningElement;
+        });
+
+        function createJSXAttribute(name: string, value: string | number | null): TSESTree.JSXAttribute {
+            return {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name } as TSESTree.JSXIdentifier,
+                value: value !== null ? ({ type: AST_NODE_TYPES.Literal, value } as TSESTree.Literal) : null,
+                loc: {} as TSESTree.SourceLocation,
+                range: [0, 0]
+            };
+        }
+
+        test("returns false if aria-labelledby is missing", () => {
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, context);
+            expect(result).toBe(false);
+        });
+
+        test("returns false if aria-labelledby is empty", () => {
+            openingElement.attributes = [createJSXAttribute("aria-labelledby", "")];
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, context);
+            expect(result).toBe(false);
+        });
+
+        test("returns false if aria-labelledby value is not a string", () => {
+            openingElement.attributes = [createJSXAttribute("aria-labelledby", 123)];
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, context);
+            expect(result).toBe(false);
+        });
+
+        test("returns false if referenced element by id does not exist", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<Label id='existing-label-id'>Test Label</Label>",
+                    text: () => "<Label id='existing-label-id'>Test Label</Label>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-labelledby", "non-existing-id")];
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, customContext);
+            expect(result).toBe(false);
+        });
+
+        test("returns true if aria-labelledby references an existing label element", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<Label id='existing-label-id'>Test Label</Label>",
+                    text: () => "<Label id='existing-label-id'>Test Label</Label>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-labelledby", "existing-label-id")];
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, customContext);
+            expect(result).toBe(true);
+        });
+
+        test("returns true if aria-labelledby references an existing non-label element", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<div id='existing-non-label-id'>Test Label</div>",
+                    text: () => "<div id='existing-non-label-id'>Test Label</div>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-labelledby", "existing-non-label-id")];
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, customContext);
+            expect(result).toBe(true);
+        });
+
+        test("returns true if aria-labelledby references both label and non-label elements", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<h2 id='existing-label-id'>Test Label</h2>",
+                    text: () => "<h2 id='existing-label-id'>Test Label</h2>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-labelledby", "existing-label-id")];
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, customContext);
+            expect(result).toBe(true);
+        });
     });
 
-    it("should return true when nested within a label tag (case-insensitive)", function () {
-        const context = {
-            getAncestors: () => [
-                {
-                    type: "JSXElement",
-                    openingElement: { name: { name: "label" } }
-                }
-                // Other ancestors as needed...
-            ]
-        };
+    describe("hasAssociatedLabelViaAriaDescribedby", () => {
+        let context: TSESLint.RuleContext<string, unknown[]>;
+        let openingElement: TSESTree.JSXOpeningElement;
 
-        const result = isInsideLabelTag(context);
+        beforeEach(() => {
+            context = mockContext();
+            openingElement = {
+                attributes: []
+            } as unknown as TSESTree.JSXOpeningElement;
+        });
 
-        expect(result).toBe(true);
-    });
+        function createJSXAttribute(name: string, value: string | number | null): TSESTree.JSXAttribute {
+            return {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name } as TSESTree.JSXIdentifier,
+                value: value !== null ? ({ type: AST_NODE_TYPES.Literal, value } as TSESTree.Literal) : null,
+                loc: {} as TSESTree.SourceLocation,
+                range: [0, 0]
+            };
+        }
 
-    it("should return false when not nested within a Label tag", function () {
-        const context = {
-            getAncestors: () => [
-                {
-                    type: "JSXElement",
-                    openingElement: { name: { name: "div" } } // Non-Label element
-                }
-                // Other ancestors as needed...
-            ]
-        };
+        test("returns false if aria-describedby is missing", () => {
+            const result = hasAssociatedLabelViaAriaDescribedby(openingElement, context);
+            expect(result).toBe(false);
+        });
 
-        const result = isInsideLabelTag(context);
+        test("returns false if aria-describedby is empty", () => {
+            openingElement.attributes = [createJSXAttribute("aria-describedby", "")];
+            const result = hasAssociatedLabelViaAriaDescribedby(openingElement, context);
+            expect(result).toBe(false);
+        });
 
-        expect(result).toBe(false);
+        test("returns false if aria-describedby value is not a string", () => {
+            openingElement.attributes = [createJSXAttribute("aria-describedby", 123)];
+            const result = hasAssociatedLabelViaAriaDescribedby(openingElement, context);
+            expect(result).toBe(false);
+        });
+
+        test("returns false if referenced element by id does not exist", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<Label id='existing-label-id'>Test Label</Label>",
+                    text: () => "<Label id='existing-label-id'>Test Label</Label>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-describedby", "non-existing-id")];
+            const result = hasAssociatedLabelViaAriaDescribedby(openingElement, customContext);
+            expect(result).toBe(false);
+        });
+
+        test("returns true if aria-describedby references an existing label element", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<Label id='existing-label-id'>Test Label</Label>",
+                    text: () => "<Label id='existing-label-id'>Test Label</Label>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-describedby", "existing-label-id")];
+            const result = hasAssociatedLabelViaAriaDescribedby(openingElement, customContext);
+            expect(result).toBe(true);
+        });
+
+        test("returns true if aria-describedby references an existing non-label element", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<div id='existing-non-label-id'>Test Label</div>",
+                    text: () => "<div id='existing-non-label-id'>Test Label</div>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-describedby", "existing-non-label-id")];
+            const result = hasAssociatedLabelViaAriaDescribedby(openingElement, customContext);
+            expect(result).toBe(true);
+        });
+
+        test("returns true if aria-describedby references both label and non-label elements", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<h2 id='existing-label-id'>Test Label</h2>",
+                    text: () => "<h2 id='existing-label-id'>Test Label</h2>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-describedby", "existing-label-id")];
+            const result = hasAssociatedLabelViaAriaDescribedby(openingElement, customContext);
+            expect(result).toBe(true);
+        });
     });
 });

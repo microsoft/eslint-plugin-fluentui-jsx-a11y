@@ -4,7 +4,7 @@
 import { TSESTree } from "@typescript-eslint/types";
 
 // Flatten the JSX tree structure by recursively collecting all child elements
-export default function flattenChildren(node: TSESTree.JSXElement): TSESTree.JSXElement[] {
+const flattenChildren = (node: TSESTree.JSXElement): TSESTree.JSXElement[] => {
     const flatChildren: TSESTree.JSXElement[] = [];
 
     if (node.children && node.children.length > 0) {
@@ -17,4 +17,6 @@ export default function flattenChildren(node: TSESTree.JSXElement): TSESTree.JSX
     }
 
     return flatChildren;
-}
+};
+
+export { flattenChildren };

@@ -1,73 +1,50 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { flattenChildren } from "../../../../lib/util/flattenChildren";
 import { TSESTree } from "@typescript-eslint/types";
 
 describe("flattenChildren", () => {
-    test("should return an empty array when node has no children", () => {
+    it("should return an empty array when there are no children", () => {
         const node: TSESTree.JSXElement = {
-            type: "JSXElement",
-            openingElement: {} as TSESTree.JSXOpeningElement,
-            closingElement: null,
             children: []
-        };
-        const result = flattenChildren(node);
-        expect(result).toEqual([]);
+        } as any;
+        expect(flattenChildren(node)).toEqual([]);
     });
 
-    test("should return the same array when node has no nested JSXElement children", () => {
+    it("should return direct children when there are no nested children", () => {
+        const child1: TSESTree.JSXElement = { children: [], type: "JSXElement" } as any;
+        const child2: TSESTree.JSXElement = { children: [], type: "JSXElement" } as any;
         const node: TSESTree.JSXElement = {
-            type: "JSXElement",
-            openingElement: {} as TSESTree.JSXOpeningElement,
-            closingElement: null,
-            children: [
-                { type: "JSXText", value: "Hello" } as TSESTree.JSXText,
-                { type: "JSXExpressionContainer" } as TSESTree.JSXExpressionContainer
-            ]
-        };
-        const result = flattenChildren(node);
-        expect(result).toEqual([]);
+            children: [child1, child2]
+        } as any;
+
+        expect(flattenChildren(node)).toEqual([child1, child2]);
     });
 
-    test("should flatten nested JSXElement children", () => {
-        const node: TSESTree.JSXElement = {
-            type: "JSXElement",
-            openingElement: {} as TSESTree.JSXOpeningElement,
-            closingElement: null,
-            children: [
-                {
-                    type: "JSXElement",
-                    openingElement: {} as TSESTree.JSXOpeningElement,
-                    closingElement: null,
-                    children: [{ type: "JSXText", value: "Nested" } as TSESTree.JSXText]
-                } as TSESTree.JSXElement
-            ]
-        };
-        const result = flattenChildren(node);
-        expect(result).toEqual([node.children[0], { type: "JSXText", value: "Nested" }]);
+    it("should return a flattened array of children with nested JSXElements", () => {
+        const nestedChild: TSESTree.JSXElement = { children: [], type: "JSXElement" } as any;
+        const child: TSESTree.JSXElement = { children: [nestedChild], type: "JSXElement" } as any;
+        const root: TSESTree.JSXElement = { children: [child], type: "JSXElement" } as any;
+
+        expect(flattenChildren(root)).toEqual([child, nestedChild]);
     });
 
-    test("should handle mixed nested and non-nested JSXElement children", () => {
-        const node: TSESTree.JSXElement = {
-            type: "JSXElement",
-            openingElement: {} as TSESTree.JSXOpeningElement,
-            closingElement: null,
-            children: [
-                {
-                    type: "JSXElement",
-                    openingElement: {} as TSESTree.JSXOpeningElement,
-                    closingElement: null,
-                    children: [
-                        { type: "JSXText", value: "Text" } as TSESTree.JSXText,
-                        {
-                            type: "JSXElement",
-                            openingElement: {} as TSESTree.JSXOpeningElement,
-                            closingElement: null,
-                            children: []
-                        } as TSESTree.JSXElement
-                    ]
-                } as TSESTree.JSXElement
-            ]
-        };
-        const result = flattenChildren(node);
-        expect(result).toEqual([node.children[0], { type: "JSXText", value: "Text" }, node.children[0].children[1]]);
+    it("should ignore non-JSXElement children", () => {
+        const child: TSESTree.JSXElement = { children: [], type: "JSXElement" } as any;
+        const nonJSXChild = { type: "JSXText", value: "Hello" } as any;
+        const root: TSESTree.JSXElement = { children: [child, nonJSXChild], type: "JSXElement" } as any;
+
+        expect(flattenChildren(root)).toEqual([child]);
+    });
+
+    it("should handle complex nesting of JSXElements", () => {
+        const grandchild1: TSESTree.JSXElement = { children: [], type: "JSXElement" } as any;
+        const grandchild2: TSESTree.JSXElement = { children: [], type: "JSXElement" } as any;
+        const child1: TSESTree.JSXElement = { children: [grandchild1], type: "JSXElement" } as any;
+        const child2: TSESTree.JSXElement = { children: [grandchild2], type: "JSXElement" } as any;
+        const root: TSESTree.JSXElement = { children: [child1, child2], type: "JSXElement" } as any;
+
+        expect(flattenChildren(root)).toEqual([child1, grandchild1, child2, grandchild2]);
     });
 });

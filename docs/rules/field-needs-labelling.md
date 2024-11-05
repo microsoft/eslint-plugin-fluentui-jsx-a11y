@@ -1,4 +1,4 @@
-# Accessibility: Field must have label attribute (`@microsoft/fluentui-jsx-a11y/field-needs-labelling`)
+# Accessibility: Field must have label (`@microsoft/fluentui-jsx-a11y/field-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

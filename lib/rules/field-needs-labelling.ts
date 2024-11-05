@@ -5,12 +5,14 @@
 
 const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
 const elementType = require("jsx-ast-utils").elementType;
+import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
 
-module.exports = {
+const rule = ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
@@ -21,16 +23,17 @@ module.exports = {
         // docs for the rule
         docs: {
             description: "Accessibility: Field must have label",
-            recommended: true,
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
         schema: []
     },
+
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree
     create(context) {
         return {
             // visitor functions for different types of nodes
-            JSXOpeningElement(node) {
+            JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
                 // if it is not a Spinner, return
                 if (elementType(node) !== "Field") {
                     return;
@@ -48,4 +51,6 @@ module.exports = {
             }
         };
     }
-};
+});
+
+export default rule;
