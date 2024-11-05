@@ -1,10 +1,10 @@
-# Accessibility: Field must have either label, validationMessage and hint attributes (`@microsoft/fluentui-jsx-a11y/field-needs-labelling`)
+# Accessibility: Field must have label attribute (`@microsoft/fluentui-jsx-a11y/field-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
 <!-- end auto-generated rule header -->
 
-Field must have `label` prop and either `validationMessage` or `hint` prop.
+Field must have `label` prop.
 
 <https://www.w3.org/TR/html-aria/>
 
@@ -12,7 +12,6 @@ Field must have `label` prop and either `validationMessage` or `hint` prop.
 
 -   Make sure that Field component has following props:
     -   `label`
-    -   `validationMessage` or `hint`
 
 ## Rule Details
 
@@ -21,19 +20,13 @@ This rule aims to make Field component accessible.
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<Field
-    label="Example field"
-    validationState="success"
->
+<Field label="Example field" validationState="success">
     <ProgressBar value={0.5} max={1} />
 </Field>
 ```
 
 ```jsx
-<Field
-    validationState="success"
-    hint="This is a hint."
->
+<Field validationState="success" hint="This is a hint.">
     <ProgressBar value={0.5} max={1} />
 </Field>
 ```
@@ -41,21 +34,19 @@ Examples of **incorrect** code for this rule:
 Examples of **correct** code for this rule:
 
 ```jsx
-<Field
-    label="Example field"
-    validationState="success"
-    validationMessage="This is a success message."
->
+<Field label="Example field">
+    <Input />
+</Field>
+```
+
+```jsx
+<Field label="Example field" validationState="success" validationMessage="This is a success message.">
     <ProgressBar value={0.5} max={1} />
 </Field>
 ```
 
 ```jsx
-<Field
-    label="Example field"
-    validationState="success"
-    hint="This is a hint."
->
+<Field label="Example field" validationState="success" hint="This is a hint.">
     <ProgressBar value={0.5} max={1} />
 </Field>
 ```
