@@ -21,7 +21,8 @@ function generateTestCases(componentName: string) {
             `<Label>test</Label>`,
             `<Label>test<${componentName} /></Label>`,
             `<Label>test<SomeNesting><${componentName} /></SomeNesting></Label>`,
-            `<Field label="${componentName}"><${componentName} /></Field>`
+            `<Field label="${componentName}"><${componentName} /></Field>`,
+            `<${componentName} aria-label="this is my component" />`
         ],
         invalid: [
             {

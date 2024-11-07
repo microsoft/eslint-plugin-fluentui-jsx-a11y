@@ -7,6 +7,7 @@ import { isInsideLabelTag, hasAssociatedLabelViaHtmlFor, hasAssociatedLabelViaAr
 import { hasFieldParent } from "../util/hasFieldParent";
 import { applicableComponents } from "../applicableComponents/inputBasedComponents";
 import { JSXOpeningElement } from "estree-jsx";
+import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
 
 //------------------------------------------------------------------------------
 // Rule Definition
@@ -17,7 +18,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
     meta: {
         // possible error messages for the rule
         messages: {
-            missingLabelOnInput: `Accessibility - input fields must have a aria label associated with it: ${applicableComponents.join(
+            missingLabelOnInput: `Accessibility - input fields must have an accessible label associated with it: ${applicableComponents.join(
                 ", "
             )}`
         },
@@ -43,6 +44,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
 
                 // wrapped in Label tag, labelled with htmlFor, labelled with aria-labelledby
                 if (
+                    hasNonEmptyProp(node.attributes, "aria-label") ||
                     hasFieldParent(context) ||
                     isInsideLabelTag(context) ||
                     hasAssociatedLabelViaHtmlFor(node, context) ||

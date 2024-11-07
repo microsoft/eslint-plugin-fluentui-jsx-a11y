@@ -20,7 +20,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
         },
         type: "suggestion", // `problem`, `suggestion`, or `layout`
         docs: {
-            description: "Visual label is better than an aria-label",
+            description: "Visual label is better than an aria-label because sighted users can't read the aria-label text.",
             recommended: "strict",
             url: undefined // URL to the documentation page for this rule
         },

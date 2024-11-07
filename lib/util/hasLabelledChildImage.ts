@@ -25,6 +25,7 @@ const isJSXIdentifierWithName = (name: TSESTree.JSXTagNameExpression, validNames
  * @returns boolean
  */
 const hasLabelledChildImage = (node: TSESTree.JSXElement): boolean => {
+    console.log("node::", node);
     if (!node.children || node.children.length === 0) {
         return false;
     }
@@ -32,6 +33,10 @@ const hasLabelledChildImage = (node: TSESTree.JSXElement): boolean => {
     return flattenChildren(node).some(child => {
         if (child.type === "JSXElement" && isJSXIdentifierWithName(child.openingElement.name, mergedImageComponents)) {
             const attributes = child.openingElement.attributes;
+            console.log("attributes::", attributes);
+            console.log("hasAccessibilityAttributes(attributes)", hasAccessibilityAttributes(attributes));
+            console.log("!isImageHidden(attributes)", !isImageHidden(attributes));
+
             return !isImageHidden(attributes) && hasAccessibilityAttributes(attributes);
         }
         return false;
@@ -58,17 +63,28 @@ const hasAccessibilityAttributes = (attributes: TSESTree.JSXOpeningElement["attr
  * @returns boolean
  */
 const isImageHidden = (attributes: TSESTree.JSXOpeningElement["attributes"]): boolean => {
+    // Check if the image has the `aria-hidden` attribute
     if (hasProp(attributes as unknown as JSXOpeningElement["attributes"], "aria-hidden")) {
         return true;
     }
 
+    // Check if the image has an `aria-label` attribute with a non-empty value
+    const ariaLabelProp = getProp(attributes as unknown as JSXOpeningElement["attributes"], "aria-label");
+    if (ariaLabelProp) {
+        const ariaLabelValue = getPropValue(ariaLabelProp);
+        if (ariaLabelValue) {
+            return false; // If `aria-label` is present and has a value, the image is not hidden
+        }
+    }
+
+    // Check if the image has an `alt` attribute and return true if the `alt` value is falsy
     const altProp = getProp(attributes as unknown as JSXOpeningElement["attributes"], "alt");
     if (altProp) {
         const altValue = getPropValue(altProp);
         return !altValue; // Returns true if `altValue` is falsy (e.g., empty string, null, or undefined)
     }
 
-    return true; // If `alt` is not present, consider the image hidden
+    return true; // If neither `alt` nor `aria-label` is present, consider the image hidden
 };
 
 export { hasLabelledChildImage, isImageHidden, hasAccessibilityAttributes, isJSXIdentifierWithName };
