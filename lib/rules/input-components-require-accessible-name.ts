@@ -42,12 +42,6 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
                     return;
                 }
 
-                console.log("aria-label::: ", hasNonEmptyProp(node.attributes, "aria-label"));
-                console.log("hasFieldParent::: ", hasFieldParent(context));
-                console.log("isInsideLabelTag::: ", isInsideLabelTag(context));
-                console.log("hasAssociatedLabelViaHtmlFor::: ", hasAssociatedLabelViaHtmlFor(node, context));
-                console.log("hasAssociatedLabelViaAriaLabelledBy::: ", hasAssociatedLabelViaAriaLabelledBy(node, context));
-
                 // wrapped in Label tag, labelled with htmlFor, labelled with aria-labelledby
                 if (
                     hasNonEmptyProp(node.attributes, "aria-label") ||
