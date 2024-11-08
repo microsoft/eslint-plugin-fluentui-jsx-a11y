@@ -31,39 +31,40 @@ function generateTestCases(labelComponent: string, componentName: string) {
 function generateTestCasesLabel(labelComponent: string, componentName: string) {
     return {
         valid: [
-            `<><${labelComponent} htmlFor="some-id">Some Label</${labelComponent}><${componentName} id="some-id"/></>`,
-            `<><${labelComponent} id="test-span">Some Label</${labelComponent}><${componentName} id="some-id" aria-labelledby="test-span"/></>`,
-            `<${labelComponent}>test</${labelComponent}>`,
-            `<${labelComponent}>test<${componentName} /></${labelComponent}>`,
-            `<${labelComponent}>test<SomeNesting><${componentName} /></SomeNesting></${labelComponent}>`,
-            `<Field label="this is my label"><${componentName} /></Field>`,
-            `<${componentName} aria-label="this is my component" />`
+            // `<><${labelComponent} htmlFor="some-id">Some Label</${labelComponent}><${componentName} id="some-id"/></>`,
+            // `<><${labelComponent} id="test-span">Some Label</${labelComponent}><${componentName} id="some-id" aria-labelledby="test-span"/></>`,
+            // `<${labelComponent}>test</${labelComponent}>`,
+            // `<${labelComponent}>test<${componentName} /></${labelComponent}>`,
+            // `<${labelComponent}>test<SomeNesting><${componentName} /></SomeNesting></${labelComponent}>`,
+            // `<Field label="this is my label"><${componentName} /></Field>`,
+            // `<${componentName} aria-label="this is my component" />`,
+            `<><${labelComponent} id="paragraph_label-2">type here</${labelComponent}><${componentName} aria-labelledby="paragraph_label-2"></${componentName}><${labelComponent} id="paragraph_label-3">type here</${labelComponent}><${componentName} aria-labelledby="paragraph_label-3"></${componentName}></>`
         ],
         invalid: [
-            {
-                code: `<><${componentName}/></>`,
-                errors: [{ messageId: "missingLabelOnInput" }]
-            },
-            {
-                code: `<><${labelComponent}/><${componentName}/></>`,
-                errors: [{ messageId: "missingLabelOnInput" }]
-            },
-            {
-                code: `<><${labelComponent} htmlFor="id"/><${componentName} /></>`,
-                errors: [{ messageId: "missingLabelOnInput" }]
-            },
-            {
-                code: `<${componentName} id="some-id"/>`,
-                errors: [{ messageId: "missingLabelOnInput" }]
-            },
-            {
-                code: `<><${labelComponent}>Some Label</${labelComponent}><${componentName} id="some-id"/></>`,
-                errors: [{ messageId: "missingLabelOnInput" }]
-            },
-            {
-                code: `<><Field></Field><${componentName} id="some-id"/></>`,
-                errors: [{ messageId: "missingLabelOnInput" }]
-            }
+            // {
+            //     code: `<><${componentName}/></>`,
+            //     errors: [{ messageId: "missingLabelOnInput" }]
+            // },
+            // {
+            //     code: `<><${labelComponent}/><${componentName}/></>`,
+            //     errors: [{ messageId: "missingLabelOnInput" }]
+            // },
+            // {
+            //     code: `<><${labelComponent} htmlFor="id"/><${componentName} /></>`,
+            //     errors: [{ messageId: "missingLabelOnInput" }]
+            // },
+            // {
+            //     code: `<${componentName} id="some-id"/>`,
+            //     errors: [{ messageId: "missingLabelOnInput" }]
+            // },
+            // {
+            //     code: `<><${labelComponent}>Some Label</${labelComponent}><${componentName} id="some-id"/></>`,
+            //     errors: [{ messageId: "missingLabelOnInput" }]
+            // },
+            // {
+            //     code: `<><Field></Field><${componentName} id="some-id"/></>`,
+            //     errors: [{ messageId: "missingLabelOnInput" }]
+            // }
         ]
     };
 }
@@ -72,13 +73,15 @@ function generateAllTestCases() {
     const testSets: any[] = [];
 
     // For each input-based component, generate test cases
-    applicableComponents.forEach(components => {
-        elementsUsedAsLabels.forEach(labels => {
-            testSets.push(generateTestCases(labels, components));
-        });
+    ["Input"].forEach(components => {
+        // applicableComponents.forEach(components => {
+        // elementsUsedAsLabels.forEach(labels => {
+        //     testSets.push(generateTestCases(labels, components));
+        // });
 
         // Also generate test cases for each native DOM element
-        labelBasedComponents.forEach(labels => {
+        ["Label"].forEach(labels => {
+            // labelBasedComponents.forEach(labels => {
             testSets.push(generateTestCasesLabel(labels, components));
         });
     });

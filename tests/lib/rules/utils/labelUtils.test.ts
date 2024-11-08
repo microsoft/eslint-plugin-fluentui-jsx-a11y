@@ -79,6 +79,19 @@ describe("labelUtils", () => {
             expect(result).toBe(true);
         });
 
+        test("returns true if aria-labelledby references an existing label element without duplicates", () => {
+            const customContext: TSESLint.RuleContext<string, unknown[]> = {
+                getSourceCode: () => ({
+                    getText: () => "<Label id='existing-label-id'>Test Label</Label><Label id='existing-label-id-2'>Test Label</Label>",
+                    text: () => "<Label id='existing-label-id'>Test Label</Label>"
+                })
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
+
+            openingElement.attributes = [createJSXAttribute("aria-labelledby", "existing-label-id")];
+            const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, customContext);
+            expect(result).toBe(true);
+        });
+
         test("returns true if aria-labelledby references an existing non-label element", () => {
             const customContext: TSESLint.RuleContext<string, unknown[]> = {
                 getSourceCode: () => ({

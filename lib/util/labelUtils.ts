@@ -40,9 +40,17 @@ const hasLabelWithHtmlForId = (idValue: string, context: TSESLint.RuleContext<st
         return false;
     }
     const sourceCode = context.getSourceCode();
-    const regex = /<Label[^>]*htmlFor[^>]*=[^>]*[{"|{'|"|']([^>'"}]*)['|"|'}|"}][^>]*>/gim;
-    const matches = regex.exec(sourceCode.text);
-    return !!matches && matches.some(match => match === idValue);
+    console.log("sourceCode", sourceCode.getText()); // Optional debugging
+
+    const regex = /<(Label|label)[^>]*htmlFor[^>]*=["{']([^"'{}]*)["'}]/gi;
+    let match;
+    while ((match = regex.exec(sourceCode.text)) !== null) {
+        // `match[2]` contains the `htmlFor` attribute value
+        if (match[2] === idValue) {
+            return true;
+        }
+    }
+    return false;
 };
 
 /**
@@ -59,10 +67,16 @@ const hasLabelWithHtmlId = (idValue: string, context: TSESLint.RuleContext<strin
     }
     const sourceCode = context.getSourceCode();
     console.log("sourceCode", sourceCode.getText());
-    const regex = /<Label[^>]*id[^>]*=[^>]*[{"|{'|"|']([^>'"}]*)['|"|'}|"}][^>]*>/gim;
 
-    const matches = regex.exec(sourceCode.text);
-    return !!matches && matches.some(match => match === idValue);
+    const regex = /<(Label|label)[^>]*id[^>]*=["{']([^"'{}]*)["'}]/gi;
+    let match;
+    while ((match = regex.exec(sourceCode.text)) !== null) {
+        // match[2] should contain the id value
+        if (match[2] === idValue) {
+            return true;
+        }
+    }
+    return false;
 };
 
 /***
@@ -79,10 +93,18 @@ const hasOtherElementWithHtmlId = (idValue: string, context: TSESLint.RuleContex
         return false;
     }
     const sourceCode: string = context.getSourceCode().text;
-    const regex = /<(div|span|p|h[1-6])[^>]*id[^>]*=[^>]*[{"|{'|"|']([^>'"}]*)['|"|'}|"}][^>]*>/gim;
+    console.log("sourceCode", sourceCode); // For debugging, if needed
 
-    const matches = regex.exec(sourceCode);
-    return !!matches && matches.some(match => match === idValue);
+    // Adjusted regex pattern for elements with `id` attribute
+    const regex = /<(div|span|p|h[1-6])[^>]*id[^>]*=["{']([^"'{}]*)["'}]/gi;
+    let match;
+    while ((match = regex.exec(sourceCode)) !== null) {
+        // `match[2]` contains the `id` value in each matched element
+        if (match[2] === idValue) {
+            return true;
+        }
+    }
+    return false;
 };
 
 /**
@@ -99,6 +121,7 @@ const hasAssociatedLabelViaAriaLabelledBy = (
     context: TSESLint.RuleContext<string, unknown[]>
 ): boolean => {
     const _hasAriaLabelledBy = hasNonEmptyProp(openingElement.attributes, "aria-labelledby");
+    console.log(" --- _hasAriaLabelledBy::", _hasAriaLabelledBy);
     const prop = getProp(openingElement.attributes as unknown as JSXOpeningElement["attributes"], "aria-labelledby");
 
     // Check if the prop exists before passing it to getPropValue
@@ -110,7 +133,10 @@ const hasAssociatedLabelViaAriaLabelledBy = (
     }
 
     const hasHtmlId = hasLabelWithHtmlId(idValue, context);
+    console.log(" --- hasHtmlId::", hasHtmlId);
+
     const hasElementWithHtmlId = hasOtherElementWithHtmlId(idValue, context);
+    console.log(" --- hasElementWithHtmlId:::", hasElementWithHtmlId);
 
     return _hasAriaLabelledBy && (hasHtmlId || hasElementWithHtmlId);
 };
