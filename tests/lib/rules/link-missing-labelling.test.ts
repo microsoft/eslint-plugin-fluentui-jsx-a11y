@@ -24,6 +24,7 @@ function generateTestCases(componentName: string, imageName: string) {
             `<><Label id="my-label-2">This is a Header</Label><${componentName} href="https://www.bing.com" aria-labelledby="my-label-2"><${imageName} src="img_girl.jpg" /></${componentName}></>`,
             `<${componentName} href="https://www.bing.com"><${imageName} src="img1.jpg" /><${imageName} src="img2.jpg" alt="The girl with the dog." /></${componentName}>`
         ],
+
         invalid: [
             // Invalid cases
             {

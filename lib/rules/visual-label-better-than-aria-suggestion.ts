@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-"use strict";
-
-var elementType = require("jsx-ast-utils").elementType;
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
-const { applicableComponents } = require("../applicableComponents/buttonBasedComponents");
+import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
+import { applicableComponents } from "../applicableComponents/inputBasedComponents";
+import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
+import { elementType } from "jsx-ast-utils";
+import { JSXOpeningElement } from "estree-jsx";
 
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
 
-/** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+const rule = ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible warning messages for the lint rule
         messages: {
@@ -20,20 +20,21 @@ module.exports = {
         },
         type: "suggestion", // `problem`, `suggestion`, or `layout`
         docs: {
-            description: "Visual label is better than an aria-label",
-            recommended: true,
-            url: null // URL to the documentation page for this rule
+            description: "Visual label is better than an aria-label because sighted users can't read the aria-label text.",
+            recommended: "strict",
+            url: undefined // URL to the documentation page for this rule
         },
-        fixable: null, // Or `code` or `whitespace`
+        fixable: undefined, // Or `code` or `whitespace`
         schema: [] // Add a schema if the rule has options
     },
+
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree
     create(context) {
         return {
             // visitor functions for different types of nodes
-            JSXOpeningElement(node) {
+            JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
                 // if it is not a listed component, return
-                if (!applicableComponents.includes(elementType(node))) {
+                if (!applicableComponents.includes(elementType(node as unknown as JSXOpeningElement))) {
                     return;
                 }
 
@@ -47,4 +48,6 @@ module.exports = {
             }
         };
     }
-};
+});
+
+export default rule;

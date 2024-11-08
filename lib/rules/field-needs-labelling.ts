@@ -5,41 +5,41 @@
 
 const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
 const elementType = require("jsx-ast-utils").elementType;
+import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 
 //------------------------------------------------------------------------------
 // Rule Definition
 //------------------------------------------------------------------------------
 
-module.exports = {
+const rule = ESLintUtils.RuleCreator.withoutDocs({
+    defaultOptions: [],
     meta: {
         // possible error messages for the rule
         messages: {
-            noUnlabelledField: "Accessibility: Field must have either label, validationMessage and hint attributes"
+            noUnlabelledField: "Accessibility: Field must have label"
         },
         // "problem" means the rule is identifying code that either will cause an error or may cause a confusing behavior: https://eslint.org/docs/latest/developer-guide/working-with-rules
         type: "problem",
         // docs for the rule
         docs: {
-            description: "Accessibility: Field must have either label, validationMessage and hint attributes",
-            recommended: true,
+            description: "Accessibility: Field must have label",
+            recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
         schema: []
     },
+
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree
     create(context) {
         return {
             // visitor functions for different types of nodes
-            JSXOpeningElement(node) {
+            JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
                 // if it is not a Spinner, return
                 if (elementType(node) !== "Field") {
                     return;
                 }
 
-                if (
-                    hasNonEmptyProp(node.attributes, "label", true) &&
-                    (hasNonEmptyProp(node.attributes, "validationMessage", true) || hasNonEmptyProp(node.attributes, "hint", true))
-                ) {
+                if (hasNonEmptyProp(node.attributes, "label")) {
                     return;
                 }
 
@@ -51,5 +51,6 @@ module.exports = {
             }
         };
     }
-};
+});
 
+export default rule;

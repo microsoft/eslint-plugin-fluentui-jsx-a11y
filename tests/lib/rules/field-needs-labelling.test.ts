@@ -6,22 +6,17 @@
 //------------------------------------------------------------------------------
 // Requirements
 //------------------------------------------------------------------------------
-
-const rule = require("../../../lib/rules/field-needs-labelling"),
-    RuleTester = require("eslint").RuleTester;
+import { Rule } from "eslint";
+import ruleTester from "./helper/ruleTester";
+import rule from "../../../lib/rules/field-needs-labelling";
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
-const ruleTester = new RuleTester();
-ruleTester.run("field-needs-labelling", rule, {
+ruleTester.run("field-needs-labelling", rule as unknown as Rule.RuleModule, {
     valid: [
-        `<Field
-            label="Example field"
-            validationState="success"
-            validationMessage="This is a success message."
-        >
+        `<Field label="Example field">
             <ProgressBar value={0.5} max={1} />
         </Field>`,
         `<Field
@@ -34,23 +29,12 @@ ruleTester.run("field-needs-labelling", rule, {
     ],
     invalid: [
         {
-            code: `<Field
-                label="Example field"
-                validationState="success"
-            >
-                <ProgressBar value={0.5} max={1} />
-            </Field>`,
+            code: `<Field><ProgressBar value={0.5} max={1} /></Field>`,
             errors: [{ messageId: "noUnlabelledField" }]
         },
         {
-            code: `<Field
-                validationState="success"
-                hint="This is a hint."
-            >
-                <ProgressBar value={0.5} max={1} />
-            </Field>`,
+            code: `<Field validationState="success" hint="This is a hint."><ProgressBar value={0.5} max={1} /></Field>`,
             errors: [{ messageId: "noUnlabelledField" }]
         }
     ]
 });
-
