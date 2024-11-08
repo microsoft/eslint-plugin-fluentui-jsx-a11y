@@ -41,7 +41,7 @@ const hasLabelWithHtmlForId = (idValue: string, context: TSESLint.RuleContext<st
     }
     const sourceCode = context.getSourceCode();
 
-    const regex = /<(Label|label)[^>]*\bid\b\s*=\s*["{']([^"'{}]*)["'}]/gi;
+    const regex = /<(Label|label)[^>]*\bhtmlFor\b\s*=\s*["{']([^"'{}]*)["'}]/gi;
 
     let match;
     while ((match = regex.exec(sourceCode.text)) !== null) {
