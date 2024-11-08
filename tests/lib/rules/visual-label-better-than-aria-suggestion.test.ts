@@ -5,7 +5,7 @@ import { Rule } from "eslint";
 import ruleTester from "./helper/ruleTester";
 import rule from "../../../lib/rules/visual-label-better-than-aria-suggestion";
 
-import { applicableComponents } from "../../../lib/applicableComponents/buttonBasedComponents";
+import { applicableComponents } from "../../../lib/applicableComponents/inputBasedComponents";
 
 //------------------------------------------------------------------------------
 // Requirements

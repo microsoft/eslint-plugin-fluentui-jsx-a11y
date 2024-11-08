@@ -9,19 +9,34 @@ import { Rule } from "eslint";
 import ruleTester from "./helper/ruleTester";
 import rule from "../../../lib/rules/input-components-require-accessible-name";
 import { applicableComponents } from "../../../lib/applicableComponents/inputBasedComponents";
+import { labelBasedComponents, elementsUsedAsLabels } from "../../../lib/applicableComponents/labelBasedComponents";
 
 //------------------------------------------------------------------------------
 // Helper function to generate test cases
 //------------------------------------------------------------------------------
-function generateTestCases(componentName: string) {
+function generateTestCases(labelComponent: string, componentName: string) {
     return {
         valid: [
-            `<><Label htmlFor="some-id">Some Label</Label><${componentName} id="some-id"/></>`,
-            `<><Label id="test-span">Some Label</Label><${componentName} id="some-id" aria-labelledby="test-span"/></>`,
-            `<Label>test</Label>`,
-            `<Label>test<${componentName} /></Label>`,
-            `<Label>test<SomeNesting><${componentName} /></SomeNesting></Label>`,
-            `<Field label="${componentName}"><${componentName} /></Field>`,
+            `<><${labelComponent} id="test-span">Some Label</${labelComponent}><${componentName} id="some-id" aria-labelledby="test-span"/></>`
+        ],
+        invalid: [
+            {
+                code: `<><${labelComponent} id="test-span-2">Some Label</${labelComponent}><${componentName} id="some-id" aria-labelledby="test-span"/></>`,
+                errors: [{ messageId: "missingLabelOnInput" }]
+            }
+        ]
+    };
+}
+
+function generateTestCasesLabel(labelComponent: string, componentName: string) {
+    return {
+        valid: [
+            `<><${labelComponent} htmlFor="some-id">Some Label</${labelComponent}><${componentName} id="some-id"/></>`,
+            `<><${labelComponent} id="test-span">Some Label</${labelComponent}><${componentName} id="some-id" aria-labelledby="test-span"/></>`,
+            `<${labelComponent}>test</${labelComponent}>`,
+            `<${labelComponent}>test<${componentName} /></${labelComponent}>`,
+            `<${labelComponent}>test<SomeNesting><${componentName} /></SomeNesting></${labelComponent}>`,
+            `<Field label="this is my label"><${componentName} /></Field>`,
             `<${componentName} aria-label="this is my component" />`
         ],
         invalid: [
@@ -30,11 +45,11 @@ function generateTestCases(componentName: string) {
                 errors: [{ messageId: "missingLabelOnInput" }]
             },
             {
-                code: `<><Label/><${componentName}/></>`,
+                code: `<><${labelComponent}/><${componentName}/></>`,
                 errors: [{ messageId: "missingLabelOnInput" }]
             },
             {
-                code: `<><Label htmlFor="id"/><${componentName} /></>`,
+                code: `<><${labelComponent} htmlFor="id"/><${componentName} /></>`,
                 errors: [{ messageId: "missingLabelOnInput" }]
             },
             {
@@ -42,7 +57,7 @@ function generateTestCases(componentName: string) {
                 errors: [{ messageId: "missingLabelOnInput" }]
             },
             {
-                code: `<><Label>Some Label</Label><${componentName} id="some-id"/></>`,
+                code: `<><${labelComponent}>Some Label</${labelComponent}><${componentName} id="some-id"/></>`,
                 errors: [{ messageId: "missingLabelOnInput" }]
             },
             {
@@ -53,14 +68,33 @@ function generateTestCases(componentName: string) {
     };
 }
 
+function generateAllTestCases() {
+    const testSets: any[] = [];
+
+    // For each input-based component, generate test cases
+    applicableComponents.forEach(components => {
+        elementsUsedAsLabels.forEach(labels => {
+            testSets.push(generateTestCases(labels, components));
+        });
+
+        // Also generate test cases for each native DOM element
+        labelBasedComponents.forEach(labels => {
+            testSets.push(generateTestCasesLabel(labels, components));
+        });
+    });
+
+    return testSets;
+}
+
 // Collect all test cases for all applicable components
-const allTestCases = applicableComponents.flatMap(component => generateTestCases(component));
+const allTestCases = generateAllTestCases();
 
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
-
-ruleTester.run("input-missing-label", rule as unknown as Rule.RuleModule, {
-    valid: allTestCases.flatMap(test => test.valid),
-    invalid: allTestCases.flatMap(test => test.invalid)
+allTestCases.forEach((testCaseSet, index) => {
+    ruleTester.run(`input-missing-label test set ${index + 1}`, rule as unknown as Rule.RuleModule, {
+        valid: testCaseSet.valid,
+        invalid: testCaseSet.invalid
+    });
 });

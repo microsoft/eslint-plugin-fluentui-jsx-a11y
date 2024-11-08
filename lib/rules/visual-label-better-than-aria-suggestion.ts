@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
-import { applicableComponents } from "../applicableComponents/buttonBasedComponents";
+import { applicableComponents } from "../applicableComponents/inputBasedComponents";
 import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 import { elementType } from "jsx-ast-utils";
 import { JSXOpeningElement } from "estree-jsx";
