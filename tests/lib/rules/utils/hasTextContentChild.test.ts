@@ -22,7 +22,7 @@ describe("hasTextContentChild", () => {
         expect(hasTextContentChild(node)).toBe(false);
     });
 
-    it("should return false when node.children has no JSXText elements with non-whitespace content", () => {
+    it("should return false when node.children has no JSXText or relevant JSXExpressionContainer content", () => {
         const node: TSESTree.JSXElement = {
             children: [{ type: "JSXElement" }, { type: "JSXExpressionContainer" }]
         } as any;
@@ -39,6 +39,34 @@ describe("hasTextContentChild", () => {
     it("should return false when node.children has only whitespace in JSXText elements", () => {
         const node: TSESTree.JSXElement = {
             children: [{ type: "JSXText", value: "   " }]
+        } as any;
+        expect(hasTextContentChild(node)).toBe(false);
+    });
+
+    it("should return true when node.children has JSXExpressionContainer with a literal string", () => {
+        const node: TSESTree.JSXElement = {
+            children: [{ type: "JSXExpressionContainer", expression: { type: "Literal", value: "Hello" } }]
+        } as any;
+        expect(hasTextContentChild(node)).toBe(true);
+    });
+
+    it("should return true when node.children has JSXExpressionContainer with a function call", () => {
+        const node: TSESTree.JSXElement = {
+            children: [{ type: "JSXExpressionContainer", expression: { type: "CallExpression", callee: { name: "myFunc" } } }]
+        } as any;
+        expect(hasTextContentChild(node)).toBe(true);
+    });
+
+    it("should return true when node.children has JSXExpressionContainer with an identifier (variable)", () => {
+        const node: TSESTree.JSXElement = {
+            children: [{ type: "JSXExpressionContainer", expression: { type: "Identifier", name: "myVar" } }]
+        } as any;
+        expect(hasTextContentChild(node)).toBe(true);
+    });
+
+    it("should return false when node.children has JSXExpressionContainer with an empty string literal", () => {
+        const node: TSESTree.JSXElement = {
+            children: [{ type: "JSXExpressionContainer", expression: { type: "Literal", value: "" } }]
         } as any;
         expect(hasTextContentChild(node)).toBe(false);
     });
