@@ -3,6 +3,7 @@
 
 import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
 import { applicableComponents } from "../applicableComponents/inputBasedComponents";
+import { dropdownBasedComponents } from "../applicableComponents/dropdownBasedComponents";
 import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 import { elementType } from "jsx-ast-utils";
 import { JSXOpeningElement } from "estree-jsx";
@@ -34,7 +35,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
             // visitor functions for different types of nodes
             JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
                 // if it is not a listed component, return
-                if (!applicableComponents.includes(elementType(node as unknown as JSXOpeningElement))) {
+                if (![dropdownBasedComponents, ...applicableComponents].includes(elementType(node as unknown as JSXOpeningElement))) {
                     return;
                 }
 

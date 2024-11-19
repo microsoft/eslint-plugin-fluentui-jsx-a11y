@@ -6,6 +6,7 @@ import { elementType } from "jsx-ast-utils";
 import { hasAssociatedLabelViaAriaLabelledBy, hasAssociatedLabelViaHtmlFor, isInsideLabelTag } from "../util/labelUtils";
 import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
 import { JSXOpeningElement } from "estree-jsx";
+import { dropdownBasedComponents } from "../applicableComponents/dropdownBasedComponents";
 
 //------------------------------------------------------------------------------
 // Rule Definition
@@ -34,7 +35,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
             // visitor functions for different types of nodes
             JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
                 // if it is not a Dropdown, return
-                if (elementType(node as JSXOpeningElement) !== "Dropdown") {
+                if (!dropdownBasedComponents.includes(elementType(node as unknown as JSXOpeningElement))) {
                     return;
                 }
 
