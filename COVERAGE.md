@@ -23,7 +23,11 @@ We currently cover the following components:
         -   [] CardFooter
         -   [] CardHeader
         -   [] CardPreview
+    -   [] Carousel
+        - [] Carousel
+        - [] CarouselNav
     -   [x] Checkbox
+    -   [] ColorPicker
     -   [x] Combobox
     -   [] DataGrid
     -   [x] Dialog
@@ -37,10 +41,12 @@ We currently cover the following components:
     -   [x] Input
     -   [x] Label
     -   [x] Link
+    -   [] List
     -   [x] Menu
         -   [x] Menu
         -   [x] MenuList
     -   [x] MessageBar
+    -   [] Nav
     -   [N/A] Overflow
     -   [] Persona
     -   [] Popover
@@ -59,6 +65,7 @@ We currently cover the following components:
     -   [x] Spinner
     -   [] SwatchPicker
     -   [x] Switch
+    -   [] SearchBox
     -   [] Table
     -   [x] TabList
     -   [] Tag
