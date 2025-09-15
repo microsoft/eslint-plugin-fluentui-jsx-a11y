@@ -19,6 +19,6 @@
         "rootDir": ".",
         "allowJs": true
     },
-    "include": ["lib"],
+    "include": ["lib", "tests/lib"],
     "exclude": ["node_modules", "dist"]
 }

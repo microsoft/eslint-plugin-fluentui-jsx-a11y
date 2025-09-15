@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 export { default as accordionHeaderNeedsLabelling } from "./accordion-header-needs-labelling";
 export { default as accordionItemNeedsHeaderAndPanel } from "./accordion-item-needs-header-and-panel";
 export { default as avatarNeedsName } from "./avatar-needs-name";

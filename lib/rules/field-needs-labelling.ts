@@ -3,7 +3,7 @@
 
 "use strict";
 
-const { hasNonEmptyProp } = require("../util/hasNonEmptyProp");
+import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
 const elementType = require("jsx-ast-utils").elementType;
 import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 

@@ -1,4 +1,6 @@
-// Import necessary dependencies and mock functions
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import {
     hasLabelledChildImage,
     isImageHidden,

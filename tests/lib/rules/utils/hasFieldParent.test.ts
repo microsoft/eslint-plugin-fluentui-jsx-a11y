@@ -25,9 +25,11 @@ const createMockContext = (ancestors: TSESTree.Node[]): TSESLint.RuleContext<str
     report: jest.fn(),
     getAncestors: () => ancestors,
     getSourceCode: jest.fn(),
+    // eslint-disable-next-line no-unused-vars
     getDeclaredVariables: function (node: TSESTree.Node): readonly TSESLint.Scope.Variable[] {
         throw new Error("Function not implemented.");
     },
+    // eslint-disable-next-line no-unused-vars
     markVariableAsUsed: function (name: string): boolean {
         throw new Error("Function not implemented.");
     }
