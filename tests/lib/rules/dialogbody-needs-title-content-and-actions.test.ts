@@ -22,7 +22,8 @@ ruleTester.run("dialogbody-needs-title-content-and-actions", rule as any as Rule
                 <Button>Close</Button>
                 <Button>Do Something</Button>
             </DialogActions>
-        </DialogBody>`
+        </DialogBody>`,
+        `<React.StrictMode><Component /></React.StrictMode>`
     ],
 
     invalid: [

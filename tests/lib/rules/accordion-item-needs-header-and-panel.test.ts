@@ -15,7 +15,8 @@ import rule from "../../../lib/rules/accordion-item-needs-header-and-panel";
 
 ruleTester.run("accordion-item-needs-header-and-panel", rule as unknown as Rule.RuleModule, {
     valid: [
-        `<AccordionItem><AccordionHeader>Accordion Header 1</AccordionHeader><AccordionPanel><div>Accordion Panel 1</div></AccordionPanel></AccordionItem>`
+        `<AccordionItem><AccordionHeader>Accordion Header 1</AccordionHeader><AccordionPanel><div>Accordion Panel 1</div></AccordionPanel></AccordionItem>`,
+        `<React.StrictMode><Component /></React.StrictMode>`
     ],
 
     invalid: [
