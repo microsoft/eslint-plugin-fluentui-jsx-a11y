@@ -9,8 +9,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:eslint-plugin/recommended",
         "plugin:node/recommended",
-        "prettier",
-        "plugin:eslint-plugin/recommended"
+        "plugin:prettier/recommended" // Prettier plugin must be last in the extensions
     ],
     plugins: ["header"],
     env: {
