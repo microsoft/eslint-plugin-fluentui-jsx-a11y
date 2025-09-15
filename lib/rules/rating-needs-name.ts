@@ -14,13 +14,14 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
     meta: {
         // possible error messages for the rule
         messages: {
-            missingAriaLabel: 'Accessibility - ratings must have an accessible name or an itemLabel that generates an aria label'
+            missingAriaLabel: "Accessibility - ratings must have an accessible name or an itemLabel that generates an aria label"
         },
         // "problem" means the rule is identifying code that either will cause an error or may cause a confusing behavior: https://eslint.org/docs/latest/developer-guide/working-with-rules
         type: "problem",
         // docs for the rule
         docs: {
-            description: "Accessibility: Ratings must have accessible labelling: name, aria-label, aria-labelledby or itemLabel which generates aria-label",
+            description:
+                "Accessibility: Ratings must have accessible labelling: name, aria-label, aria-labelledby or itemLabel which generates aria-label",
             recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
@@ -32,9 +33,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
             // visitor functions for different types of nodes
             JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
                 // if it is not a listed component, return
-                if (
-                    elementType(node as JSXOpeningElement) !== "Rating"
-                ) {
+                if (elementType(node as JSXOpeningElement) !== "Rating") {
                     return;
                 }
 
