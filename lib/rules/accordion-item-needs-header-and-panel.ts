@@ -25,9 +25,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
     create(context) {
         return {
             JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
-                const isAccordionItem =
-                    node.name.type === AST_NODE_TYPES.JSXIdentifier &&
-                    node.name.name === "AccordionItem";
+                const isAccordionItem = node.name.type === AST_NODE_TYPES.JSXIdentifier && node.name.name === "AccordionItem";
 
                 if (!isAccordionItem) return;
 
