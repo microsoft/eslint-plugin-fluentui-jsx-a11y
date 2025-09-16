@@ -1,7 +1,7 @@
 {
     "arrowParens": "avoid",
     "bracketSpacing": true,
-    "endOfLine": "crlf",
+    "endOfLine": "auto",
     "bracketSameLine": true,
     "printWidth": 140,
     "semi": true,
