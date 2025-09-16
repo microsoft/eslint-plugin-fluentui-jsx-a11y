@@ -4,7 +4,6 @@
 import { elementType } from "jsx-ast-utils";
 import { getPropValue } from "jsx-ast-utils";
 import { getProp } from "jsx-ast-utils";
-import { hasNonEmptyProp } from "./hasNonEmptyProp";
 import { TSESLint } from "@typescript-eslint/utils";
 import { JSXOpeningElement } from "estree-jsx";
 import { TSESTree } from "@typescript-eslint/utils";
@@ -133,7 +132,9 @@ const hasAssociatedAriaText = (
             const varName = expr.name as string;
             const src = getSourceText(context);
             const labelMatch = new RegExp(`<(?:Label|label)[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(varName)}\\s*\\}`, "i").test(src);
-            const otherMatch = new RegExp(`<(?:div|span|p|h[1-6])[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(varName)}\\s*\\}`, "i").test(src);
+            const otherMatch = new RegExp(`<(?:div|span|p|h[1-6])[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(varName)}\\s*\\}`, "i").test(
+                src
+            );
             return labelMatch || otherMatch;
         }
     }
@@ -142,11 +143,15 @@ const hasAssociatedAriaText = (
 };
 
 /* thin wrappers kept for compatibility with existing callers */
-const hasAssociatedLabelViaAriaLabelledBy = (openingElement: TSESTree.JSXOpeningElement, context: TSESLint.RuleContext<string, unknown[]>) =>
-    hasAssociatedAriaText(openingElement, context, "aria-labelledby");
+const hasAssociatedLabelViaAriaLabelledBy = (
+    openingElement: TSESTree.JSXOpeningElement,
+    context: TSESLint.RuleContext<string, unknown[]>
+) => hasAssociatedAriaText(openingElement, context, "aria-labelledby");
 
-const hasAssociatedLabelViaAriaDescribedby = (openingElement: TSESTree.JSXOpeningElement, context: TSESLint.RuleContext<string, unknown[]>) =>
-    hasAssociatedAriaText(openingElement, context, "aria-describedby");
+const hasAssociatedLabelViaAriaDescribedby = (
+    openingElement: TSESTree.JSXOpeningElement,
+    context: TSESLint.RuleContext<string, unknown[]>
+) => hasAssociatedAriaText(openingElement, context, "aria-describedby");
 
 /**
  * htmlFor / id relationship helper for controls (string + identifier fallback)

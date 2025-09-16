@@ -100,7 +100,9 @@ describe("labelUtils", () => {
         });
 
         test("returns true if aria-labelledby references an existing label element without duplicates (literal)", () => {
-            const customContext = mockContext("<Label id='existing-label-id'>Test Label</Label><Label id='existing-label-id-2'>Test Label</Label>");
+            const customContext = mockContext(
+                "<Label id='existing-label-id'>Test Label</Label><Label id='existing-label-id-2'>Test Label</Label>"
+            );
             openingElement.attributes = [createJSXAttributeLiteral("aria-labelledby", "existing-label-id")];
             const result = hasAssociatedLabelViaAriaLabelledBy(openingElement, customContext);
             expect(result).toBe(true);
