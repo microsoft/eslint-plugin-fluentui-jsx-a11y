@@ -45,6 +45,12 @@ module.exports = {
                 "node/no-unsupported-features/es-syntax": "off",
                 "node/no-extraneous-import": "off"
             }
+        },
+        {
+            files: ["lib/index.ts"],
+            rules: {
+                "sort-keys": ["error", "asc", { caseSensitive: true, natural: false }]
+            }
         }
     ],
     rules: {
@@ -53,3 +59,4 @@ module.exports = {
     },
     ignorePatterns: ["node_modules", "dist/", "scripts"]
 };
+
