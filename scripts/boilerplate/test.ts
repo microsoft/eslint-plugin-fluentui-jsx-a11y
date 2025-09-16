@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const testBoilerplate = name => `// Copyright (c) Microsoft Corporation.
+export const testBoilerplateGenerator = (name: string): string => `// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 import { Rule } from "eslint";
@@ -21,4 +21,4 @@ ruleTester.run("${name}", rule as unknown as Rule.RuleModule, {
     ]
 });
 `;
-module.exports = testBoilerplate;
+

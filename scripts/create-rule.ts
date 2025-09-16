@@ -2,13 +2,19 @@
 // Licensed under the MIT License.
 
 /* eslint-disable no-console */
-const { resolve } = require("path");
-const { existsSync, writeFileSync } = require("fs");
-const { exec } = require("child_process");
-const yargs = require("yargs/yargs"); // Use yargs/yargs for modules
-const { hideBin } = require("yargs/helpers"); // To handle CLI arguments
+import { resolve } from "path";
+import { existsSync, writeFileSync } from "fs";
+import { exec } from "child_process";
+// @ts-ignore: yargs has no default export
+import yargs from "yargs/yargs";
+// @ts-ignore: yargs/helpers has no default export
+import { hideBin } from "yargs/helpers";
+// Use require for boilerplate generators (CommonJS)
+// @ts-ignore
 const ruleBoilerplateGenerator = require("./boilerplate/rule");
+// @ts-ignore
 const testBoilerplateGenerator = require("./boilerplate/test");
+// @ts-ignore
 const docBoilerplateGenerator = require("./boilerplate/doc");
 
 // Define the yargs configuration
@@ -18,20 +24,20 @@ const argv = yargs(hideBin(process.argv))
             alias: "a",
             type: "string",
             describe: "Author of the rule",
-            default: "$AUTHOR" // Provide default value
+            default: "$AUTHOR"
         },
         description: {
             alias: "d",
             type: "string",
             describe: "Description of the rule",
-            default: "$DESCRIPTION" // Provide default value
+            default: "$DESCRIPTION"
         }
     })
-    .demandCommand(1, "You must provide the rule name.").argv; // Make the rule name (positional)
+    .demandCommand(1, "You must provide the rule name.").argv as any; // Type assertion for yargs
 
-const ruleName = argv._[0];
-const author = argv.author || "$AUTHOR";
-const description = argv.description || "$DESCRIPTION";
+const ruleName: string = argv._[0];
+const author: string = argv.author || "$AUTHOR";
+const description: string = argv.description || "$DESCRIPTION";
 
 const rulePath = resolve(`lib/rules/${ruleName}.ts`);
 const testPath = resolve(`tests/lib/rules/${ruleName}-test.ts`);
@@ -106,3 +112,4 @@ exec(commandForMainIndex, (error, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
     });
 });
+

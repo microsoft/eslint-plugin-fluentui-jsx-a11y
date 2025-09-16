@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const docBoilerplateGenerator = (name, description) => `# ${description} (@microsoft/fluentui-jsx-a11y/${name})
+export const docBoilerplateGenerator = (
+    name: string,
+    description: string
+): string => `# ${description} (@microsoft/fluentui-jsx-a11y/${name})
 
 Write a useful explanation here!
 
@@ -19,4 +22,4 @@ Write more details here!
 
 ## Further Reading
 `;
-module.exports = docBoilerplateGenerator;
+
