@@ -63,7 +63,11 @@ We currently cover the following components:
     -   [N/A] SkeletonItem
     -   [x] SpinButton
     -   [x] Spinner
-    -   [] SwatchPicker
+    -   [x] SwatchPicker
+        - [] ColorSwatch
+        - [] ImageSwatch
+        - [] EmptySwatch
+        - [] SwatchPickerRow
     -   [x] Switch
     -   [] SearchBox
     -   [] Table
