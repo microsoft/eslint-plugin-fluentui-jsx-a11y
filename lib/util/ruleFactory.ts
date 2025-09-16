@@ -11,10 +11,12 @@ import { JSXOpeningElement } from "estree-jsx";
 export type LabeledControlConfig = {
     component: string | RegExp;
     labelProps: string[]; // e.g. ["label", "aria-label"]
-    allowFieldParent?: boolean; // e.g. <Field label=...><RadioGroup/></Field>
-    allowFor?: boolean; // htmlFor
-    allowLabelledBy?: boolean; // aria-labelledby
-    allowWrappingLabel?: boolean; // <label>...</label>
+    allowFieldParent: boolean; // e.g. <Field label=...><RadioGroup/></Field>
+    allowFor: boolean; // htmlFor
+    allowLabelledBy: boolean; // aria-labelledby
+    allowWrappingLabel: boolean; // <label>...</label>
+    messageId: string;
+    description: string;
 };
 
 /**
@@ -80,27 +82,21 @@ export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: an
  * ```
  *
  * @param config - See `hasAccessibleLabel` for the configuration fields and semantics.
- * @param messageId - The message key used in `meta.messages` (e.g., "missingLabel").
- * @param description - Human-readable rule description and the text displayed for `messageId`.
  * @returns An ESLint `RuleModule` that reports when the configured component lacks an accessible label.
  */
-export function makeLabeledControlRule(
-    config: LabeledControlConfig,
-    messageId: string,
-    description: string
-): TSESLint.RuleModule<string, []> {
+export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.RuleModule<string, []> {
     return {
         meta: {
-            type: "problem" as const,
-            messages: { [messageId]: description },
+            type: "problem",
+            messages: { [config.messageId]: config.description },
             docs: {
-                description,
-                recommended: "strict" as const, // not `true`
+                description: config.description,
+                recommended: "strict",
                 url: "https://www.w3.org/TR/html-aria/"
             },
             schema: []
         },
-        defaultOptions: [] as const,
+        defaultOptions: [],
 
         create(context: TSESLint.RuleContext<string, []>) {
             return {
@@ -112,7 +108,7 @@ export function makeLabeledControlRule(
                     if (!matches) return;
 
                     if (!hasAccessibleLabel(node, context, config)) {
-                        context.report({ node, messageId });
+                        context.report({ node, messageId: config.messageId });
                     }
                 }
             };

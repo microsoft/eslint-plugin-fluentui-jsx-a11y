@@ -9,16 +9,14 @@ import { makeLabeledControlRule } from "../util/ruleFactory";
 //------------------------------------------------------------------------------
 
 export default ESLintUtils.RuleCreator.withoutDocs(
-    makeLabeledControlRule(
-        {
-            component: "SwatchPicker",
-            labelProps: ["aria-label"],
-            allowFieldParent: true,
-            allowFor: false,
-            allowLabelledBy: true,
-            allowWrappingLabel: false
-        },
-        "noUnlabeledSwatchPicker",
-        "Accessibility: SwatchPicker must have an accessible name via aria-label, aria-labelledby, Field component, etc.."
-    )
+    makeLabeledControlRule({
+        component: "SwatchPicker",
+        labelProps: ["aria-label"],
+        allowFieldParent: true,
+        allowFor: false,
+        allowLabelledBy: true,
+        allowWrappingLabel: false,
+        messageId: "noUnlabeledSwatchPicker",
+        description: "Accessibility: SwatchPicker must have an accessible name via aria-label, aria-labelledby, Field component, etc.."
+    })
 );

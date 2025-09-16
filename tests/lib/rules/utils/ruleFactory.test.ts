@@ -61,7 +61,9 @@ describe("hasAccessibleLabel (unit)", () => {
         allowFieldParent: true,
         allowFor: true,
         allowLabelledBy: true,
-        allowWrappingLabel: true
+        allowWrappingLabel: true,
+        messageId: "errorMsg",
+        description: "anything"
     };
 
     test("returns false when no heuristics pass", () => {
@@ -119,25 +121,22 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
         allowFieldParent: true,
         allowFor: true,
         allowLabelledBy: true,
-        allowWrappingLabel: true
+        allowWrappingLabel: true,
+        messageId: "noUnlabeledRadioGroup",
+        description: "Accessibility: RadioGroup must have a programmatic and visual label."
     };
-
-    const messageId = "noUnlabeledRadioGroup";
-
-    const description = "Accessibility: RadioGroup must have a programmatic and visual label.";
 
     // 1) No heuristics -> report
     describe("reports when component matches and no label heuristics pass", () => {
         beforeEach(() => resetAllMocksToFalse());
-        const rule = makeLabeledControlRule(baseCfg, messageId, description);
+        const rule = makeLabeledControlRule(baseCfg);
 
         ruleTester.run("no-unlabeled-radio-group", rule as unknown as Rule.RuleModule, {
             valid: [],
             invalid: [
                 {
-                    filename: "example.tsx",
                     code: `<RadioGroup />`,
-                    errors: [{ messageId }]
+                    errors: [{ messageId: baseCfg.messageId }]
                 }
             ]
         });
@@ -153,13 +152,10 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
             );
         });
 
-        const rule = makeLabeledControlRule(baseCfg, messageId, description);
+        const rule = makeLabeledControlRule(baseCfg);
 
         ruleTester.run("no-unlabeled-radio-group (label prop)", rule as unknown as Rule.RuleModule, {
-            valid: [
-                { filename: "example.tsx", code: `<RadioGroup label="Account type" />` },
-                { filename: "example.tsx", code: `<RadioGroup aria-label={"Account type"} />` }
-            ],
+            valid: [{ code: `<RadioGroup label="Account type" />` }, { code: `<RadioGroup aria-label={"Account type"} />` }],
             invalid: []
         });
     });
@@ -175,21 +171,21 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
             );
         });
 
-        const rule = makeLabeledControlRule(baseCfg, messageId, description);
+        const rule = makeLabeledControlRule(baseCfg);
 
         ruleTester.run("no-unlabeled-radio-group (aria-labelledby)", rule as unknown as Rule.RuleModule, {
-            valid: [{ filename: "example.tsx", code: `<RadioGroup aria-labelledby="groupLabelId" />` }],
-            invalid: [{ filename: "example.tsx", code: `<RadioGroup />`, errors: [{ messageId }] }]
+            valid: [{ code: `<RadioGroup aria-labelledby="groupLabelId" />` }],
+            invalid: [{ code: `<RadioGroup />`, errors: [{ messageId: baseCfg.messageId }] }]
         });
     });
 
     // 4) non-matching component -> ignored
     describe("does not report for non-matching component names", () => {
         beforeEach(() => resetAllMocksToFalse());
-        const rule = makeLabeledControlRule(baseCfg, messageId, description);
+        const rule = makeLabeledControlRule(baseCfg);
 
         ruleTester.run("no-unlabeled-radio-group (non-matching)", rule as unknown as Rule.RuleModule, {
-            valid: [{ filename: "example.tsx", code: `<Dropdown />` }],
+            valid: [{ code: `<Dropdown />` }],
             invalid: []
         });
     });
@@ -197,11 +193,16 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
     // 5) RegExp component match
     describe("supports RegExp component config (/Group$/)", () => {
         beforeEach(() => resetAllMocksToFalse());
-        const rule = makeLabeledControlRule({ ...baseCfg, component: /Group$/ }, messageId, description);
+        const rule = makeLabeledControlRule({ ...baseCfg, component: /Group$/ });
 
         ruleTester.run("no-unlabeled-*Group (regex)", rule as unknown as Rule.RuleModule, {
             valid: [],
-            invalid: [{ filename: "example.tsx", code: `<CheckboxGroup />`, errors: [{ messageId }] }]
+            invalid: [
+                {
+                    code: `<CheckboxGroup />`,
+                    errors: [{ messageId: baseCfg.messageId }]
+                }
+            ]
         });
     });
 
@@ -212,19 +213,18 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
             (hasFieldParent as jest.Mock).mockReturnValue(true);
         });
 
-        const rule = makeLabeledControlRule(baseCfg, messageId, description);
+        const rule = makeLabeledControlRule(baseCfg);
 
         ruleTester.run("no-unlabeled-radio-group (Field parent)", rule as unknown as Rule.RuleModule, {
             valid: [
                 {
-                    filename: "example.tsx",
                     code: `
-            <>
-              <Field label="Account type">
-                <RadioGroup />
-              </Field>
-            </>
-          `
+                        <>
+                        <Field label="Account type">
+                            <RadioGroup />
+                        </Field>
+                        </>
+                    `
                 }
             ],
             invalid: []
@@ -238,17 +238,16 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
             (isInsideLabelTag as jest.Mock).mockReturnValue(true);
         });
 
-        const rule = makeLabeledControlRule(baseCfg, messageId, description);
+        const rule = makeLabeledControlRule(baseCfg);
 
         ruleTester.run("no-unlabeled-radio-group (wrapping <label>)", rule as unknown as Rule.RuleModule, {
             valid: [
                 {
-                    filename: "example.tsx",
                     code: `
-            <label>
-              <RadioGroup />
-            </label>
-          `
+                        <label>
+                            <RadioGroup />
+                        </label>
+                    `
                 }
             ],
             invalid: []
