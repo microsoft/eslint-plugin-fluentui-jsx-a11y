@@ -18,6 +18,9 @@ jest.mock("../../../../lib/util/hasFieldParent", () => ({
 jest.mock("../../../../lib/util/hasLabeledChild", () => ({
     hasLabeledChild: jest.fn()
 }));
+jest.mock("../../../../lib/util/hasTooltipParent", () => ({
+    hasToolTipParent: jest.fn()
+}));
 
 import { hasNonEmptyProp } from "../../../../lib/util/hasNonEmptyProp";
 import {
@@ -33,6 +36,7 @@ import { hasAccessibleLabel, LabeledControlConfig, makeLabeledControlRule } from
 import type { TSESTree } from "@typescript-eslint/utils";
 import { Rule, RuleTester } from "eslint";
 import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
+import { hasToolTipParent } from "../../../../lib/util/hasTooltipParent";
 
 // Helper: reset all mocks to a default "false" stance
 const resetAllMocksToFalse = () => {
@@ -43,6 +47,7 @@ const resetAllMocksToFalse = () => {
     (hasAssociatedLabelViaHtmlFor as jest.Mock).mockReset().mockReturnValue(false);
     (hasFieldParent as jest.Mock).mockReset().mockReturnValue(false);
     (hasLabeledChild as jest.Mock).mockReset().mockReturnValue(false);
+    (hasToolTipParent as jest.Mock).mockReset().mockReturnValue(false);
 };
 
 beforeEach(() => {
@@ -74,7 +79,7 @@ describe("hasAccessibleLabel (unit)", () => {
         allowHtmlFor: true,
         allowLabelledBy: true,
         allowWrappingLabel: true,
-        allowTooltipParent: false,
+        allowTooltipParent: true,
         allowDescribedBy: true,
         messageId: "errorMsg",
         description: "anything",
@@ -89,6 +94,12 @@ describe("hasAccessibleLabel (unit)", () => {
 
     test("true when allowFieldParent and hasFieldParent(ctx) === true", () => {
         (hasFieldParent as jest.Mock).mockReturnValue(true);
+        const node = makeOpeningElement("RadioGroup");
+        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+    });
+
+    test("true when allowTooltipParent and hasTooltipParent(ctx) === true", () => {
+        (hasToolTipParent as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
         expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
     });
@@ -143,7 +154,7 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
         allowHtmlFor: true,
         allowLabelledBy: true,
         allowWrappingLabel: true,
-        allowTooltipParent: false,
+        allowTooltipParent: true,
         allowDescribedBy: true,
         messageId: "noUnlabeledRadioGroup",
         description: "Accessibility: RadioGroup must have a programmatic and visual label.",
@@ -294,6 +305,31 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
         ruleTester.run("no-unlabeled-radio-group (aria-describedby)", rule as unknown as Rule.RuleModule, {
             valid: [{ code: `<RadioGroup aria-describedby="groupLabelId" />` }],
             invalid: [{ code: `<RadioGroup />`, errors: [{ messageId: baseCfg.messageId }] }]
+        });
+    });
+
+    // 9) tool tip parent
+    describe("accepts when parent Tooltip provides label", () => {
+        beforeEach(() => {
+            resetAllMocksToFalse();
+            (hasToolTipParent as jest.Mock).mockReturnValue(true);
+        });
+
+        const rule = makeLabeledControlRule(baseCfg);
+
+        ruleTester.run("no-unlabeled-radio-group (Tooltip parent)", rule as unknown as Rule.RuleModule, {
+            valid: [
+                {
+                    code: `
+                        <>
+                        <Tooltip label="Account type">
+                            <RadioGroup />
+                        </Tooltip>
+                        </>
+                    `
+                }
+            ],
+            invalid: []
         });
     });
 });
