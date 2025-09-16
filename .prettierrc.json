@@ -1,8 +1,8 @@
 {
     "arrowParens": "avoid",
-    "bracketSpacing": true,
-    "endOfLine": "crlf",
     "bracketSameLine": true,
+    "bracketSpacing": true,
+    "endOfLine": "auto",
     "printWidth": 140,
     "semi": true,
     "tabWidth": 4,

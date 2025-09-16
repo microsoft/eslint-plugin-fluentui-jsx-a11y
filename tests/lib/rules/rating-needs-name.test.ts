@@ -18,11 +18,11 @@ import rule from "../../../lib/rules/rating-needs-name";
 ruleTester.run("rating-needs-name", rule as unknown as Rule.RuleModule, {
     valid: [
         // give me some code that won't trigger a warning
-        '<Rating itemLabel={itemLabel} />',
+        "<Rating itemLabel={itemLabel} />",
         '<Rating name="Rating" />',
         '<Rating aria-label="Rating" />',
         '<><Label id="label-id">Rating</Label><Rating aria-labelledby="label-id" /></>',
-        '<Rating itemLabel={itemLabel}></Rating>',
+        "<Rating itemLabel={itemLabel}></Rating>",
         '<Rating name="Rating"></Rating>',
         '<Rating aria-label="Rating"></Rating>',
         '<><Label id="label-id">Rating</Label><Rating aria-labelledby="label-id"></Rating></>'

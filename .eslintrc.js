@@ -9,8 +9,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:eslint-plugin/recommended",
         "plugin:node/recommended",
-        "prettier",
-        "plugin:eslint-plugin/recommended"
+        "plugin:prettier/recommended" // Prettier plugin must be last in the extensions
     ],
     plugins: ["header"],
     env: {
@@ -44,6 +43,12 @@ module.exports = {
                 "node/no-missing-import": "off",
                 "node/no-unsupported-features/es-syntax": "off",
                 "node/no-extraneous-import": "off"
+            }
+        },
+        {
+            files: ["lib/index.ts"],
+            rules: {
+                "sort-keys": ["error", "asc", { caseSensitive: true, natural: false }]
             }
         }
     ],

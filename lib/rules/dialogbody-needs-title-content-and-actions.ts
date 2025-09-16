@@ -25,9 +25,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
     create(context) {
         return {
             JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
-                const isDialogBody =
-                    node.name.type === AST_NODE_TYPES.JSXIdentifier &&
-                    node.name.name === "DialogBody";
+                const isDialogBody = node.name.type === AST_NODE_TYPES.JSXIdentifier && node.name.name === "DialogBody";
 
                 if (!isDialogBody) {
                     return;

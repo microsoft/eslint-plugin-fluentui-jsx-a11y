@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {ESLintUtils, TSESTree} from '@typescript-eslint/utils';
+import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 import { elementType } from "jsx-ast-utils";
 import { hasToolTipParent } from "../util/hasTooltipParent";
-import { JSXOpeningElement } from 'estree-jsx';
+import { JSXOpeningElement } from "estree-jsx";
 
 //------------------------------------------------------------------------------
 // Rule Definition
@@ -22,7 +22,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
         type: "suggestion", // `problem`, `suggestion`, or `layout`
         docs: {
             description: `Accessibility: Prefer text content or aria over a tooltip for these components ${allowedComponents.join(", ")}`,
-            recommended: 'strict',
+            recommended: "strict"
         },
         schema: [] // Add a schema if the rule has options
     },
@@ -49,7 +49,5 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
         };
     }
 });
-
-
 
 export default rule;

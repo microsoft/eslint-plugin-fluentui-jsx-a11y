@@ -89,4 +89,3 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
 });
 
 export default rule;
-
