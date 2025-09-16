@@ -1,4 +1,8 @@
-# $DESCRIPTION (@microsoft/fluentui-jsx-a11y/swatchpicker-needs-labelling)
+# Accessibility: SwatchPicker must have an accessible name via aria-label, aria-labelledby, Field component, etc. (`@microsoft/fluentui-jsx-a11y/swatchpicker-needs-labelling`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 All interactive elements must have an accessible name.
 
