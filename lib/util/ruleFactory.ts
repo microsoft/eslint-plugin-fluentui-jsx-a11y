@@ -3,86 +3,79 @@
 
 import { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { hasNonEmptyProp } from "./hasNonEmptyProp";
-import { hasAssociatedLabelViaAriaLabelledBy, isInsideLabelTag, hasAssociatedLabelViaHtmlFor } from "./labelUtils";
+import {
+    hasAssociatedLabelViaAriaLabelledBy,
+    isInsideLabelTag,
+    hasAssociatedLabelViaHtmlFor,
+    hasAssociatedLabelViaAriaDescribedby
+} from "./labelUtils";
 import { hasFieldParent } from "./hasFieldParent";
 import { elementType } from "jsx-ast-utils";
 import { JSXOpeningElement } from "estree-jsx";
+import { hasToolTipParent } from "./hasTooltipParent";
+import { hasLabeledChild } from "./hasLabeledChild";
 
 export type LabeledControlConfig = {
     component: string | RegExp;
-    labelProps: string[]; // e.g. ["label", "aria-label"]
-    allowFieldParent: boolean; // e.g. <Field label=...><RadioGroup/></Field>
-    allowFor: boolean; // htmlFor
-    allowLabelledBy: boolean; // aria-labelledby
-    allowWrappingLabel: boolean; // <label>...</label>
     messageId: string;
     description: string;
+    labelProps: string[]; // e.g. ["aria-label", "title", "label"]
+    /** Accept a parent <Field label="..."> wrapper as providing the label. */
+    allowFieldParent: boolean; // default false
+    allowHtmlFor: boolean /** Accept <label htmlFor="..."> association. */;
+    allowLabelledBy: boolean /** Accept aria-labelledby association. */;
+    allowWrappingLabel: boolean /** Accept being wrapped in a <label> element. */;
+    allowTooltipParent: boolean /** Accept a parent <Tooltip content="..."> wrapper as providing the label. */;
+    /**
+     * Accept aria-describedby as a labeling strategy.
+     * NOTE: This is discouraged for *primary* labeling; prefer text/aria-label/labelledby.
+     * Keep this off unless a specific component (e.g., Icon-only buttons) intentionally uses it.
+     */
+    allowDescribedBy: boolean;
+    // NEW: treat labeled child content (img alt, svg title, aria-label on role="img") as the name
+    allowLabeledChild: boolean;
 };
 
 /**
  * Returns `true` if the JSX opening element is considered **accessibly labelled**
- * per the rule configuration. This function centralizes all supported labelling
- * strategies so the rule stays small and testable.
+ * per the rule configuration. This centralizes all supported labeling strategies.
  *
- * The supported strategies (gated by `config` flags) are:
- *  1) A parent `<Field>`-like wrapper that provides the label context (`allowFieldParent`).
- *  2) A non-empty inline prop such as `aria-label` or `title` (`labelProps`).
- *  3) Being wrapped by a `<label>` element (`allowWrappingLabel`).
- *  4) Associated `<label for="...">` / `htmlFor` relation (`allowFor`).
- *  5) `aria-labelledby` association to an element with textual content (`allowLabelledBy`).
+ * Supported strategies (gated by config flags):
+ *  1) Parent <Field label="..."> context .............................. (allowFieldParent)
+ *  2) Non-empty inline prop(s) like aria-label/title .................. (labelProps)
+ *  3) Wrapped by a <label> ............................................ (allowWrappingLabel)
+ *  4) <label htmlFor="..."> / htmlFor association ..................... (allowFor)
+ *  5) aria-labelledby association ..................................... (allowLabelledBy)
+ *  6) Parent <Tooltip content="..."> context .......................... (allowTooltipParent)
+ *  7) aria-describedby association (opt-in; discouraged as primary) .... (allowDescribedBy)
+ *  8) treat labeled child content (img alt, svg title, aria-label on role="img") as the name
  *
- * Note: This does not validate contrast or UX; it only checks the existence of
- * an accessible **name** via common HTML/ARIA labelling patterns.
- *
- * @param node - The JSX opening element we’re inspecting (e.g., `<Input ...>` opening node).
- * @param context - ESLint rule context or tree-walker context used by helper functions to
- *              resolve scope/ancestors and collect referenced nodes.
- * @param config - Rule configuration describing which components/props/associations count as labelled.
- *              Expected shape:
- *              - `component: string | RegExp` — component tag name or regex to match.
- *              - `labelProps: string[]` — prop names that, when non-empty, count as labels (e.g., `["aria-label","title"]`).
- *              - `allowFieldParent?: boolean` — if true, a recognized parent “Field” wrapper satisfies labelling.
- *              - `allowWrappingLabel?: boolean` — if true, being inside a `<label>` satisfies labelling.
- *              - `allowFor?: boolean` — if true, `<label htmlFor>` association is considered.
- *              - `allowLabelledBy?: boolean` — if true, `aria-labelledby` association is considered.
- * @returns `true` if any configured labelling strategy succeeds; otherwise `false`.
+ * This checks for presence of an accessible *name* only; not contrast or UX.
  */
 export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: any, config: LabeledControlConfig): boolean {
-    if (config.allowFieldParent && hasFieldParent(context)) return true;
-    if (config.labelProps.some(p => hasNonEmptyProp(node.attributes, p))) return true;
-    if (config.allowWrappingLabel && isInsideLabelTag(context)) return true;
-    if (config.allowFor && hasAssociatedLabelViaHtmlFor(node, context)) return true;
-    if (config.allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(node, context)) return true;
+    const allowFieldParent = !!config.allowFieldParent;
+    const allowWrappingLabel = !!config.allowWrappingLabel;
+    const allowHtmlFor = !!config.allowHtmlFor;
+    const allowLabelledBy = !!config.allowLabelledBy;
+    const allowTooltipParent = !!config.allowTooltipParent;
+    const allowDescribedBy = !!config.allowDescribedBy;
+    const allowLabeledChild = !!config.allowLabeledChild;
+
+    if (allowFieldParent && hasFieldParent(context)) return true;
+    if (config.labelProps?.some(p => hasNonEmptyProp(node.attributes, p))) return true;
+    if (allowWrappingLabel && isInsideLabelTag(context)) return true;
+    if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(node, context)) return true;
+    if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(node, context)) return true;
+    if (allowTooltipParent && hasToolTipParent(context)) return true;
+    if (allowDescribedBy && hasAssociatedLabelViaAriaDescribedby(node, context)) return true;
+    if (allowLabeledChild && hasLabeledChild(node, context)) return true;
+
     return false;
 }
 
 /**
  * Factory for a minimal, strongly-configurable ESLint rule that enforces
- * accessible labelling on a specific JSX element/component.
- *
- * The rule:
- *  • Matches opening elements by `config.component` (exact name or RegExp).
- *  • Uses `hasAccessibleLabel` to decide whether the element is labelled.
- *  • Reports with `messageId` if no labelling strategy succeeds.
- *
- * Example:
- * ```ts
- * export default makeLabeledControlRule(
- *   {
- *     component: /^(?:input|textarea|Select|ComboBox)$/i,
- *     labelProps: ["aria-label", "aria-labelledby", "title"],
- *     allowFieldParent: true,
- *     allowWrappingLabel: true,
- *     allowFor: true,
- *     allowLabelledBy: true,
- *   },
- *   "missingLabel",
- *   "Provide an accessible label (e.g., via <label>, htmlFor, aria-label, or aria-labelledby)."
- * );
- * ```
- *
- * @param config - See `hasAccessibleLabel` for the configuration fields and semantics.
- * @returns An ESLint `RuleModule` that reports when the configured component lacks an accessible label.
+ * accessible labeling on a specific JSX element/component.
  */
 export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.RuleModule<string, []> {
     return {
