@@ -7,6 +7,7 @@ jest.mock("../../../../lib/util/hasNonEmptyProp", () => ({
     hasNonEmptyProp: jest.fn()
 }));
 jest.mock("../../../../lib/util/labelUtils", () => ({
+    hasAssociatedLabelViaAriaDescribedby: jest.fn(),
     hasAssociatedLabelViaAriaLabelledBy: jest.fn(),
     isInsideLabelTag: jest.fn(),
     hasAssociatedLabelViaHtmlFor: jest.fn()
@@ -14,23 +15,34 @@ jest.mock("../../../../lib/util/labelUtils", () => ({
 jest.mock("../../../../lib/util/hasFieldParent", () => ({
     hasFieldParent: jest.fn()
 }));
+jest.mock("../../../../lib/util/hasLabeledChild", () => ({
+    hasLabeledChild: jest.fn()
+}));
 
 import { hasNonEmptyProp } from "../../../../lib/util/hasNonEmptyProp";
-import { hasAssociatedLabelViaAriaLabelledBy, isInsideLabelTag, hasAssociatedLabelViaHtmlFor } from "../../../../lib/util/labelUtils";
+import {
+    hasAssociatedLabelViaAriaLabelledBy,
+    isInsideLabelTag,
+    hasAssociatedLabelViaHtmlFor,
+    hasAssociatedLabelViaAriaDescribedby
+} from "../../../../lib/util/labelUtils";
 import { hasFieldParent } from "../../../../lib/util/hasFieldParent";
 
 // Import the module under test AFTER mocks
 import { hasAccessibleLabel, LabeledControlConfig, makeLabeledControlRule } from "../../../../lib/util/ruleFactory";
 import type { TSESTree } from "@typescript-eslint/utils";
 import { Rule, RuleTester } from "eslint";
+import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
 
 // Helper: reset all mocks to a default "false" stance
 const resetAllMocksToFalse = () => {
     (hasNonEmptyProp as jest.Mock).mockReset().mockReturnValue(false);
     (hasAssociatedLabelViaAriaLabelledBy as jest.Mock).mockReset().mockReturnValue(false);
+    (hasAssociatedLabelViaAriaDescribedby as jest.Mock).mockReset().mockReturnValue(false);
     (isInsideLabelTag as jest.Mock).mockReset().mockReturnValue(false);
     (hasAssociatedLabelViaHtmlFor as jest.Mock).mockReset().mockReturnValue(false);
     (hasFieldParent as jest.Mock).mockReset().mockReturnValue(false);
+    (hasLabeledChild as jest.Mock).mockReset().mockReturnValue(false);
 };
 
 beforeEach(() => {
@@ -59,11 +71,14 @@ describe("hasAccessibleLabel (unit)", () => {
         component: "RadioGroup",
         labelProps: ["label", "aria-label"],
         allowFieldParent: true,
-        allowFor: true,
+        allowHtmlFor: true,
         allowLabelledBy: true,
         allowWrappingLabel: true,
+        allowTooltipParent: false,
+        allowDescribedBy: true,
         messageId: "errorMsg",
-        description: "anything"
+        description: "anything",
+        allowLabeledChild: false
     };
 
     test("returns false when no heuristics pass", () => {
@@ -106,6 +121,12 @@ describe("hasAccessibleLabel (unit)", () => {
         const node = makeOpeningElement("RadioGroup");
         expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
     });
+
+    test("true when allowDescribedByBy and hasAssociatedLabelViaAriaDescribedBy(...) === true", () => {
+        (hasAssociatedLabelViaAriaDescribedby as jest.Mock).mockReturnValue(true);
+        const node = makeOpeningElement("RadioGroup");
+        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+    });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -119,11 +140,14 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
         component: "RadioGroup",
         labelProps: ["label", "aria-label"],
         allowFieldParent: true,
-        allowFor: true,
+        allowHtmlFor: true,
         allowLabelledBy: true,
         allowWrappingLabel: true,
+        allowTooltipParent: false,
+        allowDescribedBy: true,
         messageId: "noUnlabeledRadioGroup",
-        description: "Accessibility: RadioGroup must have a programmatic and visual label."
+        description: "Accessibility: RadioGroup must have a programmatic and visual label.",
+        allowLabeledChild: false
     };
 
     // 1) No heuristics -> report
@@ -251,6 +275,25 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
                 }
             ],
             invalid: []
+        });
+    });
+
+    // 8) in rare cases
+    describe("accepts when aria-describedby is present", () => {
+        beforeEach(() => {
+            resetAllMocksToFalse();
+            (hasAssociatedLabelViaAriaDescribedby as jest.Mock).mockImplementation(
+                (node: any) =>
+                    Array.isArray(node?.attributes) &&
+                    node.attributes.some((a: any) => a?.type === "JSXAttribute" && a?.name?.name === "aria-describedby")
+            );
+        });
+
+        const rule = makeLabeledControlRule(baseCfg);
+
+        ruleTester.run("no-unlabeled-radio-group (aria-describedby)", rule as unknown as Rule.RuleModule, {
+            valid: [{ code: `<RadioGroup aria-describedby="groupLabelId" />` }],
+            invalid: [{ code: `<RadioGroup />`, errors: [{ messageId: baseCfg.messageId }] }]
         });
     });
 });
