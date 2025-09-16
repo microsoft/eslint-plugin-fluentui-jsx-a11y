@@ -29,6 +29,7 @@ export { default as ratingNeedsName } from "./rating-needs-name";
 export { default as spinButtonNeedsLabelling } from "./spin-button-needs-labelling";
 export { default as spinButtonUnrecommendedLabelling } from "./spin-button-unrecommended-labelling";
 export { default as spinnerNeedsLabelling } from "./spinner-needs-labelling";
+export { default as swatchpickerNeedsLabelling } from "./swatchpicker-needs-labelling";
 export { default as switchNeedsLabelling } from "./switch-needs-labelling";
 export { default as tablistAndTabsNeedLabelling } from "./tablist-and-tabs-need-labelling";
 export { default as toolbarMissingAria } from "./toolbar-missing-aria";

@@ -35,12 +35,12 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
         return {
             // visitor functions for different types of nodes
             JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
-                // if it is not a Checkbox, return
+                // if it is not a RadioGroup, return
                 if (elementType(node as JSXOpeningElement) !== "RadioGroup") {
                     return;
                 }
 
-                // if the Checkbox has a label, if the Switch has an associated label, return
+                // if the RadioGroup has a label, return
                 if (
                     hasFieldParent(context) ||
                     hasNonEmptyProp(node.attributes, "label") ||
