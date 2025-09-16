@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const ruleBoilerplate = (name, description) => `// Copyright (c) Microsoft Corporation.
+const { withCRLF } = require("./util");
+
+const ruleBoilerplate = (name, description) =>
+    withCRLF(`// Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
@@ -41,5 +44,5 @@ const rule = createRule({
 });
 
 export default rule;
-`;
+`);
 module.exports = ruleBoilerplate;
