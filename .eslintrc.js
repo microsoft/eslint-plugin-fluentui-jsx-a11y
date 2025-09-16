@@ -25,6 +25,26 @@ module.exports = {
         {
             files: ["tests/**/*.js"],
             env: { mocha: true }
+        },
+        {
+            files: ["tests/**/*.ts"],
+            env: { jest: true }
+        },
+        {
+            files: ["**/*.ts"],
+            parser: "@typescript-eslint/parser",
+            plugins: ["@typescript-eslint"],
+            parserOptions: {
+                ecmaVersion: 2021,
+                sourceType: "module",
+                project: "./tsconfig.json"
+            },
+            rules: {
+                // Disable Node.js rules that conflict with TypeScript
+                "node/no-missing-import": "off",
+                "node/no-unsupported-features/es-syntax": "off",
+                "node/no-extraneous-import": "off"
+            }
         }
     ],
     rules: {
