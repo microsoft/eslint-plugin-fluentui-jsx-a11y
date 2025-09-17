@@ -8,6 +8,31 @@ import { TSESLint } from "@typescript-eslint/utils";
 import { JSXOpeningElement } from "estree-jsx";
 import { TSESTree } from "@typescript-eslint/utils";
 
+/**
+ * Utility helpers used by several rules to determine whether a JSX control is
+ * associated with a visual label (via id/htmlFor/aria-labelledby/aria-describedby).
+ *
+ * Supported attribute RHS shapes (matched by `idOrExprRegex` and in AST inspection):
+ *  - "double-quoted" and 'single-quoted' attribute values
+ *  - expression containers with quoted strings:    htmlFor={"id"} or id={'id'}
+ *  - expression containers with an Identifier:     htmlFor={someId} or id={someId}
+ *  - simple constant BinaryExpression concatenations made only of Literals: {"my-" + 1}
+ *  - TemplateLiterals: `my-${value}` (we canonicalize literal parts and allow any expression inside ${...})
+ *
+ * getAttributeValueInfo normalizes the attribute into one of:
+ *   - { kind: "string", raw: string, tokens: string[], exprText?: string }
+ *   - { kind: "identifier", name: string }
+ *   - { kind: "template", template: string }
+ *   - { kind: "empty" }
+ *   - { kind: "none" }
+ *
+ * Design notes:
+ *  - Prefer AST inspection (JSXExpressionContainer) where available for precision.
+ *  - Evaluate BinaryExpression concatenations only when composed entirely of Literals (conservative).
+ *  - For TemplateLiteral matching we compare literal parts but allow any expression inside ${...}.
+ *  - For some binary-constant cases we reconstruct a small source form (exprText) and attempt to
+ *    find an exact-matching expression occurrence in the raw source when necessary.
+ */
 const validIdentifierRe = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
 
 /**
@@ -20,20 +45,15 @@ const isInsideLabelTag = (context: TSESLint.RuleContext<string, unknown[]>): boo
         return tagName.toLowerCase() === "label";
     });
 
-/**
- * idOrExprRegex supports:
- *  - "double-quoted" and 'single-quoted' attribute values
- *  - expression containers with quoted strings:    htmlFor={"id"} or id={'id'}
- *  - expression containers with an Identifier:     htmlFor={someId} or id={someId}
- *
- * Capture groups (when the alternation matches) are in positions 2..6
- * (group 1 is the element/tag capture used in some surrounding regexes).
- */
+/* id / expression alternatives used when matching id/htmlFor attributes in source text.
+   Capture groups (when this alternation is embedded in a surrounding regex) occupy
+   consecutive groups so extractCapturedId reads groups 2..6 (group 1 is typically the tag).
+*/
 const idLiteralDouble = '"([^"]*)"';
 const idLiteralSingle = "'([^']*)'";
 const exprStringDouble = '\\{\\s*"([^"]*)"\\s*\\}';
 const exprStringSingle = "\\{\\s*'([^']*)'\\s*\\}";
-const exprIdentifier = "\\{\\s*([A-Za-z_$][A-Za-z0-9_$]*)\\s*\\}";
+const exprIdentifier = "\\{\\s*([A-Za-z_$][A-Za-l0-9_$]*)\\s*\\}";
 
 const idOrExprRegex = new RegExp(
     `(?:${idLiteralDouble}|${idLiteralSingle}|${exprStringDouble}|${exprStringSingle}|${exprIdentifier})`,
@@ -72,9 +92,13 @@ const evalConstantString = (node: any): string | undefined => {
 };
 
 /**
- * Small renderer to reconstruct simple expression source text for BinaryExpressions and Literals.
- * This provides a normalized textual form we can use to search the raw source for an exact expression match.
- * For strings, we preserve quotes by using JSON.stringify; numbers use String(value).
+ * Reconstruct a small, predictable source-like form for Literal and BinaryExpression nodes.
+ * Used for conservative source-text matching of constant binary concatenations.
+ * - Strings are JSON.stringify'd to preserve quoting.
+ * - Numbers are converted with String().
+ * - BinaryExpressions are rendered as "<left> + <right>" with spaces (consistent formatting).
+ *
+ * Note: this deliberately avoids attempting to stringify arbitrary expressions.
  */
 const renderSimpleExprSource = (node: any): string | undefined => {
     if (!node || typeof node !== "object") return undefined;
@@ -95,14 +119,8 @@ const renderSimpleExprSource = (node: any): string | undefined => {
 };
 
 /**
- * New small helper: normalize attribute value (string list vs identifier vs empty/none vs template)
- *
- * Return shapes:
- *   { kind: "string", raw: string, tokens: string[] }
- *   { kind: "identifier", name: string }
- *   { kind: "template", template: string } // template uses backticks and ${exprName} placeholders
- *   { kind: "empty" }
- *   { kind: "none" }
+ * Normalize attribute values into canonical shapes so callers can reason about
+ * id/htmlFor/aria attributes in a small set of cases.
  */
 const getAttributeValueInfo = (
     openingElement: TSESTree.JSXOpeningElement,
@@ -115,7 +133,7 @@ const getAttributeValueInfo = (
     if (prop && prop.value && (prop.value as any).type === "JSXExpressionContainer") {
         const expr = (prop.value as any).expression;
 
-        // Identifier: only accept valid JS identifiers
+        // Identifier: only accept valid JS identifiers (no hyphens, etc.)
         if (expr && expr.type === "Identifier") {
             if (typeof expr.name === "string" && validIdentifierRe.test(expr.name)) {
                 return { kind: "identifier", name: expr.name as string };
@@ -123,20 +141,20 @@ const getAttributeValueInfo = (
             return { kind: "none" };
         }
 
-        // Literal inside expression container: {"x"} or {'x'}
+        // Expression container with a literal string: {"x"} or {'x'}
         if (expr && expr.type === "Literal" && typeof (expr as any).value === "string") {
             const trimmed = ((expr as any).value as string).trim();
             if (trimmed === "") return { kind: "empty" };
             return { kind: "string", raw: trimmed, tokens: trimmed.split(/\s+/), exprText: JSON.stringify((expr as any).value) };
         }
 
-        // BinaryExpression evaluation for constant concatenations: {"my-" + "label"} or {"my-" + 1}
+        // BinaryExpression evaluation for constant concatenations only when composed of Literals.
         if (expr && expr.type === "BinaryExpression") {
             const v = evalConstantString(expr);
             if (typeof v === "string") {
                 const trimmed = v.trim();
                 if (trimmed === "") return { kind: "empty" };
-                // Reconstruct simple source for the binary expression so we can search for an exact occurrence in raw source
+                // Reconstruct a small source-like form for matching in raw source.
                 const exprText = renderSimpleExprSource(expr);
                 if (exprText) {
                     return { kind: "string", raw: trimmed, tokens: trimmed.split(/\s+/), exprText };
@@ -145,7 +163,8 @@ const getAttributeValueInfo = (
             }
         }
 
-        // TemplateLiteral: reconstruct a canonical template string (preserve placeholders as ${name})
+        // TemplateLiteral: reconstruct a canonical template string (preserve literal parts and insert
+        // ${name} placeholders for identifiers, ${} for unknown expressions).
         if (expr && expr.type === "TemplateLiteral") {
             try {
                 const quasis = (expr as any).quasis || [];
@@ -170,12 +189,12 @@ const getAttributeValueInfo = (
                 templateRaw += "`";
                 return { kind: "template", template: templateRaw };
             } catch {
-                // if anything goes wrong, fall through
+                // If anything goes wrong, fall through to fallback.
             }
         }
     }
 
-    // Fallback: try to resolve via getPropValue (covers literal attrs and expression-literals and other resolvable forms)
+    // Fallback: try to resolve via getPropValue (covers literal attrs and some resolvable cases)
     const resolved = prop ? getPropValue(prop) : undefined;
     if (typeof resolved === "string") {
         const trimmed = resolved.trim();
@@ -186,6 +205,10 @@ const getAttributeValueInfo = (
     return { kind: "none" };
 };
 
+/**
+ * Look for an element with the given attribute written as a braced id: e.g. <Label id={foo}></Label>
+ * Used as a narrow fallback for identifier-based matches.
+ */
 const hasBracedAttrId = (
     tagPattern: string,
     attrName: string,
@@ -251,6 +274,12 @@ const hasOtherElementWithHtmlId = (idValue: string, context: TSESLint.RuleContex
 
 /**
  * Generic helper for aria-* attributes.
+ *
+ * - For string-kind attributes we check label/other elements by raw token id and also
+ *   attempt to match binary-constant expressions via exprText (when available).
+ * - For identifier-kind attributes we look for braced identifier matches in the source.
+ * - For template-kind attributes we build a flexible pattern that matches literal parts of the
+ *   template while permitting any expression text inside ${...} placeholders.
  */
 const hasAssociatedAriaText = (
     openingElement: TSESTree.JSXOpeningElement,
@@ -264,7 +293,7 @@ const hasAssociatedAriaText = (
             if (hasLabelWithHtmlId(id, context) || hasOtherElementWithHtmlId(id, context)) {
                 return true;
             }
-            // Fallback: if this string was produced by evaluating a BinaryExpression in the source,
+            // If this string was produced by evaluating a BinaryExpression in the source,
             // attempt to match the exact binary-expression source in other element id attributes.
             if (info.exprText) {
                 const labelRe = new RegExp(`<(?:Label|label)[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(info.exprText)}\\s*\\}`, "i");
