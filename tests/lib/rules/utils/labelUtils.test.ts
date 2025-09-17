@@ -457,4 +457,335 @@ describe("labelUtils", () => {
             expect(hasAssociatedLabelViaHtmlFor(opening, ctx)).toBe(true);
         });
     });
+
+    describe("enhanced coverage for missing scenarios", () => {
+        describe("template literal edge cases and error handling", () => {
+            test("template literal parsing with missing value.raw falls back to value.cooked", () => {
+                const templateNode = {
+                    type: AST_NODE_TYPES.TemplateLiteral,
+                    quasis: [
+                        {
+                            type: AST_NODE_TYPES.TemplateElement,
+                            value: { cooked: "prefix-" }, // missing raw, should use cooked
+                            tail: false
+                        },
+                        {
+                            type: AST_NODE_TYPES.TemplateElement,
+                            value: { raw: "-suffix", cooked: "-suffix" },
+                            tail: true
+                        }
+                    ],
+                    expressions: [{ type: AST_NODE_TYPES.Identifier, name: "id" }]
+                } as any;
+
+                const exprContainer = { type: AST_NODE_TYPES.JSXExpressionContainer, expression: templateNode } as any;
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: exprContainer
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label id={`prefix-${id}-suffix`}>L</Label></div>");
+                expect(hasAssociatedLabelViaAriaLabelledBy(opening, ctx)).toBe(true);
+            });
+
+            test("template literal parsing with completely missing value object", () => {
+                const templateNode = {
+                    type: AST_NODE_TYPES.TemplateLiteral,
+                    quasis: [
+                        { type: AST_NODE_TYPES.TemplateElement, value: null, tail: false }, // null value
+                        { type: AST_NODE_TYPES.TemplateElement, value: { raw: "end" }, tail: true }
+                    ],
+                    expressions: [{ type: AST_NODE_TYPES.Identifier, name: "var1" }]
+                } as any;
+
+                const exprContainer = { type: AST_NODE_TYPES.JSXExpressionContainer, expression: templateNode } as any;
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: exprContainer
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label id={`${var1}end`}>L</Label></div>");
+                expect(hasAssociatedLabelViaAriaLabelledBy(opening, ctx)).toBe(true);
+            });
+
+            test("template literal with literal expression gets interpolated", () => {
+                const templateNode = {
+                    type: AST_NODE_TYPES.TemplateLiteral,
+                    quasis: [
+                        { type: AST_NODE_TYPES.TemplateElement, value: { raw: "pre-" }, tail: false },
+                        { type: AST_NODE_TYPES.TemplateElement, value: { raw: "" }, tail: true }
+                    ],
+                    expressions: [{ type: AST_NODE_TYPES.Literal, value: "literal" }]
+                } as any;
+
+                const exprContainer = { type: AST_NODE_TYPES.JSXExpressionContainer, expression: templateNode } as any;
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: exprContainer
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label id={`pre-${literal}`}>L</Label></div>");
+                expect(hasAssociatedLabelViaAriaLabelledBy(opening, ctx)).toBe(true);
+            });
+        });
+
+        describe("getPropValue fallback scenarios", () => {
+            test("getPropValue resolves some expressions that AST inspection cannot handle", () => {
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: { type: AST_NODE_TYPES.Literal, value: "resolved-by-fallback" }
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label id='resolved-by-fallback'>L</Label></div>");
+                const info = getAttributeValueInfo(opening, ctx, "aria-labelledby");
+                expect(info.kind).toBe("string");
+                expect(info.raw).toBe("resolved-by-fallback");
+            });
+
+            test("getPropValue returns non-string - results in kind: none", () => {
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: { type: AST_NODE_TYPES.Literal, value: 123 }
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label id='123'>L</Label></div>");
+                const info = getAttributeValueInfo(opening, ctx, "aria-labelledby");
+                expect(info.kind).toBe("none");
+            });
+
+            test("empty string from getPropValue results in kind: empty", () => {
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: { type: AST_NODE_TYPES.Literal, value: "   " }
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label id=''>L</Label></div>");
+                const info = getAttributeValueInfo(opening, ctx, "aria-labelledby");
+                expect(info.kind).toBe("empty");
+            });
+        });
+
+        describe("binary expression edge cases", () => {
+            test("nested binary expressions evaluate correctly", () => {
+                const nestedBinExpr = {
+                    type: AST_NODE_TYPES.BinaryExpression,
+                    operator: "+",
+                    left: {
+                        type: AST_NODE_TYPES.BinaryExpression,
+                        operator: "+",
+                        left: { type: AST_NODE_TYPES.Literal, value: "a" },
+                        right: { type: AST_NODE_TYPES.Literal, value: "b" }
+                    },
+                    right: { type: AST_NODE_TYPES.Literal, value: "c" }
+                } as any;
+
+                const exprContainer = { type: AST_NODE_TYPES.JSXExpressionContainer, expression: nestedBinExpr } as any;
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: exprContainer
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext('<div><Label id={"a" + "b" + "c"}>L</Label></div>');
+                expect(hasAssociatedLabelViaAriaLabelledBy(opening, ctx)).toBe(true);
+            });
+
+            test("binary expression with non-plus operator returns undefined", () => {
+                const divisionExpr = {
+                    type: AST_NODE_TYPES.BinaryExpression,
+                    operator: "/",
+                    left: { type: AST_NODE_TYPES.Literal, value: "not" },
+                    right: { type: AST_NODE_TYPES.Literal, value: "supported" }
+                } as any;
+
+                const exprContainer = { type: AST_NODE_TYPES.JSXExpressionContainer, expression: divisionExpr } as any;
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: exprContainer
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label id='any'>L</Label></div>");
+                const info = getAttributeValueInfo(opening, ctx, "aria-labelledby");
+                expect(info.kind).toBe("none");
+            });
+
+            test("binary expression source reconstruction for complex nested expressions", () => {
+                const complexExpr = {
+                    type: AST_NODE_TYPES.BinaryExpression,
+                    operator: "+",
+                    left: {
+                        type: AST_NODE_TYPES.BinaryExpression,
+                        operator: "+",
+                        left: { type: AST_NODE_TYPES.Literal, value: "prefix" },
+                        right: { type: AST_NODE_TYPES.Literal, value: 123 }
+                    },
+                    right: { type: AST_NODE_TYPES.Literal, value: "suffix" }
+                } as any;
+
+                const exprContainer = { type: AST_NODE_TYPES.JSXExpressionContainer, expression: complexExpr } as any;
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby" },
+                            value: exprContainer
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext('<div><Label id={"prefix" + 123 + "suffix"}>L</Label></div>');
+                const info = getAttributeValueInfo(opening, ctx, "aria-labelledby");
+                expect(info.kind).toBe("string");
+                expect(info.raw).toBe("prefix123suffix");
+                expect(info.exprText).toBe('"prefix" + 123 + "suffix"');
+            });
+        });
+
+        describe("isInsideLabelTag additional coverage", () => {
+            test("case-insensitive label detection", () => {
+                const ctxLowercase = {
+                    getAncestors: () => [
+                        {
+                            type: "JSXElement",
+                            openingElement: { name: { type: AST_NODE_TYPES.JSXIdentifier, name: "label" } }
+                        }
+                    ]
+                } as unknown as TSESLint.RuleContext<string, unknown[]>;
+                expect(isInsideLabelTag(ctxLowercase)).toBe(true);
+
+                const ctxMixedCase = {
+                    getAncestors: () => [
+                        {
+                            type: "JSXElement",
+                            openingElement: { name: { type: AST_NODE_TYPES.JSXIdentifier, name: "LABEL" } }
+                        }
+                    ]
+                } as unknown as TSESLint.RuleContext<string, unknown[]>;
+                expect(isInsideLabelTag(ctxMixedCase)).toBe(true);
+            });
+
+            test("non-JSXElement ancestors are ignored", () => {
+                const ctxMixed = {
+                    getAncestors: () => [
+                        { type: "SomeOtherNode" },
+                        { type: "JSXElement", openingElement: { name: { type: AST_NODE_TYPES.JSXIdentifier, name: "div" } } },
+                        { type: "AnotherNode" }
+                    ]
+                } as unknown as TSESLint.RuleContext<string, unknown[]>;
+                expect(isInsideLabelTag(ctxMixed)).toBe(false);
+            });
+        });
+
+        describe("regex escape and source text matching", () => {
+            test("regex special characters in identifiers are properly escaped", () => {
+                const ctx = mockContext("<Label id={regex$special}>L</Label>");
+                expect(hasBracedAttrId("Label|label", "id", "regex$special", ctx)).toBe(true);
+
+                const ctx2 = mockContext("<div id={dots.and.brackets[0]}>content</div>");
+                expect(hasBracedAttrId("div|span|p|h[1-6]", "id", "dots.and.brackets[0]", ctx2)).toBe(true);
+            });
+
+            test("empty id values return false immediately", () => {
+                expect(hasLabelWithHtmlForId("", mockContext("<Label htmlFor='test'>L</Label>"))).toBe(false);
+                expect(hasLabelWithHtmlId("", mockContext("<Label id='test'>L</Label>"))).toBe(false);
+                expect(hasOtherElementWithHtmlId("", mockContext("<div id='test'>D</div>"))).toBe(false);
+                expect(hasBracedAttrId("Label", "id", "", mockContext("<Label id={test}>L</Label>"))).toBe(false);
+            });
+        });
+
+        describe("template literal htmlFor matching", () => {
+            test("id as template literal matches htmlFor with identical template", () => {
+                const templateNode = {
+                    type: AST_NODE_TYPES.TemplateLiteral,
+                    quasis: [
+                        { type: AST_NODE_TYPES.TemplateElement, value: { raw: "input-" }, tail: false },
+                        { type: AST_NODE_TYPES.TemplateElement, value: { raw: "" }, tail: true }
+                    ],
+                    expressions: [{ type: AST_NODE_TYPES.Identifier, name: "fieldId" }]
+                } as any;
+
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "id" },
+                            value: { type: AST_NODE_TYPES.JSXExpressionContainer, expression: templateNode }
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label htmlFor={`input-${fieldId}`}>Field Label</Label></div>");
+                expect(hasAssociatedLabelViaHtmlFor(opening, ctx)).toBe(true);
+            });
+
+            test("template literal with complex expressions in placeholders", () => {
+                const templateNode = {
+                    type: AST_NODE_TYPES.TemplateLiteral,
+                    quasis: [
+                        { type: AST_NODE_TYPES.TemplateElement, value: { raw: "form-" }, tail: false },
+                        { type: AST_NODE_TYPES.TemplateElement, value: { raw: "-field" }, tail: true }
+                    ],
+                    expressions: [
+                        {
+                            type: AST_NODE_TYPES.CallExpression,
+                            callee: { type: AST_NODE_TYPES.Identifier, name: "generateId" },
+                            arguments: []
+                        }
+                    ]
+                } as any;
+
+                const opening = {
+                    attributes: [
+                        {
+                            type: AST_NODE_TYPES.JSXAttribute,
+                            name: { type: AST_NODE_TYPES.JSXIdentifier, name: "id" },
+                            value: { type: AST_NODE_TYPES.JSXExpressionContainer, expression: templateNode }
+                        }
+                    ]
+                } as unknown as TSESTree.JSXOpeningElement;
+
+                const ctx = mockContext("<div><Label htmlFor={`form-${generateId()}-field`}>Generated Field</Label></div>");
+                expect(hasAssociatedLabelViaHtmlFor(opening, ctx)).toBe(true);
+            });
+        });
+    });
 });
