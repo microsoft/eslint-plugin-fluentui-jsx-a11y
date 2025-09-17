@@ -19,23 +19,20 @@ This rule aims to...
 Examples of **incorrect** code for this rule:
 
 ```jsx
-<SplitButton />
-```
-
-```jsx
-<SplitButton disabled/>
-```
-
-Examples of **correct** code for this rule:
-
-```jsx
    <SplitButton> Example</SplitButton>
 ```
 
 ```jsx
-   <SplitButton aria-label="My button"/>
+   <SplitButton disabled> Example</SplitButton>
+```
+
+
+Examples of **correct** code for this rule:
+
+```jsx
+   <SplitButton aria-label="My button">Example</SplitButton>
 ```
 
 ```jsx
-<SplitButton disabled>Disabled State</SplitButton>
+<SplitButton disabled aria-label="My button">Disabled State</SplitButton>
 ```

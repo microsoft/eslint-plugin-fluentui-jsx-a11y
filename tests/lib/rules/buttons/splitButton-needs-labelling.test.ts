@@ -14,24 +14,50 @@ ruleTester.run("splitButton-needs-labelling", rule as unknown as Rule.RuleModule
 
         `<SplitButton aria-label="Example">Example</SplitButton>
       `,
-        // 2) Field wrapper with label prop
+        // 2) disabled SplitButton with aria-label
         `
         <SplitButton aria-label="Example" disabled> Disabled State </SplitButton>
-      `
+      `,
+        `<>
+          <span id="splitButton">Choose Values</span>
+          <SplitButton aria-labelledby="splitButton"> Example
+          </SplitButton>
+        </>`
     ],
 
     invalid: [
-        // Unlabeled SwatchPicker (children present, but no accessible name)
+        // Unlabeled SplitButton
         {
             code: `
                 <SplitButton>Example</SplitButton>
             `,
             errors: [{ messageId: "noUnlabeledSplitButton" }]
         },
+        // disabled SplitButton without aria-label
         {
-            // 7) Native <label> wrapping (implicit label)
             code: `
                 <SplitButton disabled>Example</SplitButton>
+            `,
+            errors: [{ messageId: "noUnlabeledSplitButton" }]
+        },
+        // SplitButton with empty aria-label
+        {
+            code: `
+                <SplitButton aria-label="">Example</SplitButton>
+            `,
+            errors: [{ messageId: "noUnlabeledSplitButton" }]
+        },
+        // SplitButton with aria-label undefined
+        {
+            code: `
+                <SplitButton aria-label={undefined}>Example</SplitButton>
+            `,
+            errors: [{ messageId: "noUnlabeledSplitButton" }]
+        },
+        // SplitButton with aria-label null
+        {
+            code: `
+                <SplitButton aria-label={null}>Example</SplitButton>
             `,
             errors: [{ messageId: "noUnlabeledSplitButton" }]
         }
