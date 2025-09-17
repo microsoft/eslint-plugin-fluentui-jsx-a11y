@@ -32,6 +32,8 @@ export { default as spinnerNeedsLabelling } from "./spinner-needs-labelling";
 export { default as swatchpickerNeedsLabelling } from "./swatchpicker-needs-labelling";
 export { default as switchNeedsLabelling } from "./switch-needs-labelling";
 export { default as tablistAndTabsNeedLabelling } from "./tablist-and-tabs-need-labelling";
+export { default as tagDismissibleNeedsLabelling } from "./tag-dismissible-needs-labelling";
+export { default as tagNeedsName } from "./tag-needs-name";
 export { default as toolbarMissingAria } from "./toolbar-missing-aria";
 export { default as tooltipNotRecommended } from "./tooltip-not-recommended";
 export { default as visualLabelBetterThanAriaSuggestion } from "./visual-label-better-than-aria-suggestion";
