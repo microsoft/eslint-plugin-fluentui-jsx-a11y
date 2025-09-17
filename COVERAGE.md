@@ -15,7 +15,7 @@ We currently cover the following components:
         -   [X] CompoundButton
         -   [] MenuButton
         -   [X] MenuItem
-        -   [] SplitButton
+        -   [x] SplitButton
         -   [x] ToggleButton
         -   [] ToolbarToggleButton
     -   [] Card

@@ -20,6 +20,7 @@ export { default as inputComponentsRequireAccessibleName } from "./input-compone
 export { default as linkMissingLabelling } from "./link-missing-labelling";
 export { default as menuItemNeedsLabelling } from "./menu-item-needs-labelling";
 export { default as noEmptyButtons } from "./buttons/no-empty-buttons";
+export { default as splitButtonNeedsLabelling } from "./buttons/splitButton-needs-labelling";
 export { default as noEmptyComponents } from "./no-empty-components";
 export { default as preferAriaOverTitleAttribute } from "./prefer-aria-over-title-attribute";
 export { default as progressbarNeedsLabelling } from "./progressbar-needs-labelling";
