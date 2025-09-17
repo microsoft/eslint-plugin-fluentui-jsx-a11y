@@ -3,6 +3,7 @@
 
 import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
 import { elementType, hasProp, getProp, getPropValue } from "jsx-ast-utils";
+import { hasNonEmptyProp } from "../util/hasNonEmptyProp";
 import { JSXOpeningElement, JSXAttribute } from "estree-jsx";
 
 //------------------------------------------------------------------------------
@@ -10,18 +11,10 @@ import { JSXOpeningElement, JSXAttribute } from "estree-jsx";
 //------------------------------------------------------------------------------
 
 /**
- * Checks if a value is a non-empty string (same logic as hasNonEmptyProp for strings)
+ * Checks if a value is a non-empty string
  */
 const isNonEmptyString = (value: any): boolean => {
     return typeof value === "string" && value.trim().length > 0;
-};
-
-/**
- * Checks if an object has a non-empty string property
- */
-const hasNonEmptyObjectProperty = (obj: any, propertyName: string): boolean => {
-    if (!obj || typeof obj !== "object") return false;
-    return isNonEmptyString(obj[propertyName]);
 };
 
 //------------------------------------------------------------------------------
@@ -33,14 +26,16 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
         type: "problem",
         docs: {
             description:
-                "This rule aims to ensure that dismissible Tag components have an aria-label on the dismiss button",
-            recommended: false
+                "This rule aims to ensure that dismissible Tag components have proper accessibility labelling: either aria-label on dismissIcon or aria-label on Tag with role on dismissIcon",
+            recommended: "strict",
+            url: "https://react.fluentui.dev/?path=/docs/components-tag-tag--docs"
         },
         fixable: undefined,
         schema: [],
         messages: {
-            missingDismissLabel: "Accessibility: Dismissible Tag must have dismissIcon with aria-label"
-        },
+            missingDismissLabel:
+                "Accessibility: Dismissible Tag must have either aria-label on dismissIcon or aria-label on Tag with role on dismissIcon"
+        }
     },
     create(context) {
         return {
@@ -59,9 +54,8 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
                     return;
                 }
 
-                // Check if dismissible Tag has dismissIcon with aria-label
+                // Check if dismissible Tag has proper accessibility labelling
                 const dismissIconProp = getProp(openingElement.attributes as JSXAttribute[], "dismissIcon");
-                
                 if (!dismissIconProp) {
                     context.report({
                         node,
@@ -70,10 +64,23 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
                     return;
                 }
 
-                // Get the dismissIcon value and check if it has valid aria-label
                 const dismissIconValue = getPropValue(dismissIconProp);
-                
-                if (!hasNonEmptyObjectProperty(dismissIconValue, "aria-label")) {
+
+                // Check if dismissIcon has aria-label
+                const dismissIconHasAriaLabel =
+                    dismissIconValue && typeof dismissIconValue === "object" && isNonEmptyString((dismissIconValue as any)["aria-label"]);
+
+                // Check if dismissIcon has role
+                const dismissIconHasRole =
+                    dismissIconValue && typeof dismissIconValue === "object" && isNonEmptyString((dismissIconValue as any)["role"]);
+
+                // Check if Tag has aria-label (required when dismissIcon has role)
+                const tagHasAriaLabel = hasNonEmptyProp(openingElement.attributes, "aria-label");
+                // Valid patterns:
+                // Option 1: dismissIcon has aria-label
+                // Option 2: Tag has aria-label and dismissIcon has role
+                const hasValidLabelling = dismissIconHasAriaLabel || (tagHasAriaLabel && dismissIconHasRole);
+                if (!hasValidLabelling) {
                     context.report({
                         node,
                         messageId: `missingDismissLabel`
