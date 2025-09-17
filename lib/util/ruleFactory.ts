@@ -27,7 +27,7 @@ export type LabeledControlConfig = {
     messageId: string;
     /** A short description of the rule. */
     description: string;
-    /** Properties that are required to have string values. @example ["alt"] */
+    /** Properties that are required to have a non-`null` and non-`undefined` value. @example ["alt"] */
     requiredProps?: string[];
     /** Properties that are required to be defined and not empty. @example ["aria-label", "title", "label"] */
     requiredNonEmptyProps?: string[];
