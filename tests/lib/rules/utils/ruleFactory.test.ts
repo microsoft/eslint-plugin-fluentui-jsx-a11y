@@ -209,7 +209,7 @@ describe("hasAccessibleLabel (unit)", () => {
         expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 
-    test("true when allowDescribedByBy and hasAssociatedLabelViaAriaDescribedBy(...) === true", () => {
+    test("true when allowDescribedBy and hasAssociatedLabelViaAriaDescribedBy(...) === true", () => {
         (hasAssociatedLabelViaAriaDescribedby as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
         const element = makeElement();
@@ -228,6 +228,57 @@ describe("hasAccessibleLabel (unit)", () => {
         const node = makeOpeningElement("RadioGroup");
         const element = makeElement();
         expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when allowLabeledChild and hasLabeledChild(...) === true", () => {
+        (hasLabeledChild as jest.Mock).mockReturnValue(true);
+        const node = makeOpeningElement("RadioGroup");
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when allowLabeledChild and hasLabeledChild(...) === true", () => {
+        (hasLabeledChild as jest.Mock).mockReturnValue(true);
+        const node = makeOpeningElement("RadioGroup");
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when allowTextContentChild and hasTextContentChild(...) === true", () => {
+        (hasTextContentChild as jest.Mock).mockReturnValue(true);
+        const node = makeOpeningElement("RadioGroup");
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    describe("With all configs disabled", () => {
+        const disabledCfg: LabeledControlConfig = {
+            component: "RadioGroup",
+            allowFieldParent: false,
+            allowHtmlFor: false,
+            allowLabelledBy: false,
+            allowWrappingLabel: false,
+            allowTooltipParent: false,
+            allowDescribedBy: false,
+            messageId: "noUnlabeledRadioGroup",
+            description: "Accessibility: RadioGroup must have a programmatic and visual label.",
+            allowLabeledChild: false
+        };
+        test("returns false when all helpers return true but config is disabled", () => {
+            (hasDefinedProp as jest.Mock).mockReset().mockReturnValue(true);
+            (hasNonEmptyProp as jest.Mock).mockReset().mockReturnValue(true);
+            (hasAssociatedLabelViaAriaLabelledBy as jest.Mock).mockReset().mockReturnValue(true);
+            (hasAssociatedLabelViaAriaDescribedby as jest.Mock).mockReset().mockReturnValue(true);
+            (isInsideLabelTag as jest.Mock).mockReset().mockReturnValue(true);
+            (hasAssociatedLabelViaHtmlFor as jest.Mock).mockReset().mockReturnValue(true);
+            (hasFieldParent as jest.Mock).mockReset().mockReturnValue(true);
+            (hasLabeledChild as jest.Mock).mockReset().mockReturnValue(true);
+            (hasToolTipParent as jest.Mock).mockReset().mockReturnValue(true);
+            const node = makeOpeningElement("RadioGroup");
+            const element = makeElement();
+            const result = hasAccessibleLabel(node, element, mockContext, disabledCfg);
+            expect(result).toBe(false);
+        });
     });
 });
 
