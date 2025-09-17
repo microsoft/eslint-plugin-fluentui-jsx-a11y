@@ -10,7 +10,14 @@ import rule from "../../../lib/rules/image-needs-alt";
 // -----------------------------------------------------------------------------
 
 ruleTester.run("image-needs-alt", rule as unknown as Rule.RuleModule, {
-    valid: ['<Image src="image.png" alt="Description of image" />', '<Image src="image.png" alt={altText} />'],
+    valid: [
+        // Not an Image
+        "<div></div>",
+        // Valid string test
+        '<Image src="image.png" alt="Description of image" />',
+        // Valid expression test
+        '<Image src="image.png" alt={altText} />'
+    ],
     invalid: [
         {
             // No alt attribute
