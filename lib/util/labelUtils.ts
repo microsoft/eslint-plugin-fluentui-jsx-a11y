@@ -42,6 +42,56 @@ const extractCapturedId = (match: RegExpExecArray): string | undefined => {
 };
 
 /**
+ * New small helper: normalize attribute value (string list vs identifier vs empty/none)
+ * Keeps getProp/getPropValue usage isolated and provides a single place to trim/split.
+ * Return shape (for consumers): 
+ *   { kind: "string", raw: string, tokens: string[] }
+ *   { kind: "identifier", name: string }
+ *   { kind: "empty" }
+ *   { kind: "none" }
+ */
+const getAttributeValueInfo = (
+    openingElement: TSESTree.JSXOpeningElement,
+    context: TSESLint.RuleContext<string, unknown[]>,
+    attrName: string
+): any => {
+    const prop = getProp(openingElement.attributes as unknown as JSXOpeningElement["attributes"], attrName);
+
+    if (prop && prop.value && (prop.value as any).type === "JSXExpressionContainer") {
+        const expr = (prop.value as any).expression;
+        if (expr && expr.type === "Identifier") {
+            return { kind: "identifier", name: expr.name as string };
+        }
+        if (expr && expr.type === "Literal" && typeof (expr as any).value === "string") {
+            const trimmed = ((expr as any).value as string).trim();
+            if (trimmed === "") return { kind: "empty" };
+            return { kind: "string", raw: trimmed, tokens: trimmed.split(/\s+/) };
+        }
+    }
+
+    const resolved = prop ? getPropValue(prop) : undefined;
+    if (typeof resolved === "string") {
+        const trimmed = resolved.trim();
+        if (trimmed === "") return { kind: "empty" };
+        return { kind: "string", raw: trimmed, tokens: trimmed.split(/\s+/) };
+    }
+
+    return { kind: "none" };
+};
+
+const hasBracedAttrId = (
+    tagPattern: string,
+    attrName: string,
+    idValue: string,
+    context: TSESLint.RuleContext<string, unknown[]>
+): boolean => {
+    if (!idValue) return false;
+    const src = getSourceText(context);
+    const re = new RegExp(`<(?:${tagPattern})[^>]*\\b${attrName}\\s*=\\s*\\{\\s*${escapeForRegExp(idValue)}\\s*\\}`, "i");
+    return re.test(src);
+};
+
+/**
  * Checks if a Label exists with htmlFor that matches idValue.
  * Handles:
  *  - htmlFor="id", htmlFor={'id'}, htmlFor={"id"}, htmlFor={idVar}
@@ -57,8 +107,7 @@ const hasLabelWithHtmlForId = (idValue: string, context: TSESLint.RuleContext<st
         if (capturedValue === idValue) return true;
     }
 
-    const fallbackRe = new RegExp(`<(?:Label|label)[^>]*\\bhtmlFor\\s*=\\s*\\{\\s*${escapeForRegExp(idValue)}\\s*\\}`, "i");
-    return fallbackRe.test(source);
+    return hasBracedAttrId("Label|label", "htmlFor", idValue, context);
 };
 
 /**
@@ -76,8 +125,7 @@ const hasLabelWithHtmlId = (idValue: string, context: TSESLint.RuleContext<strin
         if (capturedValue === idValue) return true;
     }
 
-    const fallbackRe = new RegExp(`<(?:Label|label)[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(idValue)}\\s*\\}`, "i");
-    return fallbackRe.test(source);
+    return hasBracedAttrId("Label|label", "id", idValue, context);
 };
 
 /**
@@ -94,8 +142,7 @@ const hasOtherElementWithHtmlId = (idValue: string, context: TSESLint.RuleContex
         if (capturedValue === idValue) return true;
     }
 
-    const fallbackRe = new RegExp(`<(?:div|span|p|h[1-6])[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(idValue)}\\s*\\}`, "i");
-    return fallbackRe.test(source);
+    return hasBracedAttrId("div|span|p|h[1-6]", "id", idValue, context);
 };
 
 /**
@@ -111,13 +158,10 @@ const hasAssociatedAriaText = (
     context: TSESLint.RuleContext<string, unknown[]>,
     ariaAttribute: string
 ): boolean => {
-    const prop = getProp(openingElement.attributes as unknown as JSXOpeningElement["attributes"], ariaAttribute);
-    const resolved = prop ? getPropValue(prop) : undefined;
+    const info = getAttributeValueInfo(openingElement, context, ariaAttribute);
 
-    if (typeof resolved === "string" && resolved.trim() !== "") {
-        // support space-separated lists like "first second" — check each id independently
-        const ids = resolved.trim().split(/\s+/);
-        for (const id of ids) {
+    if (info.kind === "string") {
+        for (const id of info.tokens) {
             if (hasLabelWithHtmlId(id, context) || hasOtherElementWithHtmlId(id, context)) {
                 return true;
             }
@@ -125,24 +169,14 @@ const hasAssociatedAriaText = (
         return false;
     }
 
-    // identifier expression: aria-*= {someIdentifier}
-    if (prop && prop.value && prop.value.type === "JSXExpressionContainer") {
-        const expr = (prop.value as any).expression;
-        if (expr && expr.type === "Identifier") {
-            const varName = expr.name as string;
-            const src = getSourceText(context);
-            const labelMatch = new RegExp(`<(?:Label|label)[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(varName)}\\s*\\}`, "i").test(src);
-            const otherMatch = new RegExp(`<(?:div|span|p|h[1-6])[^>]*\\bid\\s*=\\s*\\{\\s*${escapeForRegExp(varName)}\\s*\\}`, "i").test(
-                src
-            );
-            return labelMatch || otherMatch;
-        }
+    if (info.kind === "identifier") {
+        const varName = info.name;
+        return hasBracedAttrId("Label|label", "id", varName, context) || hasBracedAttrId("div|span|p|h[1-6]", "id", varName, context);
     }
 
     return false;
 };
 
-/* thin wrappers kept for compatibility with existing callers */
 const hasAssociatedLabelViaAriaLabelledBy = (
     openingElement: TSESTree.JSXOpeningElement,
     context: TSESLint.RuleContext<string, unknown[]>
@@ -153,30 +187,21 @@ const hasAssociatedLabelViaAriaDescribedby = (
     context: TSESLint.RuleContext<string, unknown[]>
 ) => hasAssociatedAriaText(openingElement, context, "aria-describedby");
 
-/**
- * htmlFor / id relationship helper for controls (string + identifier fallback)
- */
 const hasAssociatedLabelViaHtmlFor = (openingElement: TSESTree.JSXOpeningElement, context: TSESLint.RuleContext<string, unknown[]>) => {
-    const prop = getProp(openingElement.attributes as unknown as JSXOpeningElement["attributes"], "id");
-    const resolved = prop ? getPropValue(prop) : undefined;
+    const info = getAttributeValueInfo(openingElement, context, "id");
 
-    if (typeof resolved === "string" && resolved.trim() !== "") {
-        return hasLabelWithHtmlForId(resolved, context);
+    if (info.kind === "string") {
+        return hasLabelWithHtmlForId(info.raw, context);
     }
 
-    if (prop && prop.value && prop.value.type === "JSXExpressionContainer") {
-        const expr = (prop.value as any).expression;
-        if (expr && expr.type === "Identifier") {
-            const varName = expr.name as string;
-            const src = getSourceText(context);
-            return new RegExp(`<(?:Label|label)[^>]*\\bhtmlFor\\s*=\\s*\\{\\s*${escapeForRegExp(varName)}\\s*\\}`, "i").test(src);
-        }
+    if (info.kind === "identifier") {
+        const varName = info.name;
+        return hasBracedAttrId("Label|label", "htmlFor", varName, context);
     }
 
     return false;
 };
 
-/* exported API */
 export {
     isInsideLabelTag,
     hasLabelWithHtmlForId,
@@ -185,5 +210,7 @@ export {
     hasAssociatedLabelViaHtmlFor,
     hasAssociatedLabelViaAriaDescribedby,
     hasAssociatedAriaText,
-    hasOtherElementWithHtmlId
+    hasOtherElementWithHtmlId,
+    hasBracedAttrId,
+    getAttributeValueInfo
 };
