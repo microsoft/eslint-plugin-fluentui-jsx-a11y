@@ -29,8 +29,16 @@ const isInsideLabelTag = (context: TSESLint.RuleContext<string, unknown[]>): boo
  * Capture groups (when the alternation matches) are in positions 2..6
  * (group 1 is the element/tag capture used in some surrounding regexes).
  */
-// FIXED: typo in identifier character class (A-ZaLign -> A-Za-z)
-const idOrExprRegex = /(?:"([^"]*)"|'([^']*)'|\{\s*"([^"]*)"\s*\}|\{\s*'([^']*)'\s*\}|\{\s*([A-Za-z_$][A-Za-z0-9_$]*)\s*\})/i;
+const idLiteralDouble = '"([^"]*)"';
+const idLiteralSingle = "'([^']*)'";
+const exprStringDouble = '\\{\\s*"([^"]*)"\\s*\\}';
+const exprStringSingle = "\\{\\s*'([^']*)'\\s*\\}";
+const exprIdentifier = "\\{\\s*([A-Za-z_$][A-Za-z0-9_$]*)\\s*\\}";
+
+const idOrExprRegex = new RegExp(
+    `(?:${idLiteralDouble}|${idLiteralSingle}|${exprStringDouble}|${exprStringSingle}|${exprIdentifier})`,
+    "i"
+);
 
 const escapeForRegExp = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
