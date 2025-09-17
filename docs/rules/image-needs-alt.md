@@ -1,4 +1,4 @@
-# Accessibility: Image must have alt attribute (`@microsoft/fluentui-jsx-a11y/image-needs-alt`)
+# Accessibility: Image must have alt attribute with a meaningful description of the image (`@microsoft/fluentui-jsx-a11y/image-needs-alt`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

@@ -13,7 +13,7 @@ export default ESLintUtils.RuleCreator.withoutDocs(
         component: "SwatchPicker",
         messageId: "noUnlabeledSwatchPicker",
         description: "Accessibility: SwatchPicker must have an accessible name via aria-label, aria-labelledby, Field component, etc..",
-        labelProps: ["aria-label"],
+        requiredNonEmptyProps: ["aria-label"],
         allowFieldParent: true,
         allowHtmlFor: false,
         allowLabelledBy: true,

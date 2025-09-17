@@ -18,8 +18,8 @@ import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
 import { hasToolTipParent } from "../../../../lib/util/hasTooltipParent";
 import { hasTextContentChild } from "../../../../lib/util/hasTextContentChild";
 
-jest.mock("../../../../lib/util/hasNonEmptyProp", () => ({
-    hasNonEmptyProp: jest.fn()
+jest.mock("../../../../lib/util/hasDefinedProp", () => ({
+    hasDefinedProp: jest.fn()
 }));
 jest.mock("../../../../lib/util/labelUtils", () => ({
     hasAssociatedLabelViaAriaDescribedby: jest.fn(),
@@ -37,12 +37,14 @@ jest.mock("../../../../lib/util/hasTooltipParent", () => ({
     hasToolTipParent: jest.fn()
 }));
 
+import { hasDefinedProp } from "../../../../lib/util/hasDefinedProp";
 jest.mock("../../../../lib/util/hasTextContentChild", () => ({
     hasTextContentChild: jest.fn()
 }));
 
 // Helper: reset all mocks to a default "false" stance
 const resetAllMocksToFalse = () => {
+    (hasDefinedProp as jest.Mock).mockReset().mockReturnValue(false);
     (hasNonEmptyProp as jest.Mock).mockReset().mockReturnValue(false);
     (hasAssociatedLabelViaAriaLabelledBy as jest.Mock).mockReset().mockReturnValue(false);
     (hasAssociatedLabelViaAriaDescribedby as jest.Mock).mockReset().mockReturnValue(false);
@@ -102,9 +104,10 @@ describe("hasAccessibleLabel (unit)", () => {
         getSourceCode: jest.fn()
     } as unknown as TSESLint.RuleContext<string, []>;
 
-    const cfg: LabeledControlConfig = {
+    const cfg: Required<LabeledControlConfig> = {
         component: "RadioGroup",
-        labelProps: ["label", "aria-label"],
+        requiredProps: ["alt"],
+        requiredNonEmptyProps: ["label", "aria-label"],
         allowFieldParent: true,
         allowHtmlFor: true,
         allowLabelledBy: true,
@@ -143,6 +146,42 @@ describe("hasAccessibleLabel (unit)", () => {
             {
                 type: AST_NODE_TYPES.JSXAttribute,
                 name: { type: AST_NODE_TYPES.JSXIdentifier, name: "label", range: [0, 0], loc: {} as any }
+            }
+        ]);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when a label prop is defined via hasDefinedProp", () => {
+        (hasDefinedProp as jest.Mock).mockImplementation((attrs, name) => (name === "alt" ? true : false));
+        const node = makeOpeningElement("RadioGroup", [
+            {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "alt", range: [0, 0], loc: {} as any }
+            }
+        ]);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when a label prop is defined via hasDefinedProp", () => {
+        (hasDefinedProp as jest.Mock).mockImplementation((attrs, name) => (name === "alt" ? true : false));
+        const node = makeOpeningElement("RadioGroup", [
+            {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "alt", range: [0, 0], loc: {} as any }
+            }
+        ]);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when a label prop is defined via hasDefinedProp", () => {
+        (hasDefinedProp as jest.Mock).mockImplementation((attrs, name) => (name === "alt" ? true : false));
+        const node = makeOpeningElement("RadioGroup", [
+            {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "alt", range: [0, 0], loc: {} as any }
             }
         ]);
         const element = makeElement();
@@ -199,9 +238,10 @@ describe("hasAccessibleLabel (unit)", () => {
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } } });
 
 describe("makeLabeledControlRule (RuleTester integration)", () => {
-    const baseCfg: LabeledControlConfig = {
+    const baseCfg: Required<LabeledControlConfig> = {
         component: "RadioGroup",
-        labelProps: ["label", "aria-label"],
+        requiredProps: ["alt"],
+        requiredNonEmptyProps: ["label", "aria-label"],
         allowFieldParent: true,
         allowHtmlFor: true,
         allowLabelledBy: true,

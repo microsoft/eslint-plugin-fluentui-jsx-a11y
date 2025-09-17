@@ -16,17 +16,14 @@ ruleTester.run("image-needs-alt", rule as unknown as Rule.RuleModule, {
         // Valid string test
         '<Image src="image.png" alt="Description of image" />',
         // Valid expression test
-        '<Image src="image.png" alt={altText} />'
+        '<Image src="image.png" alt={altText} />',
+        // Decorative image with empty alt
+        '<Image src="image.png" alt="" />'
     ],
     invalid: [
         {
             // No alt attribute
             code: '<Image src="image.png" />',
-            errors: [{ messageId: "imageNeedsAlt" }]
-        },
-        {
-            // Empty alt attribute
-            code: '<Image src="image.png" alt="" />',
             errors: [{ messageId: "imageNeedsAlt" }]
         },
         {

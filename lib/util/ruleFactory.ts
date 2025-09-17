@@ -14,26 +14,43 @@ import { elementType } from "jsx-ast-utils";
 import { JSXOpeningElement } from "estree-jsx";
 import { hasToolTipParent } from "./hasTooltipParent";
 import { hasLabeledChild } from "./hasLabeledChild";
+import { hasDefinedProp } from "./hasDefinedProp";
 import { hasTextContentChild } from "./hasTextContentChild";
 
+/**
+ * Configuration options for a rule created via the `ruleFactory`
+ */
 export type LabeledControlConfig = {
+    /** The name of the component that the rule applies to. @example 'Image', /Image|Icon/ */
     component: string | RegExp;
+    /** The unique id of the problem message. @example 'itemNeedsLabel' */
     messageId: string;
+    /** A short description of the rule. */
     description: string;
-    labelProps: string[]; // e.g. ["aria-label", "title", "label"]
-    allowFieldParent: boolean; // Accept a parent <Field label="..."> wrapper as providing the label.
-    allowHtmlFor: boolean; // Accept <label htmlFor="..."> association.
-    allowLabelledBy: boolean; // Accept aria-labelledby association.
-    allowWrappingLabel: boolean; // Accept being wrapped in a <label> element.
-    allowTooltipParent: boolean; // Accept a parent <Tooltip content="..."> wrapper as providing the label.
+    /** Properties that are required to have string values. @example ["alt"] */
+    requiredProps?: string[];
+    /** Properties that are required to be defined and not empty. @example ["aria-label", "title", "label"] */
+    requiredNonEmptyProps?: string[];
+    /** Accept a parent `<Field label="...">` wrapper as providing the label. */
+    allowFieldParent: boolean;
+    /** Accept `<label htmlFor="...">` association. */
+    allowHtmlFor: boolean;
+    /** Accept aria-labelledby association. */
+    allowLabelledBy: boolean;
+    /** Accept being wrapped in a `<label>` element. */
+    allowWrappingLabel: boolean;
+    /** Accept a parent `<Tooltip content="...">` wrapper as providing the label. */
+    allowTooltipParent: boolean;
     /**
      * Accept aria-describedby as a labeling strategy.
      * NOTE: This is discouraged for *primary* labeling; prefer text/aria-label/labelledby.
      * Keep this off unless a specific component (e.g., Icon-only buttons) intentionally uses it.
      */
     allowDescribedBy: boolean;
-    allowLabeledChild: boolean; // Accept labeled child elements to provide the label e.g. <Button><img alt="..." /></Button>
-    allowTextContentChild?: boolean; // Accept text children to provide the label e.g. <Button>Click me</Button>
+    /** Treat labeled child content (img `alt`, svg `title`, `aria-label` on `role="img"`) as the name */
+    allowLabeledChild: boolean;
+    /** Accept text children to provide the label e.g. <Button>Click me</Button> */
+    allowTextContentChild?: boolean;
 };
 
 /**
@@ -58,16 +75,22 @@ export function hasAccessibleLabel(
     context: TSESLint.RuleContext<string, []>,
     config: LabeledControlConfig
 ): boolean {
-    const allowFieldParent = !!config.allowFieldParent;
-    const allowWrappingLabel = !!config.allowWrappingLabel;
-    const allowHtmlFor = !!config.allowHtmlFor;
-    const allowLabelledBy = !!config.allowLabelledBy;
-    const allowTooltipParent = !!config.allowTooltipParent;
-    const allowDescribedBy = !!config.allowDescribedBy;
-    const allowLabeledChild = !!config.allowLabeledChild;
+    const {
+        allowFieldParent,
+        allowWrappingLabel,
+        allowHtmlFor,
+        allowLabelledBy,
+        allowTooltipParent,
+        allowDescribedBy,
+        allowLabeledChild,
+        requiredNonEmptyProps,
+        requiredProps
+    } = config;
     const allowTextContentChild = !!config.allowTextContentChild;
+
     if (allowFieldParent && hasFieldParent(context)) return true;
-    if (config.labelProps?.some(p => hasNonEmptyProp(opening.attributes, p))) return true;
+    if (requiredProps?.some(p => hasDefinedProp(opening.attributes, p))) return true;
+    if (requiredNonEmptyProps?.some(p => hasNonEmptyProp(opening.attributes, p))) return true;
     if (allowWrappingLabel && isInsideLabelTag(context)) return true;
     if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(opening, context)) return true;
     if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(opening, context)) return true;
