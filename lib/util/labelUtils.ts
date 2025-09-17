@@ -338,7 +338,20 @@ const hasAssociatedLabelViaHtmlFor = (openingElement: TSESTree.JSXOpeningElement
     if (info.kind === "template") {
         const templ = info.template as string;
         const src = getSourceText(context);
-        return new RegExp(`<(?:Label|label)[^>]*\\bhtmlFor\\s*=\\s*\\{\\s*${escapeForRegExp(templ)}\\s*\\}`, "i").test(src);
+        // Build a pattern which matches the template's literal parts but allows any expression
+        // inside `${...}` placeholders. This lets templates with non-Identifier expressions
+        // (e.g. `${a.b}`) match the canonicalized template produced from the AST.
+        const placeholderRe = /\$\{[^}]*\}/g;
+        let pattern = "";
+        let idx = 0;
+        let m: RegExpExecArray | null;
+        while ((m = placeholderRe.exec(templ)) !== null) {
+            pattern += escapeForRegExp(templ.slice(idx, m.index));
+            pattern += "\\$\\{[^}]*\\}";
+            idx = m.index + m[0].length;
+        }
+        pattern += escapeForRegExp(templ.slice(idx));
+        return new RegExp(`<(?:Label|label)[^>]*\\bhtmlFor\\s*=\\s*\\{\\s*${pattern}\\s*\\}`, "i").test(src);
     }
 
     return false;
