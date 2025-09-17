@@ -143,11 +143,9 @@ describe("labelUtils", () => {
     });
 
     describe("hasAssociatedLabelViaAriaDescribedby", () => {
-        let context: TSESLint.RuleContext<string, unknown[]>;
         let openingElement: TSESTree.JSXOpeningElement;
 
         beforeEach(() => {
-            context = mockContext();
             openingElement = { attributes: [] } as unknown as TSESTree.JSXOpeningElement;
         });
 
@@ -187,14 +185,20 @@ describe("labelUtils", () => {
             expect(hasAssociatedLabelViaHtmlFor(openingExpr, ctxExpr)).toBe(true);
 
             const ctxIdent = mockContext("<Label htmlFor={idVar}>L</Label>");
-            const openingIdent = { attributes: [createJSXAttributeExpressionIdentifier("id", "idVar")] } as unknown as TSESTree.JSXOpeningElement;
+            const openingIdent = {
+                attributes: [createJSXAttributeExpressionIdentifier("id", "idVar")]
+            } as unknown as TSESTree.JSXOpeningElement;
             expect(hasAssociatedLabelViaHtmlFor(openingIdent, ctxIdent)).toBe(true);
         });
     });
 
     describe("low-level helpers", () => {
         test("isInsideLabelTag true/false and hasBracedAttrId behavior", () => {
-            const ctxLabel = { getAncestors: () => [{ type: "JSXElement", openingElement: { name: { type: AST_NODE_TYPES.JSXIdentifier, name: "Label" } } }] } as unknown as TSESLint.RuleContext<string, unknown[]>;
+            const ctxLabel = {
+                getAncestors: () => [
+                    { type: "JSXElement", openingElement: { name: { type: AST_NODE_TYPES.JSXIdentifier, name: "Label" } } }
+                ]
+            } as unknown as TSESLint.RuleContext<string, unknown[]>;
             expect(isInsideLabelTag(ctxLabel)).toBe(true);
 
             const ctxNot = { getAncestors: () => [{ type: "NotJSX" }] } as unknown as TSESLint.RuleContext<string, unknown[]>;
@@ -218,7 +222,7 @@ describe("labelUtils", () => {
     describe("additional alternation & loop-branch coverage", () => {
         test("combined alternation forms for labels/htmlFor/other elements", () => {
             const src = [
-                "<Label id=\"a\"></Label>",
+                '<Label id="a"></Label>',
                 "<Label id='b'></Label>",
                 '<Label id={"c"}></Label>',
                 "<Label id={'d'}></Label>",
@@ -232,7 +236,7 @@ describe("labelUtils", () => {
             expect(hasLabelWithHtmlId("e", ctx)).toBe(true);
 
             const srcFor = [
-                "<Label htmlFor=\"A1\"></Label>",
+                '<Label htmlFor="A1"></Label>',
                 "<Label htmlFor='B1'></Label>",
                 '<Label htmlFor={"C1"}></Label>',
                 "<Label htmlFor={'D1'}></Label>",
@@ -259,7 +263,9 @@ describe("labelUtils", () => {
 
     describe("getAttributeValueInfo helper", () => {
         test("parses string-valued attribute into tokens and trims", () => {
-            const opening = { attributes: [createJSXAttributeLiteral("aria-labelledby", "  a  b  ")] } as unknown as TSESTree.JSXOpeningElement;
+            const opening = {
+                attributes: [createJSXAttributeLiteral("aria-labelledby", "  a  b  ")]
+            } as unknown as TSESTree.JSXOpeningElement;
             const ctx = mockContext("<Label id='a'></Label><div id='b'></div>");
             const info = getAttributeValueInfo(opening, ctx, "aria-labelledby") as any;
             expect(info.kind).toBe("string");
@@ -268,7 +274,9 @@ describe("labelUtils", () => {
         });
 
         test("detects identifier expression form on a JSXExpressionContainer", () => {
-            const opening = { attributes: [createJSXAttributeExpressionIdentifier("aria-labelledby", "someId")] } as unknown as TSESTree.JSXOpeningElement;
+            const opening = {
+                attributes: [createJSXAttributeExpressionIdentifier("aria-labelledby", "someId")]
+            } as unknown as TSESTree.JSXOpeningElement;
             const ctx = mockContext("<div id={someId}></div>");
             const info = getAttributeValueInfo(opening, ctx, "aria-labelledby") as any;
             expect(info.kind).toBe("identifier");

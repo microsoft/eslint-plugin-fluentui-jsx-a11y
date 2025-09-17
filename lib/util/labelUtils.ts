@@ -44,7 +44,7 @@ const extractCapturedId = (match: RegExpExecArray): string | undefined => {
 /**
  * New small helper: normalize attribute value (string list vs identifier vs empty/none)
  * Keeps getProp/getPropValue usage isolated and provides a single place to trim/split.
- * Return shape (for consumers): 
+ * Return shape (for consumers):
  *   { kind: "string", raw: string, tokens: string[] }
  *   { kind: "identifier", name: string }
  *   { kind: "empty" }
