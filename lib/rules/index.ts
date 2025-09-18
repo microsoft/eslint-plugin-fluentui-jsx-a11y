@@ -35,3 +35,4 @@ export { default as tablistAndTabsNeedLabelling } from "./tablist-and-tabs-need-
 export { default as toolbarMissingAria } from "./toolbar-missing-aria";
 export { default as tooltipNotRecommended } from "./tooltip-not-recommended";
 export { default as visualLabelBetterThanAriaSuggestion } from "./visual-label-better-than-aria-suggestion";
+export { default as preferDisabledFocusableOverDisabled } from "./prefer-disabledfocusable-over-disabled";
