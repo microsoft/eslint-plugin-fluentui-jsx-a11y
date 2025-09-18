@@ -14,6 +14,7 @@ import { elementType } from "jsx-ast-utils";
 import { JSXOpeningElement } from "estree-jsx";
 import { hasToolTipParent } from "./hasTooltipParent";
 import { hasLabeledChild } from "./hasLabeledChild";
+import { hasTextContentChild } from "./hasTextContentChild";
 
 export type LabeledControlConfig = {
     component: string | RegExp;
@@ -34,6 +35,7 @@ export type LabeledControlConfig = {
     allowDescribedBy: boolean;
     // NEW: treat labeled child content (img alt, svg title, aria-label on role="img") as the name
     allowLabeledChild: boolean;
+    allowTextContentChild?: boolean;
 };
 
 /**
@@ -52,7 +54,12 @@ export type LabeledControlConfig = {
  *
  * This checks for presence of an accessible *name* only; not contrast or UX.
  */
-export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: any, config: LabeledControlConfig): boolean {
+export function hasAccessibleLabel(
+    opening: TSESTree.JSXOpeningElement,
+    element: TSESTree.JSXElement,
+    context: TSESLint.RuleContext<string, []>,
+    config: LabeledControlConfig
+): boolean {
     const allowFieldParent = !!config.allowFieldParent;
     const allowWrappingLabel = !!config.allowWrappingLabel;
     const allowHtmlFor = !!config.allowHtmlFor;
@@ -60,16 +67,76 @@ export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: an
     const allowTooltipParent = !!config.allowTooltipParent;
     const allowDescribedBy = !!config.allowDescribedBy;
     const allowLabeledChild = !!config.allowLabeledChild;
+    const allowTextContentChild = !!config.allowTextContentChild;
 
-    if (allowFieldParent && hasFieldParent(context)) return true;
-    if (config.labelProps?.some(p => hasNonEmptyProp(node.attributes, p))) return true;
-    if (allowWrappingLabel && isInsideLabelTag(context)) return true;
-    if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(node, context)) return true;
-    if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(node, context)) return true;
-    if (allowTooltipParent && hasToolTipParent(context)) return true;
-    if (allowDescribedBy && hasAssociatedLabelViaAriaDescribedby(node, context)) return true;
-    if (allowLabeledChild && hasLabeledChild(node, context)) return true;
+    console.log("hasAccessibleLabel called with:", {
+        component: config.component,
+        attributes: opening.attributes,
+        allowFieldParent,
+        allowWrappingLabel,
+        allowHtmlFor,
+        allowLabelledBy,
+        allowTooltipParent,
+        allowDescribedBy,
+        allowLabeledChild,
+        allowTextContentChild
+    });
 
+    if (allowFieldParent) {
+        const res = hasFieldParent(context);
+        console.log("hasFieldParent:", res);
+        if (res) return true;
+    }
+
+    if (config.labelProps?.length) {
+        const res = config.labelProps.some(p => hasNonEmptyProp(opening.attributes, p));
+        console.log("hasNonEmptyProp:", res, config.labelProps);
+        if (res) return true;
+    }
+
+    if (allowWrappingLabel) {
+        const res = isInsideLabelTag(context);
+        console.log("isInsideLabelTag:", res);
+        if (res) return true;
+    }
+
+    if (allowHtmlFor) {
+        const res = hasAssociatedLabelViaHtmlFor(opening, context);
+        console.log("hasAssociatedLabelViaHtmlFor:", res);
+        if (res) return true;
+    }
+
+    if (allowLabelledBy) {
+        const res = hasAssociatedLabelViaAriaLabelledBy(opening, context);
+        console.log("hasAssociatedLabelViaAriaLabelledBy:", res);
+        if (res) return true;
+    }
+
+    if (allowTooltipParent) {
+        const res = hasToolTipParent(context);
+        console.log("hasToolTipParent:", res);
+        if (res) return true;
+    }
+
+    if (allowDescribedBy) {
+        const res = hasAssociatedLabelViaAriaDescribedby(opening, context);
+        console.log("hasAssociatedLabelViaAriaDescribedby:", res);
+        if (res) return true;
+    }
+
+    if (allowLabeledChild) {
+        const res = hasLabeledChild(opening, context);
+        console.log("hasLabeledChild:", res);
+        if (res) return true;
+    }
+
+    if (allowTextContentChild) {
+        const res = hasTextContentChild(element);
+        console.log("hasTextContentChild:", res);
+        if (res) return true;
+    }
+
+    console.log("No accessible label found, returning false.");
     return false;
 }
 
@@ -93,15 +160,16 @@ export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.R
 
         create(context: TSESLint.RuleContext<string, []>) {
             return {
-                JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
-                    // elementType expects an ESTree JSX node — cast is fine
-                    const name = elementType(node as unknown as JSXOpeningElement);
+                JSXElement(node: TSESTree.JSXElement) {
+                    const opening = node.openingElement;
+                    const name = elementType(opening as unknown as JSXOpeningElement);
                     const matches = typeof config.component === "string" ? name === config.component : config.component.test(name);
 
                     if (!matches) return;
 
-                    if (!hasAccessibleLabel(node, context, config)) {
-                        context.report({ node, messageId: config.messageId });
+                    if (!hasAccessibleLabel(opening, node, context, config)) {
+                        // report on the opening tag for better location
+                        context.report({ node: opening, messageId: config.messageId });
                     }
                 }
             };

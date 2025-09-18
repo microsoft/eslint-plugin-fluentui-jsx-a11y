@@ -3,6 +3,21 @@
 
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
+import { hasNonEmptyProp } from "../../../../lib/util/hasNonEmptyProp";
+import {
+    hasAssociatedLabelViaAriaLabelledBy,
+    isInsideLabelTag,
+    hasAssociatedLabelViaHtmlFor,
+    hasAssociatedLabelViaAriaDescribedby
+} from "../../../../lib/util/labelUtils";
+import { hasFieldParent } from "../../../../lib/util/hasFieldParent";
+import { hasAccessibleLabel, LabeledControlConfig, makeLabeledControlRule } from "../../../../lib/util/ruleFactory";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { Rule, RuleTester } from "eslint";
+import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
+import { hasToolTipParent } from "../../../../lib/util/hasTooltipParent";
+import { hasTextContentChild } from "../../../../lib/util/hasTextContentChild";
+
 jest.mock("../../../../lib/util/hasNonEmptyProp", () => ({
     hasNonEmptyProp: jest.fn()
 }));
@@ -22,21 +37,9 @@ jest.mock("../../../../lib/util/hasTooltipParent", () => ({
     hasToolTipParent: jest.fn()
 }));
 
-import { hasNonEmptyProp } from "../../../../lib/util/hasNonEmptyProp";
-import {
-    hasAssociatedLabelViaAriaLabelledBy,
-    isInsideLabelTag,
-    hasAssociatedLabelViaHtmlFor,
-    hasAssociatedLabelViaAriaDescribedby
-} from "../../../../lib/util/labelUtils";
-import { hasFieldParent } from "../../../../lib/util/hasFieldParent";
-
-// Import the module under test AFTER mocks
-import { hasAccessibleLabel, LabeledControlConfig, makeLabeledControlRule } from "../../../../lib/util/ruleFactory";
-import type { TSESTree } from "@typescript-eslint/utils";
-import { Rule, RuleTester } from "eslint";
-import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
-import { hasToolTipParent } from "../../../../lib/util/hasTooltipParent";
+jest.mock("../../../../lib/util/hasTextContentChild", () => ({
+    hasTextContentChild: jest.fn()
+}));
 
 // Helper: reset all mocks to a default "false" stance
 const resetAllMocksToFalse = () => {
@@ -48,6 +51,7 @@ const resetAllMocksToFalse = () => {
     (hasFieldParent as jest.Mock).mockReset().mockReturnValue(false);
     (hasLabeledChild as jest.Mock).mockReset().mockReturnValue(false);
     (hasToolTipParent as jest.Mock).mockReset().mockReturnValue(false);
+    (hasTextContentChild as jest.Mock).mockReset().mockReturnValue(false);
 };
 
 beforeEach(() => {
@@ -67,11 +71,37 @@ function makeOpeningElement(name: string, attributes: Array<Partial<TSESTree.JSX
     };
 }
 
+function makeClosingElement(name: string): TSESTree.JSXClosingElement {
+    return {
+        type: AST_NODE_TYPES.JSXClosingElement,
+        name: { type: "JSXIdentifier", name } as any,
+        range: [0, 0],
+        loc: {} as any
+    };
+}
+
+function makeElement(): TSESTree.JSXElement {
+    return {
+        type: AST_NODE_TYPES.JSXElement,
+        openingElement: makeOpeningElement("RadioGroup"),
+        closingElement: makeClosingElement("RadioGroup"),
+        children: [],
+        range: [0, 0],
+        loc: {} as any
+    };
+}
+
 /* -------------------------------------------------------------------------- */
 /*                          Unit tests: hasAccessibleLabel                     */
 /* -------------------------------------------------------------------------- */
 
 describe("hasAccessibleLabel (unit)", () => {
+    // Mock context with getSourceCode method
+    const mockContext = {
+        report: jest.fn(),
+        getSourceCode: jest.fn()
+    } as unknown as TSESLint.RuleContext<string, []>;
+
     const cfg: LabeledControlConfig = {
         component: "RadioGroup",
         labelProps: ["label", "aria-label"],
@@ -83,25 +113,28 @@ describe("hasAccessibleLabel (unit)", () => {
         allowDescribedBy: true,
         messageId: "errorMsg",
         description: "anything",
-        allowLabeledChild: false
+        allowLabeledChild: true,
+        allowTextContentChild: true
     };
 
     test("returns false when no heuristics pass", () => {
         const node = makeOpeningElement("RadioGroup");
-        const ctx = {};
-        expect(hasAccessibleLabel(node, ctx, cfg)).toBe(false);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(false);
     });
 
     test("true when allowFieldParent and hasFieldParent(ctx) === true", () => {
         (hasFieldParent as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
-        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 
     test("true when allowTooltipParent and hasTooltipParent(ctx) === true", () => {
         (hasToolTipParent as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
-        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 
     test("true when a label prop is non-empty via hasNonEmptyProp", () => {
@@ -112,31 +145,50 @@ describe("hasAccessibleLabel (unit)", () => {
                 name: { type: AST_NODE_TYPES.JSXIdentifier, name: "label", range: [0, 0], loc: {} as any }
             }
         ]);
-        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 
     test("true when allowWrappingLabel and isInsideLabelTag(ctx) === true", () => {
         (isInsideLabelTag as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
-        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 
     test("true when allowFor and hasAssociatedLabelViaHtmlFor(...) === true", () => {
         (hasAssociatedLabelViaHtmlFor as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
-        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 
     test("true when allowLabelledBy and hasAssociatedLabelViaAriaLabelledBy(...) === true", () => {
         (hasAssociatedLabelViaAriaLabelledBy as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
-        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 
     test("true when allowDescribedByBy and hasAssociatedLabelViaAriaDescribedBy(...) === true", () => {
         (hasAssociatedLabelViaAriaDescribedby as jest.Mock).mockReturnValue(true);
         const node = makeOpeningElement("RadioGroup");
-        expect(hasAccessibleLabel(node, {}, cfg)).toBe(true);
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when allowLabeledChild and hasLabeledChild(...) === true", () => {
+        (hasLabeledChild as jest.Mock).mockReturnValue(true);
+        const node = makeOpeningElement("RadioGroup");
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
+    });
+
+    test("true when allowTextContentChild and hasTextContentChild(...) === true", () => {
+        (hasTextContentChild as jest.Mock).mockReturnValue(true);
+        const node = makeOpeningElement("RadioGroup");
+        const element = makeElement();
+        expect(hasAccessibleLabel(node, element, mockContext, cfg)).toBe(true);
     });
 });
 
@@ -158,7 +210,8 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
         allowDescribedBy: true,
         messageId: "noUnlabeledRadioGroup",
         description: "Accessibility: RadioGroup must have a programmatic and visual label.",
-        allowLabeledChild: false
+        allowLabeledChild: true,
+        allowTextContentChild: true
     };
 
     // 1) No heuristics -> report
@@ -326,6 +379,52 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
                             <RadioGroup />
                         </Tooltip>
                         </>
+                    `
+                }
+            ],
+            invalid: []
+        });
+    });
+
+    // 10) has labeled child
+    describe("accepts when has labeled child", () => {
+        beforeEach(() => {
+            resetAllMocksToFalse();
+            (hasLabeledChild as jest.Mock).mockReturnValue(true);
+        });
+
+        const rule = makeLabeledControlRule(baseCfg);
+
+        ruleTester.run("no-unlabeled-radio-group (has labeled child)", rule as unknown as Rule.RuleModule, {
+            valid: [
+                {
+                    code: `
+                        <RadioGroup>
+                            <Label>Account type</Label>
+                        </RadioGroup>
+                    `
+                }
+            ],
+            invalid: []
+        });
+    });
+
+    // 11) has text content child
+    describe("accepts when has text content child", () => {
+        beforeEach(() => {
+            resetAllMocksToFalse();
+            (hasTextContentChild as jest.Mock).mockReturnValue(true);
+        });
+
+        const rule = makeLabeledControlRule(baseCfg);
+
+        ruleTester.run("no-unlabeled-radio-group (has text content child)", rule as unknown as Rule.RuleModule, {
+            valid: [
+                {
+                    code: `
+                        <RadioGroup>
+                            Account type
+                        </RadioGroup>
                     `
                 }
             ],
