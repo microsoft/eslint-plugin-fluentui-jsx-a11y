@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 /* eslint-disable no-console */
-const { resolve } = require("path");
-const { existsSync, writeFileSync } = require("fs");
-const { exec } = require("child_process");
-const yargs = require("yargs/yargs"); // Use yargs/yargs for modules
-const { hideBin } = require("yargs/helpers"); // To handle CLI arguments
-const ruleBoilerplateGenerator = require("./boilerplate/rule");
-const testBoilerplateGenerator = require("./boilerplate/test");
-const docBoilerplateGenerator = require("./boilerplate/doc");
+import { resolve } from "path";
+import { existsSync, writeFileSync } from "fs";
+import { exec } from "child_process";
+import yargs from "yargs/yargs";
+import { hideBin } from "yargs/helpers";
+import {ruleBoilerplateGenerator} from "./boilerplate/rule";
+import {testBoilerplateGenerator} from "./boilerplate/test";
+import {docBoilerplateGenerator} from "./boilerplate/doc";
 
 // Define the yargs configuration
 const argv = yargs(hideBin(process.argv))
@@ -27,11 +27,11 @@ const argv = yargs(hideBin(process.argv))
             default: "$DESCRIPTION" // Provide default value
         }
     })
-    .demandCommand(1, "You must provide the rule name.").argv; // Make the rule name (positional)
+    .demandCommand(1, "You must provide the rule name.").argv as any; // Type assertion for yargs
 
-const ruleName = argv._[0];
-const author = argv.author || "$AUTHOR";
-const description = argv.description || "$DESCRIPTION";
+const ruleName: string = argv._[0];
+const author: string = argv.author || "$AUTHOR";
+const description: string = argv.description || "$DESCRIPTION";
 
 const rulePath = resolve(`lib/rules/${ruleName}.ts`);
 const testPath = resolve(`tests/lib/rules/${ruleName}-test.ts`);
@@ -106,3 +106,4 @@ exec(commandForMainIndex, (error, stdout, stderr) => {
         console.log(`stdout: ${stdout}`);
     });
 });
+

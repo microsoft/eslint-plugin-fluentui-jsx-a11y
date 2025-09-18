@@ -4,7 +4,15 @@
 import fs from "fs";
 import { kebabToCamelCase } from "./utils/kebabToKamelCase";
 
-function transformer(file, api, options) {
+// @ts-ignore: No types for jscodeshift
+import { FileInfo, API, Options } from "jscodeshift";
+
+interface TransformerOptions {
+    ruleName: string;
+    exportIndexFilePath: string;
+}
+
+export function transformer(file: FileInfo, api: API, options: TransformerOptions): string {
     const j = api.jscodeshift;
     const { ruleName, exportIndexFilePath } = options;
 
@@ -45,14 +53,15 @@ function transformer(file, api, options) {
         // Manually sort the export statements alphabetically
         const sortedExports = updatedExportStatements
             .nodes()
-            .map(node => {
+
+            .map((node: any) => {
                 if (node.specifiers && node.specifiers[0] && node.specifiers[0].exported) {
                     return node;
                 }
                 return null; // Ignore nodes without valid specifiers
             })
-            .filter(node => node !== null) // Remove nulls
-            .sort((a, b) => {
+            .filter((node: any) => node !== null) // Remove nulls
+            .sort((a: any, b: any) => {
                 const aName = a.specifiers[0].exported.name;
                 const bName = b.specifiers[0].exported.name;
                 return aName.localeCompare(bName);
@@ -63,7 +72,7 @@ function transformer(file, api, options) {
 
         // Now insert the sorted export statements back into the AST
         const body = exportIndexSource.get().node.program.body;
-        sortedExports.forEach(exportNode => {
+        sortedExports.forEach((exportNode: any) => {
             body.push(exportNode); // Insert each export statement at the end of the body
         });
     }
@@ -74,4 +83,4 @@ function transformer(file, api, options) {
     // Return the original file source (this is for the main file passed in)
     return file.source;
 }
-module.exports = transformer;
+
