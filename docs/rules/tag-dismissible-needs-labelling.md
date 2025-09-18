@@ -1,4 +1,4 @@
-# This rule aims to ensure that dismissible Tag components have proper accessibility labelling: either aria-label on dismissIcon or aria-label on Tag with role='presentation' on dismissIcon (`@microsoft/fluentui-jsx-a11y/tag-dismissible-needs-labelling`)
+# This rule aims to ensure that dismissible Tag components have proper accessibility labelling: either aria-label on dismissIcon or aria-label on Tag with role on dismissIcon (`@microsoft/fluentui-jsx-a11y/tag-dismissible-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
