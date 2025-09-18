@@ -42,6 +42,8 @@
         "lint:eslint-docs": "npm-run-all \"update:eslint-docs -- --check\"",
         "lint:js": "eslint .",
         "test": "jest",
+        "test:branch": "npm run test -- -o",
+        "test:watch": "npm run test -- --watch",
         "lint:docs": "markdownlint **/*.md",
         "update:eslint-docs": "eslint-doc-generator",
         "fix:md": "npm run lint:docs -- --fix",

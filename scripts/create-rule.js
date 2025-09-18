@@ -34,7 +34,7 @@ const author = argv.author || "$AUTHOR";
 const description = argv.description || "$DESCRIPTION";
 
 const rulePath = resolve(`lib/rules/${ruleName}.ts`);
-const testPath = resolve(`tests/lib/rules/${ruleName}-test.ts`);
+const testPath = resolve(`tests/lib/rules/${ruleName}.test.ts`);
 const docsPath = resolve(`docs/rules/${ruleName}.md`);
 
 // Validate
