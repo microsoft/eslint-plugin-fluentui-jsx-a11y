@@ -1,4 +1,4 @@
-# Accessibility: EmptySwatch must have an accessible name (`@microsoft/fluentui-jsx-a11y/emptyswatch-needs-labelling`)
+# Accessibility: EmptySwatch must have an accessible name via aria-label, Tooltip, aria-labelledby, etc. (`@microsoft/fluentui-jsx-a11y/emptyswatch-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

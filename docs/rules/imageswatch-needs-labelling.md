@@ -1,4 +1,4 @@
-# Accessibility: ImageSwatch must have an accessible name (`@microsoft/fluentui-jsx-a11y/imageswatch-needs-labelling`)
+# Accessibility: ImageSwatch must have an accessible name via aria-label, Tooltip, aria-labelledby, etc. (`@microsoft/fluentui-jsx-a11y/imageswatch-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
