@@ -3,7 +3,7 @@
 
 import { Rule } from "eslint";
 import ruleTester from "./helper/ruleTester";
-import rule from "../../../lib/rules/tag-needs-name";
+import rule from "../../../lib/rules/tag-needs-labelling";
 
 //------------------------------------------------------------------------------
 // Requirements

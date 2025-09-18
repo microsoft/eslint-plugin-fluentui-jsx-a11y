@@ -1,4 +1,4 @@
-# This rule aims to ensure that Tag component have an accessible name via text content, aria-label, or aria-labelledby (`@microsoft/fluentui-jsx-a11y/tag-needs-name`)
+# Accessibility: Tag must have an accessible name (`@microsoft/fluentui-jsx-a11y/tag-needs-name`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

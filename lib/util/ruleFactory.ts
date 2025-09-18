@@ -35,10 +35,8 @@ export type LabeledControlConfig = {
     allowDescribedBy: boolean;
     allowLabeledChild: boolean; // Accept labeled child elements to provide the label e.g. <Button><img alt="..." /></Button>
     allowTextContentChild?: boolean; // Accept text children to provide the label e.g. <Button>Click me</Button>
-    /** Only apply rule when this trigger prop is present (e.g., "dismissible", "disabled") */
-    triggerProp?: string;
-    /** Custom validation function for complex scenarios */
-    customValidator?: Function;
+    triggerProp?: string; // Only apply rule when this trigger prop is present (e.g., "dismissible", "disabled")
+    customValidator?: Function; // Custom validation logic
 };
 
 /**

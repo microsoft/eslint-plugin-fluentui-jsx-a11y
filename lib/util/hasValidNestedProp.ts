@@ -13,9 +13,7 @@ const isNonEmptyString = (value: any): boolean => {
 };
 
 /**
- * Validates nested properties within a complex prop (object prop).
- * This is useful for props like dismissIcon={{ "aria-label": "close", role: "button" }}
- * where you need to check specific properties within the object.
+ * Validates if a component has a specific nested property with a non-empty string value.
  */
 export const hasValidNestedProp = (openingElement: TSESTree.JSXOpeningElement, propName: string, nestedKey: string): boolean => {
     const prop = getProp(openingElement.attributes as JSXAttribute[], propName);
