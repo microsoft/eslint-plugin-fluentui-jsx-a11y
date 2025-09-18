@@ -12,7 +12,8 @@ const rule = ESLintUtils.RuleCreator.withoutDocs(
     makeLabeledControlRule({
         component: "Image",
         messageId: "imageNeedsAlt",
-        description: "Accessibility: Image must have alt attribute with a meaningful description of the image",
+        description:
+            'Accessibility: Image must have alt attribute with a meaningful description of the image. If the image is decorative, use alt="".',
         requiredProps: ["alt"],
         allowFieldParent: false,
         allowHtmlFor: false,

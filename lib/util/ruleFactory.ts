@@ -29,8 +29,8 @@ export type LabeledControlConfig = {
     description: string;
     /** Properties that are required to have a non-`null` and non-`undefined` value. @example ["alt"] */
     requiredProps?: string[];
-    /** Properties that are required to be defined and not empty. @example ["aria-label", "title", "label"] */
-    requiredNonEmptyProps?: string[];
+    /** Labeling properties that are required to have at least one non-empty value. @example ["aria-label", "title", "label"] */
+    labelProps?: string[];
     /** Accept a parent `<Field label="...">` wrapper as providing the label. */
     allowFieldParent: boolean;
     /** Accept `<label htmlFor="...">` association. */
@@ -83,14 +83,14 @@ export function hasAccessibleLabel(
         allowTooltipParent,
         allowDescribedBy,
         allowLabeledChild,
-        requiredNonEmptyProps,
-        requiredProps
+        requiredProps,
+        labelProps
     } = config;
     const allowTextContentChild = !!config.allowTextContentChild;
 
     if (allowFieldParent && hasFieldParent(context)) return true;
-    if (requiredProps?.some(p => hasDefinedProp(opening.attributes, p))) return true;
-    if (requiredNonEmptyProps?.some(p => hasNonEmptyProp(opening.attributes, p))) return true;
+    if (requiredProps?.every(p => hasDefinedProp(node.attributes, p))) return true;
+    if (labelProps?.some(p => hasNonEmptyProp(node.attributes, p))) return true;
     if (allowWrappingLabel && isInsideLabelTag(context)) return true;
     if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(opening, context)) return true;
     if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(opening, context)) return true;

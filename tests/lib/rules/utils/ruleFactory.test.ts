@@ -107,7 +107,7 @@ describe("hasAccessibleLabel (unit)", () => {
     const cfg: Required<LabeledControlConfig> = {
         component: "RadioGroup",
         requiredProps: ["alt"],
-        requiredNonEmptyProps: ["label", "aria-label"],
+        labelProps: ["label", "aria-label"],
         allowFieldParent: true,
         allowHtmlFor: true,
         allowLabelledBy: true,
@@ -292,7 +292,7 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
     const baseCfg: Required<LabeledControlConfig> = {
         component: "RadioGroup",
         requiredProps: ["alt"],
-        requiredNonEmptyProps: ["label", "aria-label"],
+        labelProps: ["label", "aria-label"],
         allowFieldParent: true,
         allowHtmlFor: true,
         allowLabelledBy: true,
