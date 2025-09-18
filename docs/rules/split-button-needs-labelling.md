@@ -1,4 +1,4 @@
-# Accessibility: SplitButton must have an accessible label (`@microsoft/fluentui-jsx-a11y/splitButton-needs-labelling`)
+# Accessibility: SplitButton must have an accessible label (`@microsoft/fluentui-jsx-a11y/split-button-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 

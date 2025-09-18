@@ -3,12 +3,12 @@
 
 import { Rule } from "eslint";
 import ruleTester from "./helper/ruleTester";
-import rule from "../../../lib/rules/splitButton-needs-labelling";
+import rule from "../../../lib/rules/split-button-needs-labelling";
 // -----------------------------------------------------------------------------
 // Tests
 // -----------------------------------------------------------------------------
 
-ruleTester.run("splitButton-needs-labelling", rule as unknown as Rule.RuleModule, {
+ruleTester.run("split-button-needs-labelling", rule as unknown as Rule.RuleModule, {
     valid: [
         // 1) aria-label on the SplitButton
 
