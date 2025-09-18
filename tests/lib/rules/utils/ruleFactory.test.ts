@@ -1,25 +1,30 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AST_NODE_TYPES } from "@typescript-eslint/utils";
-
-import { hasNonEmptyProp } from "../../../../lib/util/hasNonEmptyProp";
-import {
-    hasAssociatedLabelViaAriaLabelledBy,
-    isInsideLabelTag,
-    hasAssociatedLabelViaHtmlFor,
-    hasAssociatedLabelViaAriaDescribedby
-} from "../../../../lib/util/labelUtils";
-import { hasFieldParent } from "../../../../lib/util/hasFieldParent";
-import { hasAccessibleLabel, LabeledControlConfig, makeLabeledControlRule } from "../../../../lib/util/ruleFactory";
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { Rule, RuleTester } from "eslint";
+
+import { hasDefinedProp } from "../../../../lib/util/hasDefinedProp";
+import { hasFieldParent } from "../../../../lib/util/hasFieldParent";
 import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
-import { hasToolTipParent } from "../../../../lib/util/hasTooltipParent";
+import { hasNonEmptyProp } from "../../../../lib/util/hasNonEmptyProp";
 import { hasTextContentChild } from "../../../../lib/util/hasTextContentChild";
+import { hasToolTipParent } from "../../../../lib/util/hasTooltipParent";
+import {
+    hasAssociatedLabelViaAriaDescribedby,
+    hasAssociatedLabelViaAriaLabelledBy,
+    hasAssociatedLabelViaHtmlFor,
+    isInsideLabelTag
+} from "../../../../lib/util/labelUtils";
+import { hasAccessibleLabel, LabeledControlConfig, makeLabeledControlRule } from "../../../../lib/util/ruleFactory";
 
 jest.mock("../../../../lib/util/hasDefinedProp", () => ({
     hasDefinedProp: jest.fn()
+}));
+
+jest.mock("../../../../lib/util/hasNonEmptyProp", () => ({
+    hasNonEmptyProp: jest.fn()
 }));
 jest.mock("../../../../lib/util/labelUtils", () => ({
     hasAssociatedLabelViaAriaDescribedby: jest.fn(),
@@ -36,8 +41,6 @@ jest.mock("../../../../lib/util/hasLabeledChild", () => ({
 jest.mock("../../../../lib/util/hasTooltipParent", () => ({
     hasToolTipParent: jest.fn()
 }));
-
-import { hasDefinedProp } from "../../../../lib/util/hasDefinedProp";
 jest.mock("../../../../lib/util/hasTextContentChild", () => ({
     hasTextContentChild: jest.fn()
 }));

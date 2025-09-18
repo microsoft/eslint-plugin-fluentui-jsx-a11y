@@ -89,8 +89,8 @@ export function hasAccessibleLabel(
     const allowTextContentChild = !!config.allowTextContentChild;
 
     if (allowFieldParent && hasFieldParent(context)) return true;
-    if (requiredProps?.every(p => hasDefinedProp(node.attributes, p))) return true;
-    if (labelProps?.some(p => hasNonEmptyProp(node.attributes, p))) return true;
+    if (requiredProps?.every(p => hasDefinedProp(opening.attributes, p))) return true;
+    if (labelProps?.some(p => hasNonEmptyProp(opening.attributes, p))) return true;
     if (allowWrappingLabel && isInsideLabelTag(context)) return true;
     if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(opening, context)) return true;
     if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(opening, context)) return true;
