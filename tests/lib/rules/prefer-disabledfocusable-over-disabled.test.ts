@@ -80,7 +80,7 @@ ruleTester.run("prefer-disabledfocusable-over-disabled", rule as unknown as Rule
         "<Checkbox disabled={true} disabledFocusable={false} pending />",
         "<ToggleButton disabled={isDisabled} disabledFocusable={shouldFocus} busy />",
 
-        // ✅ Complex expressions
+        // ✅ Complex expressions with disabledFocusable
         "<Button disabledFocusable={shouldDisable} loading={isSubmitting}>Submit</Button>",
         "<Input disabledFocusable={disabled && !error} isLoading={fetching} />",
         "<SpinButton disabledFocusable={!enabled || hasError} pending={processing} />",
@@ -113,7 +113,31 @@ ruleTester.run("prefer-disabledfocusable-over-disabled", rule as unknown as Rule
         "<DatePicker>Normal DatePicker</DatePicker>",
         "<TimePicker>Normal TimePicker</TimePicker>",
         "<Link>Normal Link</Link>",
-        "<Tab>Normal Tab</Tab>"
+        "<Tab>Normal Tab</Tab>",
+
+        // ✅ Test components with different casing variations
+        "<button disabled loading>Submit</button>", // lowercase (should not trigger - not a FluentUI component)
+        "<BUTTON disabled loading>Submit</BUTTON>", // uppercase (should not trigger - not a FluentUI component)
+
+        // ✅ Cases where loading props are truly empty (null, undefined, empty string)
+        '<Input disabled={true} isLoading="">Submit</Input>', // loading is empty string
+        "<Checkbox disabled={true} pending={null} />", // loading is null
+        "<SpinButton disabled={true} busy={undefined} />", // loading is undefined
+
+        // ✅ Cases where only one prop exists (no combination to trigger rule)
+        "<Button disabled={(() => false)()}>Submit</Button>", // only disabled, no loading
+        "<Input isLoading={status === 'loading'} />", // only loading, no disabled
+        "<Checkbox loading={(() => true)()} />", // only loading, no disabled
+        "<ToggleButton disabled={isDisabled ? false : true} />", // only disabled, no loading
+
+        // ✅ JSXSpreadAttribute cases without both props
+        "<Button {...props} disabled={false}>Submit</Button>", // only disabled, no loading
+        "<Input {...buttonProps} isLoading={1} />", // only loading, no disabled
+
+        // ✅ Cases where disabled has truly empty values
+        '<Button disabled="" loading={false}>Submit</Button>', // disabled is empty string (should not trigger because disabled is empty)
+        "<Input disabled={null} loading={true} />", // disabled is null (should not trigger because disabled is empty)
+        "<Checkbox disabled={undefined} pending={true} />" // disabled is undefined (should not trigger because disabled is empty)
     ],
 
     invalid: [
@@ -134,24 +158,53 @@ ruleTester.run("prefer-disabledfocusable-over-disabled", rule as unknown as Rule
             output: "<Checkbox disabledFocusable pending />"
         },
 
-        // ❌ Test case where getLoadingStateProp returns null (should use preferDisabledFocusableGeneric)
-        // This shouldn't happen in practice but tests the fallback
-        {
-            code: "<Button disabled loading>Submit</Button>",
-            errors: [{ messageId: "preferDisabledFocusable" }],
-            output: "<Button disabledFocusable loading>Submit</Button>"
-        },
-
-        // ❌ Boolean prop values
+        // ❌ Boolean prop values (ALL boolean values are considered "non-empty" by hasNonEmptyProp)
         {
             code: "<Button disabled={true} loading={true}>Submit</Button>",
             errors: [{ messageId: "preferDisabledFocusable" }],
             output: "<Button disabledFocusable={true} loading={true}>Submit</Button>"
         },
         {
+            code: "<Button disabled={true} loading={false}>Submit</Button>", // MOVED FROM VALID - false is still non-empty!
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={true} loading={false}>Submit</Button>"
+        },
+        {
             code: "<Input disabled={false} isLoading={processing} />",
             errors: [{ messageId: "preferDisabledFocusable" }],
             output: "<Input disabledFocusable={false} isLoading={processing} />"
+        },
+
+        // ❌ Cases that were incorrectly in valid section (hasNonEmptyProp treats these as non-empty)
+        {
+            code: "<Button disabled={(() => false)()} loading={(() => true)()}>Submit</Button>",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={(() => false)()} loading={(() => true)()}>Submit</Button>"
+        },
+        {
+            code: "<Input disabled={isDisabled ? false : true} isLoading={status === 'loading'} />",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Input disabledFocusable={isDisabled ? false : true} isLoading={status === 'loading'} />"
+        },
+        {
+            code: "<Button {...props} disabled={false} loading>Submit</Button>",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button {...props} disabledFocusable={false} loading>Submit</Button>"
+        },
+        {
+            code: "<Input {...buttonProps} disabled loading={false} />",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Input {...buttonProps} disabledFocusable loading={false} />"
+        },
+        {
+            code: "<Button disabled={0} loading>Submit</Button>", // 0 is considered non-empty
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={0} loading>Submit</Button>"
+        },
+        {
+            code: "<Input disabled={false} isLoading={1} />",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Input disabledFocusable={false} isLoading={1} />"
         },
 
         // ❌ Expression prop values
@@ -317,6 +370,72 @@ ruleTester.run("prefer-disabledfocusable-over-disabled", rule as unknown as Rule
             code: "<Checkbox disabled={shouldDisable || isReadonly} busy={processing} />",
             errors: [{ messageId: "preferDisabledFocusable" }],
             output: "<Checkbox disabledFocusable={shouldDisable || isReadonly} busy={processing} />"
+        },
+
+        // ❌ Test more complex expression scenarios
+        {
+            code: "<Button disabled={isSubmitting || hasError} loading={status === 'pending'}>Submit</Button>",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={isSubmitting || hasError} loading={status === 'pending'}>Submit</Button>"
+        },
+
+        // ❌ Additional test cases to ensure full coverage
+        {
+            code: "<Button disabled={true} loading>Submit</Button>",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={true} loading>Submit</Button>"
+        },
+
+        // ❌ Test edge cases for fix function coverage
+        {
+            code: "<Button disabled={1} loading={true}>Submit</Button>", // truthy number
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={1} loading={true}>Submit</Button>"
+        },
+        {
+            code: "<Input disabled={'true'} isLoading={'false'} />", // string values
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Input disabledFocusable={'true'} isLoading={'false'} />"
+        },
+
+        // ❌ Test JSXSpreadAttribute with invalid cases
+        {
+            code: "<Button {...props} disabled loading>Submit</Button>",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button {...props} disabledFocusable loading>Submit</Button>"
+        },
+        {
+            code: "<Input disabled {...inputProps} isLoading />",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Input disabledFocusable {...inputProps} isLoading />"
+        },
+
+        // ❌ Test cases where fix function edge cases might be triggered
+        {
+            code: "<Button disabled={variable} pending={anotherVariable}>Submit</Button>",
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={variable} pending={anotherVariable}>Submit</Button>"
+        },
+
+        // ❌ Test more combinations to increase coverage
+        {
+            code: "<Combobox disabled={true} loading={true} pending={false} />", // Multiple loading props
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Combobox disabledFocusable={true} loading={true} pending={false} />"
+        },
+
+        // ❌ Edge case: Test with numeric and other literal values
+        {
+            code: "<Button disabled={42} loading={-1}>Submit</Button>", // Numeric values
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: "<Button disabledFocusable={42} loading={-1}>Submit</Button>"
+        },
+
+        // ❌ Test string prop values that are non-empty
+        {
+            code: '<Button disabled="true" loading="false">Submit</Button>',
+            errors: [{ messageId: "preferDisabledFocusable" }],
+            output: '<Button disabledFocusable="true" loading="false">Submit</Button>'
         }
     ]
 });
