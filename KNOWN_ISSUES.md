@@ -18,4 +18,4 @@ e.g.
 
 Unfortunately, these will not be picked up by our linter. However, we hope to support this soon 🚀
 
-See [issue #123](https://github.com/OWNER/REPO/issues/123) for details.
+See [issue #149](https://github.com/microsoft/eslint-plugin-fluentui-jsx-a11y/issues/149) for details.
