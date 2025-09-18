@@ -1,6 +1,6 @@
-# Prefer 'disabledFocusable' over 'disabled' when component has loading state (`@microsoft/fluentui-jsx-a11y/prefer-disabledfocusable-over-disabled`)
+# Prefer 'disabledFocusable' over 'disabled' when component has loading state to maintain keyboard navigation accessibility (`@microsoft/fluentui-jsx-a11y/prefer-disabledfocusable-over-disabled`)
 
-⚠️ This rule is enabled in the ✅ `recommended` config.
+⚠️ This rule _warns_ in the ✅ `recommended` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
