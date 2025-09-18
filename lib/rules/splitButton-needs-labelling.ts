@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { ESLintUtils } from "@typescript-eslint/utils";
-import { makeLabeledControlRule } from "../../util/ruleFactory";
+import { makeLabeledControlRule } from "../util/ruleFactory";
 
 //------------------------------------------------------------------------------
 // Rule Definition

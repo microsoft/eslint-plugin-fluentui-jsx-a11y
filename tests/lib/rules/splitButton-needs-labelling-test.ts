@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import { Rule } from "eslint";
-import ruleTester from "../helper/ruleTester";
-import rule from "../../../../lib/rules/buttons/splitButton-needs-labelling";
+import ruleTester from "./helper/ruleTester";
+import rule from "../../../lib/rules/splitButton-needs-labelling";
 // -----------------------------------------------------------------------------
 // Tests
 // -----------------------------------------------------------------------------

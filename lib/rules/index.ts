@@ -20,7 +20,6 @@ export { default as inputComponentsRequireAccessibleName } from "./input-compone
 export { default as linkMissingLabelling } from "./link-missing-labelling";
 export { default as menuItemNeedsLabelling } from "./menu-item-needs-labelling";
 export { default as noEmptyButtons } from "./buttons/no-empty-buttons";
-export { default as splitButtonNeedsLabelling } from "./buttons/splitButton-needs-labelling";
 export { default as noEmptyComponents } from "./no-empty-components";
 export { default as preferAriaOverTitleAttribute } from "./prefer-aria-over-title-attribute";
 export { default as progressbarNeedsLabelling } from "./progressbar-needs-labelling";
@@ -30,6 +29,7 @@ export { default as ratingNeedsName } from "./rating-needs-name";
 export { default as spinButtonNeedsLabelling } from "./spin-button-needs-labelling";
 export { default as spinButtonUnrecommendedLabelling } from "./spin-button-unrecommended-labelling";
 export { default as spinnerNeedsLabelling } from "./spinner-needs-labelling";
+export { default as splitButtonNeedsLabelling } from "./splitButton-needs-labelling";
 export { default as swatchpickerNeedsLabelling } from "./swatchpicker-needs-labelling";
 export { default as switchNeedsLabelling } from "./switch-needs-labelling";
 export { default as tablistAndTabsNeedLabelling } from "./tablist-and-tabs-need-labelling";

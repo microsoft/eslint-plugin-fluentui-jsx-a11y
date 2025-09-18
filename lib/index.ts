@@ -44,6 +44,7 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/spin-button-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/spin-button-unrecommended-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/splitButton-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/swatchpicker-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/switch-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error",
