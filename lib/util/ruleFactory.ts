@@ -21,21 +21,19 @@ export type LabeledControlConfig = {
     messageId: string;
     description: string;
     labelProps: string[]; // e.g. ["aria-label", "title", "label"]
-    /** Accept a parent <Field label="..."> wrapper as providing the label. */
-    allowFieldParent: boolean; // default false
-    allowHtmlFor: boolean /** Accept <label htmlFor="..."> association. */;
-    allowLabelledBy: boolean /** Accept aria-labelledby association. */;
-    allowWrappingLabel: boolean /** Accept being wrapped in a <label> element. */;
-    allowTooltipParent: boolean /** Accept a parent <Tooltip content="..."> wrapper as providing the label. */;
+    allowFieldParent: boolean; // Accept a parent <Field label="..."> wrapper as providing the label.
+    allowHtmlFor: boolean; // Accept <label htmlFor="..."> association.
+    allowLabelledBy: boolean; // Accept aria-labelledby association.
+    allowWrappingLabel: boolean; // Accept being wrapped in a <label> element.
+    allowTooltipParent: boolean; // Accept a parent <Tooltip content="..."> wrapper as providing the label.
     /**
      * Accept aria-describedby as a labeling strategy.
      * NOTE: This is discouraged for *primary* labeling; prefer text/aria-label/labelledby.
      * Keep this off unless a specific component (e.g., Icon-only buttons) intentionally uses it.
      */
     allowDescribedBy: boolean;
-    // NEW: treat labeled child content (img alt, svg title, aria-label on role="img") as the name
-    allowLabeledChild: boolean;
-    allowTextContentChild?: boolean;
+    allowLabeledChild: boolean; // Accept labeled child elements to provide the label e.g. <Button><img alt="..." /></Button>
+    allowTextContentChild?: boolean; // Accept text children to provide the label e.g. <Button>Click me</Button>
 };
 
 /**
