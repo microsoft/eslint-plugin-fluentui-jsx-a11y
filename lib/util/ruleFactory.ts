@@ -68,75 +68,15 @@ export function hasAccessibleLabel(
     const allowDescribedBy = !!config.allowDescribedBy;
     const allowLabeledChild = !!config.allowLabeledChild;
     const allowTextContentChild = !!config.allowTextContentChild;
-
-    console.log("hasAccessibleLabel called with:", {
-        component: config.component,
-        attributes: opening.attributes,
-        allowFieldParent,
-        allowWrappingLabel,
-        allowHtmlFor,
-        allowLabelledBy,
-        allowTooltipParent,
-        allowDescribedBy,
-        allowLabeledChild,
-        allowTextContentChild
-    });
-
-    if (allowFieldParent) {
-        const res = hasFieldParent(context);
-        console.log("hasFieldParent:", res);
-        if (res) return true;
-    }
-
-    if (config.labelProps?.length) {
-        const res = config.labelProps.some(p => hasNonEmptyProp(opening.attributes, p));
-        console.log("hasNonEmptyProp:", res, config.labelProps);
-        if (res) return true;
-    }
-
-    if (allowWrappingLabel) {
-        const res = isInsideLabelTag(context);
-        console.log("isInsideLabelTag:", res);
-        if (res) return true;
-    }
-
-    if (allowHtmlFor) {
-        const res = hasAssociatedLabelViaHtmlFor(opening, context);
-        console.log("hasAssociatedLabelViaHtmlFor:", res);
-        if (res) return true;
-    }
-
-    if (allowLabelledBy) {
-        const res = hasAssociatedLabelViaAriaLabelledBy(opening, context);
-        console.log("hasAssociatedLabelViaAriaLabelledBy:", res);
-        if (res) return true;
-    }
-
-    if (allowTooltipParent) {
-        const res = hasToolTipParent(context);
-        console.log("hasToolTipParent:", res);
-        if (res) return true;
-    }
-
-    if (allowDescribedBy) {
-        const res = hasAssociatedLabelViaAriaDescribedby(opening, context);
-        console.log("hasAssociatedLabelViaAriaDescribedby:", res);
-        if (res) return true;
-    }
-
-    if (allowLabeledChild) {
-        const res = hasLabeledChild(opening, context);
-        console.log("hasLabeledChild:", res);
-        if (res) return true;
-    }
-
-    if (allowTextContentChild) {
-        const res = hasTextContentChild(element);
-        console.log("hasTextContentChild:", res);
-        if (res) return true;
-    }
-
-    console.log("No accessible label found, returning false.");
+    if (allowFieldParent && hasFieldParent(context)) return true;
+    if (config.labelProps?.some(p => hasNonEmptyProp(opening.attributes, p))) return true;
+    if (allowWrappingLabel && isInsideLabelTag(context)) return true;
+    if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(opening, context)) return true;
+    if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(opening, context)) return true;
+    if (allowTooltipParent && hasToolTipParent(context)) return true;
+    if (allowDescribedBy && hasAssociatedLabelViaAriaDescribedby(opening, context)) return true;
+    if (allowLabeledChild && hasLabeledChild(opening, context)) return true;
+    if (allowTextContentChild && hasTextContentChild(element)) return true;
     return false;
 }
 
