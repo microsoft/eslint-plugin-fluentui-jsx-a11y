@@ -26,6 +26,9 @@ export { default as progressbarNeedsLabelling } from "./progressbar-needs-labell
 export { default as radioButtonMissingLabel } from "./radio-button-missing-label";
 export { default as radiogroupMissingLabel } from "./radiogroup-missing-label";
 export { default as ratingNeedsName } from "./rating-needs-name";
+export { default as emptySwatchNeedsLabelling } from "./emptyswatch-needs-labelling";
+export { default as colorSwatchNeedsLabelling } from "./colorswatch-needs-labelling";
+export { default as imageSwatchNeedsLabelling } from "./imageswatch-needs-labelling";
 export { default as spinButtonNeedsLabelling } from "./spin-button-needs-labelling";
 export { default as spinButtonUnrecommendedLabelling } from "./spin-button-unrecommended-labelling";
 export { default as spinnerNeedsLabelling } from "./spinner-needs-labelling";

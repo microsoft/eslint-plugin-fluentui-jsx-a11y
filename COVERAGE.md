@@ -64,10 +64,10 @@ We currently cover the following components:
     -   [x] SpinButton
     -   [x] Spinner
     -   [x] SwatchPicker
-        - [] ColorSwatch
-        - [] ImageSwatch
-        - [] EmptySwatch
-        - [] SwatchPickerRow
+        - [x] ColorSwatch
+        - [x] ImageSwatch
+        - [x] EmptySwatch
+        - [N/A] SwatchPickerRow
     -   [x] Switch
     -   [] SearchBox
     -   [] Table
