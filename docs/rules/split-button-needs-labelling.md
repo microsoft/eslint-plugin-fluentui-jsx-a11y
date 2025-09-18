@@ -16,23 +16,33 @@ Please add label, or aria-labelledby.
 
 This rule aims to...
 
-Examples of **incorrect** code for this rule:
+Example of **incorrect** code for this rule:
 
 ```jsx
-   <SplitButton> Example</SplitButton>
+   <SplitButton
+      menuButton={triggerProps}
+      primaryActionButton={primaryActionButtonProps}
+   />
 ```
-
-```jsx
-   <SplitButton disabled> Example</SplitButton>
-```
-
 
 Examples of **correct** code for this rule:
 
 ```jsx
-   <SplitButton aria-label="My button">Example</SplitButton>
+   <SplitButton
+      menuButton={triggerProps}
+      primaryActionButton={primaryActionButtonProps}
+   >
+      Example
+   </SplitButton>
 ```
 
 ```jsx
-<SplitButton disabled aria-label="My button">Disabled State</SplitButton>
+<SplitButton
+   menuButton={triggerProps}
+   primaryActionButton={{
+      ref: setPrimaryActionButtonRef,
+      "aria-label": "With calendar icon only",
+   }}
+   icon={<CalendarMonthRegular />}
+   />
 ```
