@@ -16,6 +16,7 @@ export { default as dialogsurfaceNeedsAria } from "./dialogsurface-needs-aria";
 export { default as dropdownNeedsLabelling } from "./dropdown-needs-labelling";
 export { default as fieldNeedsLabelling } from "./field-needs-labelling";
 export { default as imageButtonMissingAria } from "./buttons/image-button-missing-aria";
+export { default as imageNeedsAlt } from "./image-needs-alt";
 export { default as inputComponentsRequireAccessibleName } from "./input-components-require-accessible-name";
 export { default as linkMissingLabelling } from "./link-missing-labelling";
 export { default as menuItemNeedsLabelling } from "./menu-item-needs-labelling";
