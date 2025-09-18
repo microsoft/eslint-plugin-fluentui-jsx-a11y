@@ -59,7 +59,12 @@ export type LabeledControlConfig = {
  *
  * This checks for presence of an accessible *name* only; not contrast or UX.
  */
-export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: any, config: LabeledControlConfig): boolean {
+export function hasAccessibleLabel(
+    opening: TSESTree.JSXOpeningElement,
+    element: TSESTree.JSXElement,
+    context: TSESLint.RuleContext<string, []>,
+    config: LabeledControlConfig
+): boolean {
     const allowFieldParent = !!config.allowFieldParent;
     const allowWrappingLabel = !!config.allowWrappingLabel;
     const allowHtmlFor = !!config.allowHtmlFor;
@@ -67,16 +72,16 @@ export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: an
     const allowTooltipParent = !!config.allowTooltipParent;
     const allowDescribedBy = !!config.allowDescribedBy;
     const allowLabeledChild = !!config.allowLabeledChild;
-
+    const allowTextContentChild = !!config.allowTextContentChild;
     if (allowFieldParent && hasFieldParent(context)) return true;
-    if (config.labelProps?.some(p => hasNonEmptyProp(node.attributes, p))) return true;
+    if (config.labelProps?.some(p => hasNonEmptyProp(opening.attributes, p))) return true;
     if (allowWrappingLabel && isInsideLabelTag(context)) return true;
-    if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(node, context)) return true;
-    if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(node, context)) return true;
+    if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(opening, context)) return true;
+    if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(opening, context)) return true;
     if (allowTooltipParent && hasToolTipParent(context)) return true;
-    if (allowDescribedBy && hasAssociatedLabelViaAriaDescribedby(node, context)) return true;
-    if (allowLabeledChild && hasLabeledChild(node, context)) return true;
-
+    if (allowDescribedBy && hasAssociatedLabelViaAriaDescribedby(opening, context)) return true;
+    if (allowLabeledChild && hasLabeledChild(opening, context)) return true;
+    if (allowTextContentChild && hasTextContentChild(element)) return true;
     return false;
 }
 
@@ -99,52 +104,30 @@ export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.R
         defaultOptions: [],
 
         create(context: TSESLint.RuleContext<string, []>) {
-            const validateElement = (node: TSESTree.JSXOpeningElement, parentElement?: TSESTree.JSXElement) => {
-                // elementType expects an ESTree JSX node — cast is fine
-                const name = elementType(node as unknown as JSXOpeningElement);
-                const matches = typeof config.component === "string" ? name === config.component : config.component.test(name);
+            return {
+                JSXElement(node: TSESTree.JSXElement) {
+                    const opening = node.openingElement;
+                    const name = elementType(opening as unknown as JSXOpeningElement);
+                    const matches = typeof config.component === "string" ? name === config.component : config.component.test(name);
 
-                if (!matches) return;
+                    if (!matches) return;
 
-                // If trigger prop is specified, only apply rule when it's present
-                if (config.triggerProp && !hasTriggerProp(node, config.triggerProp)) {
-                    return;
-                }
-
-                // Use custom validator if provided, otherwise use standard accessibility check
-                let isValid: boolean;
-                if (config.customValidator) {
-                    isValid = config.customValidator(node);
-                } else {
-                    // For text content checking, we need the parent element
-                    if (config.allowTextContentChild && parentElement) {
-                        // Create a modified config for hasAccessibleLabel that includes text content checking
-                        const modifiedConfig = { ...config };
-                        isValid = hasAccessibleLabel(node, context, modifiedConfig) || hasTextContentChild(parentElement);
-                    } else {
-                        isValid = hasAccessibleLabel(node, context, config);
+                    if (config.triggerProp && !hasTriggerProp(opening, config.triggerProp)) {
+                        return;
                     }
-                }
 
-                if (!isValid) {
-                    context.report({ node, messageId: config.messageId });
+                    // Use custom validator if provided, otherwise use standard accessibility check
+                    let isValid: boolean;
+                    config.customValidator
+                        ? (isValid = config.customValidator(opening))
+                        : (isValid = hasAccessibleLabel(opening, node, context, config));
+
+                    if (!isValid) {
+                        // report on the opening tag for better location
+                        context.report({ node: opening, messageId: config.messageId });
+                    }
                 }
             };
-
-            // If we need text content checking, we must visit JSXElement to get access to children
-            if (config.allowTextContentChild) {
-                return {
-                    JSXElement(node: TSESTree.JSXElement) {
-                        validateElement(node.openingElement, node);
-                    }
-                };
-            } else {
-                return {
-                    JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
-                        validateElement(node);
-                    }
-                };
-            }
         }
     };
 }

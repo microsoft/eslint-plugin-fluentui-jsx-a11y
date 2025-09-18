@@ -1,1 +1,10 @@
-{ "recommendations": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"] }
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "firsttris.vscode-jest-runner",
+        "esbenp.prettier-vscode",
+        "rvest.vs-code-prettier-eslint",
+        "DavidAnson.vscode-markdownlint",
+        "streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries"
+    ]
+}

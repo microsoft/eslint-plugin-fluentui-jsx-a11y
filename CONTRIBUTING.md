@@ -22,6 +22,8 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 
 -   Install [Visual Studio Code](https://code.visualstudio.com/).
 
+-   Install the [recommended plugins](#recommended-vs-code-extensions) for [Visual Studio Code](https://code.visualstudio.com/).
+
 -   Install [Node.js](https://nodejs.org/en/), with [nvm](https://github.com/nvm-sh/nvm). Please use Node version 16 and npm v 8.
 
 -   Install [jscodeshift](https://github.com/facebook/jscodeshift) globally.
@@ -48,6 +50,16 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
     ```
 
 -   Make and submit changes following the [pull request submission workflow](#pull-requests)
+
+##  Recommended VS Code Extensions
+
+To ensure a consistent and productive development environment, install the following extensions in Visual Studio Code:
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) — Linting for JavaScript/TypeScript.
+- [Jest Runner](https://marketplace.visualstudio.com/items?itemName=firsttris.vscode-jest-runner) — Run or debug Jest tests from context menu.
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) — Code formatting using Prettier.
+- [Prettier ESLint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint) — Format code with Prettier and ESLint integration.
+- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) — Linting and style checks for Markdown files.
 
 ## To create a new ESLint rule
 
