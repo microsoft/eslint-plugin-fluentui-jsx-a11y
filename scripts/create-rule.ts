@@ -5,17 +5,11 @@
 import { resolve } from "path";
 import { existsSync, writeFileSync } from "fs";
 import { exec } from "child_process";
-// @ts-ignore: yargs has no default export
 import yargs from "yargs/yargs";
-// @ts-ignore: yargs/helpers has no default export
 import { hideBin } from "yargs/helpers";
-// Use require for boilerplate generators (CommonJS)
-// @ts-ignore
-const ruleBoilerplateGenerator = require("./boilerplate/rule");
-// @ts-ignore
-const testBoilerplateGenerator = require("./boilerplate/test");
-// @ts-ignore
-const docBoilerplateGenerator = require("./boilerplate/doc");
+import {ruleBoilerplateGenerator} from "./boilerplate/rule";
+import {testBoilerplateGenerator} from "./boilerplate/test";
+import {docBoilerplateGenerator} from "./boilerplate/doc";
 
 // Define the yargs configuration
 const argv = yargs(hideBin(process.argv))
@@ -24,13 +18,13 @@ const argv = yargs(hideBin(process.argv))
             alias: "a",
             type: "string",
             describe: "Author of the rule",
-            default: "$AUTHOR"
+            default: "$AUTHOR" // Provide default value
         },
         description: {
             alias: "d",
             type: "string",
             describe: "Description of the rule",
-            default: "$DESCRIPTION"
+            default: "$DESCRIPTION" // Provide default value
         }
     })
     .demandCommand(1, "You must provide the rule name.").argv as any; // Type assertion for yargs
