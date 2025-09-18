@@ -14,26 +14,26 @@ import { elementType } from "jsx-ast-utils";
 import { JSXOpeningElement } from "estree-jsx";
 import { hasToolTipParent } from "./hasTooltipParent";
 import { hasLabeledChild } from "./hasLabeledChild";
+import { hasTextContentChild } from "./hasTextContentChild";
 
 export type LabeledControlConfig = {
     component: string | RegExp;
     messageId: string;
     description: string;
     labelProps: string[]; // e.g. ["aria-label", "title", "label"]
-    /** Accept a parent <Field label="..."> wrapper as providing the label. */
-    allowFieldParent: boolean; // default false
-    allowHtmlFor: boolean /** Accept <label htmlFor="..."> association. */;
-    allowLabelledBy: boolean /** Accept aria-labelledby association. */;
-    allowWrappingLabel: boolean /** Accept being wrapped in a <label> element. */;
-    allowTooltipParent: boolean /** Accept a parent <Tooltip content="..."> wrapper as providing the label. */;
+    allowFieldParent: boolean; // Accept a parent <Field label="..."> wrapper as providing the label.
+    allowHtmlFor: boolean; // Accept <label htmlFor="..."> association.
+    allowLabelledBy: boolean; // Accept aria-labelledby association.
+    allowWrappingLabel: boolean; // Accept being wrapped in a <label> element.
+    allowTooltipParent: boolean; // Accept a parent <Tooltip content="..."> wrapper as providing the label.
     /**
      * Accept aria-describedby as a labeling strategy.
      * NOTE: This is discouraged for *primary* labeling; prefer text/aria-label/labelledby.
      * Keep this off unless a specific component (e.g., Icon-only buttons) intentionally uses it.
      */
     allowDescribedBy: boolean;
-    // NEW: treat labeled child content (img alt, svg title, aria-label on role="img") as the name
-    allowLabeledChild: boolean;
+    allowLabeledChild: boolean; // Accept labeled child elements to provide the label e.g. <Button><img alt="..." /></Button>
+    allowTextContentChild?: boolean; // Accept text children to provide the label e.g. <Button>Click me</Button>
 };
 
 /**
@@ -52,7 +52,12 @@ export type LabeledControlConfig = {
  *
  * This checks for presence of an accessible *name* only; not contrast or UX.
  */
-export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: any, config: LabeledControlConfig): boolean {
+export function hasAccessibleLabel(
+    opening: TSESTree.JSXOpeningElement,
+    element: TSESTree.JSXElement,
+    context: TSESLint.RuleContext<string, []>,
+    config: LabeledControlConfig
+): boolean {
     const allowFieldParent = !!config.allowFieldParent;
     const allowWrappingLabel = !!config.allowWrappingLabel;
     const allowHtmlFor = !!config.allowHtmlFor;
@@ -60,16 +65,16 @@ export function hasAccessibleLabel(node: TSESTree.JSXOpeningElement, context: an
     const allowTooltipParent = !!config.allowTooltipParent;
     const allowDescribedBy = !!config.allowDescribedBy;
     const allowLabeledChild = !!config.allowLabeledChild;
-
+    const allowTextContentChild = !!config.allowTextContentChild;
     if (allowFieldParent && hasFieldParent(context)) return true;
-    if (config.labelProps?.some(p => hasNonEmptyProp(node.attributes, p))) return true;
+    if (config.labelProps?.some(p => hasNonEmptyProp(opening.attributes, p))) return true;
     if (allowWrappingLabel && isInsideLabelTag(context)) return true;
-    if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(node, context)) return true;
-    if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(node, context)) return true;
+    if (allowHtmlFor && hasAssociatedLabelViaHtmlFor(opening, context)) return true;
+    if (allowLabelledBy && hasAssociatedLabelViaAriaLabelledBy(opening, context)) return true;
     if (allowTooltipParent && hasToolTipParent(context)) return true;
-    if (allowDescribedBy && hasAssociatedLabelViaAriaDescribedby(node, context)) return true;
-    if (allowLabeledChild && hasLabeledChild(node, context)) return true;
-
+    if (allowDescribedBy && hasAssociatedLabelViaAriaDescribedby(opening, context)) return true;
+    if (allowLabeledChild && hasLabeledChild(opening, context)) return true;
+    if (allowTextContentChild && hasTextContentChild(element)) return true;
     return false;
 }
 
@@ -93,15 +98,16 @@ export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.R
 
         create(context: TSESLint.RuleContext<string, []>) {
             return {
-                JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
-                    // elementType expects an ESTree JSX node — cast is fine
-                    const name = elementType(node as unknown as JSXOpeningElement);
+                JSXElement(node: TSESTree.JSXElement) {
+                    const opening = node.openingElement;
+                    const name = elementType(opening as unknown as JSXOpeningElement);
                     const matches = typeof config.component === "string" ? name === config.component : config.component.test(name);
 
                     if (!matches) return;
 
-                    if (!hasAccessibleLabel(node, context, config)) {
-                        context.report({ node, messageId: config.messageId });
+                    if (!hasAccessibleLabel(opening, node, context, config)) {
+                        // report on the opening tag for better location
+                        context.report({ node: opening, messageId: config.messageId });
                     }
                 }
             };
