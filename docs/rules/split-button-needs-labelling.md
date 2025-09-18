@@ -1,4 +1,4 @@
-# Accessibility: SplitButton must have an accessible name via title, aria-label (`@microsoft/fluentui-jsx-a11y/split-button-needs-labelling`)
+# Accessibility: SplitButton must have text content or accessible name on primaryActionButton prop (`@microsoft/fluentui-jsx-a11y/split-button-needs-labelling`)
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
@@ -22,6 +22,7 @@ Example of **incorrect** code for this rule:
    <SplitButton
       menuButton={triggerProps}
       primaryActionButton={primaryActionButtonProps}
+      icon={<CalendarMonthRegular />}
    />
 ```
 
