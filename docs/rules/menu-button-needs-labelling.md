@@ -1,4 +1,8 @@
-# menu-button-needs-labelling
+# Accessibility: MenuButton must have an accessible name via aria-label, text content, aria-labelledby, etc (`@microsoft/fluentui-jsx-a11y/menu-button-needs-labelling`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 MenuButton components must have accessible labelling for screen readers.
 

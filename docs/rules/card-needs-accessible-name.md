@@ -1,4 +1,8 @@
-# card-needs-accessible-name
+# Accessibility: Interactive Card must have an accessible name via aria-label, aria-labelledby, etc (`@microsoft/fluentui-jsx-a11y/card-needs-accessible-name`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 Interactive Card components must have an accessible name for screen readers.
 

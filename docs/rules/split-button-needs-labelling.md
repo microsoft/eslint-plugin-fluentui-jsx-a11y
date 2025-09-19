@@ -1,4 +1,8 @@
-# split-button-needs-labelling
+# Accessibility: SplitButton must have an accessible name via aria-label, text content, aria-labelledby, etc (`@microsoft/fluentui-jsx-a11y/split-button-needs-labelling`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 SplitButton components must have accessible labelling for screen readers.
 
