@@ -170,7 +170,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 ✅ Set in the `recommended` configuration.\
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                                                                                   | Description                                                                                                                                            | 💼 | ⚠️ | 🔧 |
+| Name                                                                                                                   | Description                                                                                                                                            | 💼 | ⚠️ | 🔧 |
 | :--------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :- | :- | :- |
 | [accordion-header-needs-labelling](docs/rules/accordion-header-needs-labelling.md)                                     | The accordion header is a button and it needs an accessibile name e.g. text content, aria-label, aria-labelledby.                                      | ✅  |    |    |
 | [accordion-item-needs-header-and-panel](docs/rules/accordion-item-needs-header-and-panel.md)                           | An AccordionItem needs exactly one header and one panel                                                                                                | ✅  |    |    |

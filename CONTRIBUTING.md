@@ -74,7 +74,7 @@ The rule factory centralizes common accessibility validation patterns, making it
 
 ### Architecture
 
-```
+```sh
 ruleFactory(config) → ESLint Rule
     ↓
 hasAccessibleLabel(opening, element, context, config) → boolean
