@@ -13,13 +13,13 @@ We currently cover the following components:
     -   [x] Button
         -   [x] Button
         -   [X] CompoundButton
-        -   [] MenuButton
+        -   [x] MenuButton
         -   [X] MenuItem
         -   [] SplitButton
         -   [x] ToggleButton
         -   [] ToolbarToggleButton
-    -   [] Card
-        -   [] Card
+    -   [x] Card
+        -   [x] Card
         -   [] CardFooter
         -   [] CardHeader
         -   [] CardPreview
@@ -37,7 +37,7 @@ We currently cover the following components:
     -   [x] Field
     -   [N/A] FluentProvider
     -   [] Image
-    -   [] InfoLabel
+    -   [x] InfoLabel
     -   [x] Input
     -   [x] Label
     -   [x] Link
