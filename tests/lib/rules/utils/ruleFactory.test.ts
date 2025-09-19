@@ -107,7 +107,7 @@ describe("hasAccessibleLabel (unit)", () => {
         getSourceCode: jest.fn()
     } as unknown as TSESLint.RuleContext<string, []>;
 
-    const cfg: Required<LabeledControlConfig> = {
+    const cfg: LabeledControlConfig = {
         component: "RadioGroup",
         requiredProps: ["alt"],
         labelProps: ["label", "aria-label"],
@@ -120,9 +120,7 @@ describe("hasAccessibleLabel (unit)", () => {
         messageId: "errorMsg",
         description: "anything",
         allowLabeledChild: true,
-        allowTextContentChild: true,
-        triggerProp: "",
-        customValidator: jest.fn().mockReturnValue(false)
+        allowTextContentChild: true
     };
 
     test("returns false when no heuristics pass", () => {
@@ -294,7 +292,7 @@ describe("hasAccessibleLabel (unit)", () => {
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } } });
 
 describe("makeLabeledControlRule (RuleTester integration)", () => {
-    const baseCfg: Required<LabeledControlConfig> = {
+    const baseCfg: LabeledControlConfig = {
         component: "RadioGroup",
         requiredProps: ["alt"],
         labelProps: ["label", "aria-label"],
@@ -307,9 +305,7 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
         messageId: "noUnlabeledRadioGroup",
         description: "Accessibility: RadioGroup must have a programmatic and visual label.",
         allowLabeledChild: true,
-        allowTextContentChild: true,
-        triggerProp: "",
-        customValidator: jest.mock
+        allowTextContentChild: true
     };
 
     // 1) No heuristics -> report
