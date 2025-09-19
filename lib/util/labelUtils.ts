@@ -42,7 +42,7 @@ const idLiteralDouble = '"([^"]*)"';
 const idLiteralSingle = "'([^']*)'";
 const exprStringDouble = '\\{\\s*"([^"]*)"\\s*\\}';
 const exprStringSingle = "\\{\\s*'([^']*)'\\s*\\}";
-const exprIdentifier = "\\{\\s*([A-Za-z_$][A-Za-l0-9_$]*)\\s*\\}";
+const exprIdentifier = "\\{\\s*([A-Za-z_$][A-Za-z0-9_$]*)\\s*\\}"; // FIXED: l -> z
 
 const idOrExprRegex = new RegExp(
     `(?:${idLiteralDouble}|${idLiteralSingle}|${exprStringDouble}|${exprStringSingle}|${exprIdentifier})`,
