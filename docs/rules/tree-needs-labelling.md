@@ -1,4 +1,8 @@
-# tree-needs-labelling
+# Accessibility: Tree must have proper labelling and follow ARIA tree pattern for hierarchical navigation (`@microsoft/fluentui-jsx-a11y/tree-needs-labelling`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 Tree components must have accessible labelling for screen readers to understand the hierarchical structure and navigation purpose.
 

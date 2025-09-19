@@ -1,4 +1,8 @@
-# table-needs-labelling
+# Accessibility: Table must have proper labelling and semantic structure for screen readers (`@microsoft/fluentui-jsx-a11y/table-needs-labelling`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 Table components must have accessible labelling for screen readers to understand the table's purpose and content structure.
 

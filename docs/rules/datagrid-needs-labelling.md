@@ -1,4 +1,8 @@
-# datagrid-needs-labelling
+# Accessibility: DataGrid must have proper labelling and follow ARIA grid patterns for complex data tables (`@microsoft/fluentui-jsx-a11y/datagrid-needs-labelling`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 DataGrid components must have accessible labelling for screen readers to understand the data structure and purpose.
 
