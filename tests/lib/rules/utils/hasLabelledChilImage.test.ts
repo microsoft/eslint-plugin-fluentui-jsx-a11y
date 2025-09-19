@@ -158,8 +158,7 @@ describe("hasLabelledChildImage", () => {
 });
 
 describe("hasLabelledChildImage - missing coverage", () => {
-    it("covers line 34 - handles non-JSXElement children", () => {
-        // This test covers the case where children exist but are not JSXElement types
+    it("handles non-JSXElement children", () => {
         const mockTextChild: TSESTree.JSXText = {
             type: AST_NODE_TYPES.JSXText,
             value: "Some text content",
@@ -188,16 +187,14 @@ describe("hasLabelledChildImage - missing coverage", () => {
                 ...createMockLocRange()
             },
             closingElement: null,
-            children: [mockTextChild, mockExpressionChild], // Non-JSXElement children
+            children: [mockTextChild, mockExpressionChild],
             ...createMockLocRange()
         };
 
-        // This should execute line 34 and return false since no JSXElement children are found
         expect(hasLabelledChildImage(node)).toBe(false);
     });
 
-    it("covers line 34 - JSXElement child with non-image component name", () => {
-        // This covers the case where we have JSXElement children but they're not image components
+    it("JSXElement child with non-image component name", () => {
         const mockDivChild: TSESTree.JSXElement = {
             type: AST_NODE_TYPES.JSXElement,
             openingElement: {
@@ -233,14 +230,12 @@ describe("hasLabelledChildImage - missing coverage", () => {
             ...createMockLocRange()
         };
 
-        // This should execute line 34 and return false since child is not an image component
         expect(hasLabelledChildImage(node)).toBe(false);
     });
 });
 
 describe("isImageHidden - missing coverage for aria-label handling", () => {
-    it("covers lines 70-72 - returns false when aria-label has non-empty value", () => {
-        // This covers the case where aria-label is present and has a value (lines 70-72)
+    it("returns false when aria-label has non-empty value", () => {
         const attributes: TSESTree.JSXOpeningElement["attributes"] = [
             {
                 type: AST_NODE_TYPES.JSXAttribute,
@@ -255,12 +250,10 @@ describe("isImageHidden - missing coverage for aria-label handling", () => {
             }
         ];
 
-        // Should return false because aria-label has a value, meaning image is not hidden
         expect(isImageHidden(attributes)).toBe(false);
     });
 
-    it("covers lines 70-72 - returns false when aria-labelledby has non-empty value", () => {
-        // This covers the case where aria-labelledby is present and has a value
+    it("returns false when aria-labelledby has non-empty value", () => {
         const attributes: TSESTree.JSXOpeningElement["attributes"] = [
             {
                 type: AST_NODE_TYPES.JSXAttribute,
@@ -275,12 +268,10 @@ describe("isImageHidden - missing coverage for aria-label handling", () => {
             }
         ];
 
-        // Should return false because aria-labelledby has a value, meaning image is not hidden
         expect(isImageHidden(attributes)).toBe(false);
     });
 
     it("handles case with both aria-label and aria-labelledby present", () => {
-        // Additional test to ensure proper handling when both attributes are present
         const attributes: TSESTree.JSXOpeningElement["attributes"] = [
             {
                 type: AST_NODE_TYPES.JSXAttribute,
@@ -306,7 +297,6 @@ describe("isImageHidden - missing coverage for aria-label handling", () => {
             }
         ];
 
-        // Should return false because aria-label has a value
         expect(isImageHidden(attributes)).toBe(false);
     });
 });

@@ -5,7 +5,6 @@ import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/types";
 import { TSESLint } from "@typescript-eslint/utils";
 import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
 
-// Helper for creating mock loc/range objects
 const mockLocRange = () => ({
     loc: {
         start: { line: 0, column: 0 },
@@ -14,7 +13,6 @@ const mockLocRange = () => ({
     range: [0, 0] as [number, number]
 });
 
-// Mock context helper
 const mockContext = (sourceText = ""): TSESLint.RuleContext<string, unknown[]> => {
     return {
         getSourceCode: () => ({
@@ -24,7 +22,6 @@ const mockContext = (sourceText = ""): TSESLint.RuleContext<string, unknown[]> =
     } as unknown as TSESLint.RuleContext<string, unknown[]>;
 };
 
-// Helper to create JSX attributes
 const createJSXAttribute = (name: string, value?: string | number): TSESTree.JSXAttribute => ({
     type: AST_NODE_TYPES.JSXAttribute,
     name: {
@@ -44,7 +41,6 @@ const createJSXAttribute = (name: string, value?: string | number): TSESTree.JSX
     ...mockLocRange()
 });
 
-// Helper to create JSX opening element
 const createJSXOpeningElement = (tagName: string, attributes: TSESTree.JSXAttribute[] = []): TSESTree.JSXOpeningElement => ({
     type: AST_NODE_TYPES.JSXOpeningElement,
     name: {
@@ -57,7 +53,6 @@ const createJSXOpeningElement = (tagName: string, attributes: TSESTree.JSXAttrib
     ...mockLocRange()
 });
 
-// Helper to create JSX element
 const createJSXElement = (
     tagName: string,
     attributes: TSESTree.JSXAttribute[] = [],
@@ -78,7 +73,6 @@ const createJSXElement = (
     ...mockLocRange()
 });
 
-// Helper to create opening element with parent context
 const createOpeningElementWithParent = (tagName: string, children: TSESTree.JSXElement[] = []): TSESTree.JSXOpeningElement => {
     const parentElement = createJSXElement("Container", [], children);
     const openingElement = createJSXOpeningElement(tagName);
@@ -441,11 +435,9 @@ describe("hasLabeledChild", () => {
 
     describe("Integration with rule factory", () => {
         it("integrates correctly with makeLabeledControlRule", () => {
-            // This test ensures the function works as expected when called from the rule factory
             const imgChild = createJSXElement("img", [createJSXAttribute("alt", "Integration test")]);
             const openingElement = createOpeningElementWithParent("Button", [imgChild]);
 
-            // Simulate the call from hasAccessibleLabel in ruleFactory
             expect(hasLabeledChild(openingElement, defaultContext)).toBe(true);
         });
     });
