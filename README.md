@@ -90,6 +90,69 @@ This plugin does a static code analysis of the React JSX to spot accessibility i
 
 As the plugin can only catch errors in static source code, please use it in combination with [@axe-core/react](https://github.com/dequelabs/axe-core-npm/tree/develop/packages/react) to test the accessibility of the rendered DOM. Consider these tools just as one step of a larger a11y testing process and always test your apps with assistive technology.
 
+## Architecture & Development
+
+### Rule Factory System
+
+This plugin leverages a powerful rule factory system that provides consistent behavior across accessibility rules. The factory system includes several utility functions for validating accessible labeling:
+
+- **`hasAssociatedLabelViaAriaLabelledBy`** - Validates `aria-labelledby` references
+- **`hasAssociatedLabelViaHtmlFor`** - Validates `htmlFor`/`id` label associations  
+- **`hasAssociatedLabelViaAriaDescribedby`** - Validates `aria-describedby` references
+- **`hasLabeledChild`** - Detects accessible child content (images with alt, icons, labeled elements)
+- **`hasTextContentChild`** - Validates text content in child elements
+- **`isInsideLabelTag`** - Checks if element is wrapped in a label
+
+#### Labeled Child Detection
+
+The `hasLabeledChild` utility is particularly powerful, detecting multiple forms of accessible child content:
+
+```tsx
+// Image elements with alt text
+<Button><img alt="Save document" /></Button>
+
+// SVG elements with accessible attributes  
+<Button><svg title="Close" /></Button>
+<Button><svg aria-label="Menu" /></Button>
+
+// Elements with role="img" and labeling
+<Button><span role="img" aria-label="Celebration">🎉</span></Button>
+
+// FluentUI Icon components
+<Button><SaveIcon /></Button>
+<Button><Icon iconName="Save" /></Button>
+
+// Any element with aria-label or title
+<Button><div aria-label="Status indicator" /></Button>
+
+// Elements with aria-labelledby (validates references exist)
+<Button><span aria-labelledby="save-label" /></Button>
+<Label id="save-label">Save Document</Label>
+```
+
+The utility performs source code analysis to validate that `aria-labelledby` references point to actual elements with matching IDs, ensuring robust accessibility validation.
+
+### Creating New Rules
+
+To create a new accessibility rule, use the rule factory system:
+
+```typescript
+import { ruleFactory, LabeledControlConfig } from '../util/ruleFactory';
+
+const rule = ruleFactory({
+  component: 'YourComponent', // or /RegexPattern/
+  message: 'Your component needs accessible labeling',
+  allowTextContentChild: true,
+  allowLabeledChild: true,
+  allowHtmlFor: true,
+  allowLabelledBy: true,
+  labelProps: ['aria-label'],
+  requiredProps: ['role']
+});
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed development guidelines.
+
 ## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
