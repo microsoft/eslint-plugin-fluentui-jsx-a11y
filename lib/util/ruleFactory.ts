@@ -105,7 +105,11 @@ export function hasAccessibleLabel(
  * Factory for a minimal, strongly-configurable ESLint rule that enforces
  * accessible labeling on a specific JSX element/component.
  */
-export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.RuleModule<string, []> {
+
+// eslint-disable-next-line no-unused-vars
+type CustomChecker = (node: TSESTree.JSXElement, context: TSESLint.RuleContext<string, []>) => boolean;
+
+export function makeLabeledControlRule(config: LabeledControlConfig, customChecker?: CustomChecker): TSESLint.RuleModule<string, []> {
     return {
         meta: {
             type: "problem",
@@ -128,8 +132,9 @@ export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.R
 
                     if (!matches) return;
 
-                    if (!hasAccessibleLabel(opening, node, context, config)) {
-                        // report on the opening tag for better location
+                    const isAccessible = customChecker ? customChecker(node, context) : hasAccessibleLabel(opening, node, context, config);
+
+                    if (!isAccessible) {
                         context.report({ node: opening, messageId: config.messageId });
                     }
                 }
