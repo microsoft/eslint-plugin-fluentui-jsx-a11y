@@ -29,7 +29,7 @@ We currently cover the following components:
     -   [x] Checkbox
     -   [] ColorPicker
     -   [x] Combobox
-    -   [] DataGrid
+    -   [x] DataGrid
     -   [x] Dialog
     -   [N/A] Divider
     -   [] Drawer
@@ -70,7 +70,7 @@ We currently cover the following components:
         - [N/A] SwatchPickerRow
     -   [x] Switch
     -   [] SearchBox
-    -   [] Table
+    -   [x] Table
     -   [x] TabList
     -   [] Tag
         -   [] InteractionTag
@@ -83,7 +83,7 @@ We currently cover the following components:
     -   [] Toast
     -   [x] Toolbar
     -   [x] Tooltip
-    -   [] Tree
+    -   [x] Tree
     -   [x] Datepicker
     -   [N/A] Calendar
     -   [x] Timepicker

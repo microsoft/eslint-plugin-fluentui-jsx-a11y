@@ -28,6 +28,7 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/combobox-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/compound-button-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/counter-badge-needs-count": "error",
+                "@microsoft/fluentui-jsx-a11y/datagrid-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogbody-needs-title-content-and-actions": "error",
                 "@microsoft/fluentui-jsx-a11y/dialogsurface-needs-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/dropdown-needs-labelling": "error",
@@ -53,11 +54,13 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/spin-button-unrecommended-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/switch-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/table-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/tag-dismissible-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/tag-needs-name": "error",
                 "@microsoft/fluentui-jsx-a11y/toolbar-missing-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/tooltip-not-recommended": "error",
+                "@microsoft/fluentui-jsx-a11y/tree-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion": "warn"
             }
         }
@@ -75,6 +78,7 @@ module.exports = {
         "combobox-needs-labelling": rules.comboboxNeedsLabelling,
         "compound-button-needs-labelling": rules.compoundButtonNeedsLabelling,
         "counter-badge-needs-count": rules.counterBadgeNeedsCount,
+        "datagrid-needs-labelling": rules.dataGridNeedsLabelling,
         "dialogbody-needs-title-content-and-actions": rules.dialogbodyNeedsTitleContentAndActions,
         "dialogsurface-needs-aria": rules.dialogsurfaceNeedsAria,
         "dropdown-needs-labelling": rules.dropdownNeedsLabelling,
@@ -100,11 +104,13 @@ module.exports = {
         "spin-button-unrecommended-labelling": rules.spinButtonUnrecommendedLabelling,
         "spinner-needs-labelling": rules.spinnerNeedsLabelling,
         "switch-needs-labelling": rules.switchNeedsLabelling,
+        "table-needs-labelling": rules.tableNeedsLabelling,
         "tablist-and-tabs-need-labelling": rules.tablistAndTabsNeedLabelling,
         "tag-dismissible-needs-labelling": rules.tagDismissibleNeedsLabelling,
         "tag-needs-name": rules.tagNeedsName,
         "toolbar-missing-aria": rules.toolbarMissingAria,
         "tooltip-not-recommended": rules.tooltipNotRecommended,
+        "tree-needs-labelling": rules.treeNeedsLabelling,
         "visual-label-better-than-aria-suggestion": rules.visualLabelBetterThanAriaSuggestion
     }
 };
