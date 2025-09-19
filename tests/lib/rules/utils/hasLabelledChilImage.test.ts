@@ -156,3 +156,147 @@ describe("hasLabelledChildImage", () => {
         expect(hasLabelledChildImage(node)).toBe(false);
     });
 });
+
+describe("hasLabelledChildImage - missing coverage", () => {
+    it("handles non-JSXElement children", () => {
+        const mockTextChild: TSESTree.JSXText = {
+            type: AST_NODE_TYPES.JSXText,
+            value: "Some text content",
+            raw: "Some text content",
+            ...createMockLocRange()
+        };
+
+        const mockExpressionChild: TSESTree.JSXExpressionContainer = {
+            type: AST_NODE_TYPES.JSXExpressionContainer,
+            expression: {
+                type: AST_NODE_TYPES.Literal,
+                value: "expression",
+                raw: '"expression"',
+                ...createMockLocRange()
+            },
+            ...createMockLocRange()
+        };
+
+        const node: TSESTree.JSXElement = {
+            type: AST_NODE_TYPES.JSXElement,
+            openingElement: {
+                type: AST_NODE_TYPES.JSXOpeningElement,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "Container", ...createMockLocRange() },
+                attributes: [],
+                selfClosing: false,
+                ...createMockLocRange()
+            },
+            closingElement: null,
+            children: [mockTextChild, mockExpressionChild],
+            ...createMockLocRange()
+        };
+
+        expect(hasLabelledChildImage(node)).toBe(false);
+    });
+
+    it("JSXElement child with non-image component name", () => {
+        const mockDivChild: TSESTree.JSXElement = {
+            type: AST_NODE_TYPES.JSXElement,
+            openingElement: {
+                type: AST_NODE_TYPES.JSXOpeningElement,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "div", ...createMockLocRange() }, // Not an image component
+                attributes: [
+                    {
+                        type: AST_NODE_TYPES.JSXAttribute,
+                        name: { type: AST_NODE_TYPES.JSXIdentifier, name: "alt", ...createMockLocRange() },
+                        value: { type: AST_NODE_TYPES.Literal, value: "description", raw: '"description"', ...createMockLocRange() },
+                        ...createMockLocRange()
+                    }
+                ],
+                selfClosing: false,
+                ...createMockLocRange()
+            },
+            closingElement: null,
+            children: [],
+            ...createMockLocRange()
+        };
+
+        const node: TSESTree.JSXElement = {
+            type: AST_NODE_TYPES.JSXElement,
+            openingElement: {
+                type: AST_NODE_TYPES.JSXOpeningElement,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "Container", ...createMockLocRange() },
+                attributes: [],
+                selfClosing: false,
+                ...createMockLocRange()
+            },
+            closingElement: null,
+            children: [mockDivChild],
+            ...createMockLocRange()
+        };
+
+        expect(hasLabelledChildImage(node)).toBe(false);
+    });
+});
+
+describe("isImageHidden - missing coverage for aria-label handling", () => {
+    it("returns false when aria-label has non-empty value", () => {
+        const attributes: TSESTree.JSXOpeningElement["attributes"] = [
+            {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-label", ...createMockLocRange() },
+                value: {
+                    type: AST_NODE_TYPES.Literal,
+                    value: "Descriptive label",
+                    raw: '"Descriptive label"',
+                    ...createMockLocRange()
+                },
+                ...createMockLocRange()
+            }
+        ];
+
+        expect(isImageHidden(attributes)).toBe(false);
+    });
+
+    it("returns false when aria-labelledby has non-empty value", () => {
+        const attributes: TSESTree.JSXOpeningElement["attributes"] = [
+            {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby", ...createMockLocRange() },
+                value: {
+                    type: AST_NODE_TYPES.Literal,
+                    value: "label-id",
+                    raw: '"label-id"',
+                    ...createMockLocRange()
+                },
+                ...createMockLocRange()
+            }
+        ];
+
+        expect(isImageHidden(attributes)).toBe(false);
+    });
+
+    it("handles case with both aria-label and aria-labelledby present", () => {
+        const attributes: TSESTree.JSXOpeningElement["attributes"] = [
+            {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-label", ...createMockLocRange() },
+                value: {
+                    type: AST_NODE_TYPES.Literal,
+                    value: "Primary label",
+                    raw: '"Primary label"',
+                    ...createMockLocRange()
+                },
+                ...createMockLocRange()
+            },
+            {
+                type: AST_NODE_TYPES.JSXAttribute,
+                name: { type: AST_NODE_TYPES.JSXIdentifier, name: "aria-labelledby", ...createMockLocRange() },
+                value: {
+                    type: AST_NODE_TYPES.Literal,
+                    value: "secondary-label",
+                    raw: '"secondary-label"',
+                    ...createMockLocRange()
+                },
+                ...createMockLocRange()
+            }
+        ];
+
+        expect(isImageHidden(attributes)).toBe(false);
+    });
+});
