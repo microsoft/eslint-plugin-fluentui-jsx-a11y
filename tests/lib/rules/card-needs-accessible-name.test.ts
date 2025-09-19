@@ -1,0 +1,49 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+//------------------------------------------------------------------------------
+// Requirements
+//------------------------------------------------------------------------------
+
+import { Rule } from "eslint";
+import ruleTester from "./helper/ruleTester";
+import rule from "../../../lib/rules/card-needs-accessible-name";
+
+//------------------------------------------------------------------------------
+// Tests
+//------------------------------------------------------------------------------
+
+ruleTester.run("card-needs-accessible-name", rule as unknown as Rule.RuleModule, {
+    valid: [
+        // Card with text content
+        `<Card>Product details</Card>`,
+        // Card with aria-label
+        `<Card aria-label="Product card" />`,
+        // Card with aria-labelledby
+        `<><Label id="card-label">Product</Label><Card aria-labelledby="card-label" /></>`,
+        // Card wrapped in Tooltip
+        `<Tooltip content="Product information" relationship="label"><Card /></Tooltip>`,
+        // Card with labeled child
+        `<Card><img alt="Product image" /></Card>`,
+        // Card with Icon child
+        `<Card><ProductIcon /></Card>`
+    ],
+    invalid: [
+        {
+            code: `<Card />`,
+            errors: [{ messageId: "cardNeedsAccessibleName" }]
+        },
+        {
+            code: `<Card></Card>`,
+            errors: [{ messageId: "cardNeedsAccessibleName" }]
+        },
+        {
+            code: `<Card aria-label="" />`,
+            errors: [{ messageId: "cardNeedsAccessibleName" }]
+        },
+        {
+            code: `<><Label id="wrong-id">Product</Label><Card aria-labelledby="card-label" /></>`,
+            errors: [{ messageId: "cardNeedsAccessibleName" }]
+        }
+    ]
+});
