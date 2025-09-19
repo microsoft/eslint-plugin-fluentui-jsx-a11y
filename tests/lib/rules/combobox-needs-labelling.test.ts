@@ -21,7 +21,9 @@ ruleTester.run("combobox-needs-labelling", rule as unknown as Rule.RuleModule, {
         '<Label>Best pet<Combobox placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></Label>',
         '<div><label id="my-label">Best pet</label><Combobox aria-labelledby="my-label" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
         '<div><Label id="my-label">Best pet</Label><Combobox aria-labelledby="my-label" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
-        // '<div><Label id={"my-label"}>Best pet</Label><Combobox aria-labelledby={"my-label"} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>', // TODO: modify regular expression
+        '<div><Label id={"my-label"}>Best pet</Label><Combobox aria-labelledby={"my-label"} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
+        '<div><Label id={"my-label" + 1}>Best pet</Label><Combobox aria-labelledby={"my-label" + 1} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
+        '<div><Label id={`my-label-${value}`}>Best pet</Label><Combobox aria-labelledby={`my-label-${value}`} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
         '<div><label htmlFor="my-input">Best pet</label><Combobox id="my-input" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
         '<div><Label htmlFor="my-input">Best pet</Label><Combobox id="my-input" placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
         '<div><Label htmlFor={myInputId}>Best pet</Label><Combobox id={myInputId} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
@@ -38,6 +40,10 @@ ruleTester.run("combobox-needs-labelling", rule as unknown as Rule.RuleModule, {
         },
         {
             code: "<><Field></Field><Combobox /></>",
+            errors: [{ messageId: "noUnlabelledCombobox" }]
+        },
+        {
+            code: '<div><Label id={my-label}>Best pet</Label><Combobox aria-labelledby={my-label} placeholder="Select an animal" {...props}><Option>{"Cat"}</Option></Combobox></div>',
             errors: [{ messageId: "noUnlabelledCombobox" }]
         }
     ]
