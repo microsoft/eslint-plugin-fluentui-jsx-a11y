@@ -15,15 +15,10 @@ import rule from "../../../lib/rules/card-needs-accessible-name";
 
 ruleTester.run("card-needs-accessible-name", rule as unknown as Rule.RuleModule, {
     valid: [
-        // Card with aria-label
         `<Card aria-label="Product details" />`,
-        // Card with aria-labelledby that references existing element
-        `<><Label id="card-label">Product</Label><Card aria-labelledby="card-label" /></>`
-        // TODO: Uncomment when hasLabeledChild is implemented
-        // Card with labeled child
-        // `<Card><img alt="Product image" /></Card>`,
-        // Card with Icon child
-        // `<Card><ProductIcon /></Card>`
+        `<><Label id="card-label">Product</Label><Card aria-labelledby="card-label" /></>`,
+        `<Card><img alt="Product image" /></Card>`,
+        `<Card><ProductIcon /></Card>`
     ],
     invalid: [
         {

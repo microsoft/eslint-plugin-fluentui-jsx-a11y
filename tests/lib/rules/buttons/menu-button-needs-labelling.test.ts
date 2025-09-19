@@ -15,19 +15,12 @@ import rule from "../../../../lib/rules/buttons/menu-button-needs-labelling";
 
 ruleTester.run("menu-button-needs-labelling", rule as unknown as Rule.RuleModule, {
     valid: [
-        // MenuButton with aria-label
         `<MenuButton aria-label="Menu options" />`,
-        // MenuButton with text content
         `<MenuButton>Options</MenuButton>`,
-        // MenuButton with aria-labelledby that references existing element
         `<><Label id="menu-label">Menu</Label><MenuButton aria-labelledby="menu-label" /></>`,
-        // MenuButton wrapped in Tooltip
-        `<Tooltip content="Menu options" relationship="label"><MenuButton /></Tooltip>`
-        // TODO: Uncomment when hasLabeledChild is implemented
-        // MenuButton with labeled child
-        // `<MenuButton><img alt="Menu icon" /></MenuButton>`,
-        // MenuButton with Icon child
-        // `<MenuButton><MenuIcon /></MenuButton>`
+        `<Tooltip content="Menu options" relationship="label"><MenuButton /></Tooltip>`,
+        `<MenuButton><img alt="Menu icon" /></MenuButton>`,
+        `<MenuButton><MenuIcon /></MenuButton>`
     ],
     invalid: [
         {

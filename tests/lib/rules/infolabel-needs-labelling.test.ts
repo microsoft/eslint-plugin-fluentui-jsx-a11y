@@ -15,21 +15,14 @@ import rule from "../../../lib/rules/infolabel-needs-labelling";
 
 ruleTester.run("infolabel-needs-labelling", rule as unknown as Rule.RuleModule, {
     valid: [
-        // InfoLabel with aria-label
         `<InfoLabel aria-label="Additional information" />`,
-        // InfoLabel with text content
         `<InfoLabel>Help text</InfoLabel>`,
         `<InfoLabel>?</InfoLabel>`,
         `<InfoLabel>ℹ️</InfoLabel>`,
-        // InfoLabel with aria-labelledby that references existing element
         `<><Label id="info-label">Information</Label><InfoLabel aria-labelledby="info-label" /></>`,
-        // InfoLabel wrapped in Tooltip
-        `<Tooltip content="Help information" relationship="label"><InfoLabel /></Tooltip>`
-        // TODO: Uncomment when hasLabeledChild is implemented
-        // InfoLabel with labeled child
-        // `<InfoLabel><img alt="Help icon" /></InfoLabel>`,
-        // InfoLabel with Icon child
-        // `<InfoLabel><InfoIcon /></InfoLabel>`
+        `<Tooltip content="Help information" relationship="label"><InfoLabel /></Tooltip>`,
+        `<InfoLabel><img alt="Help icon" /></InfoLabel>`,
+        `<InfoLabel><InfoIcon /></InfoLabel>`
     ],
     invalid: [
         {
@@ -49,8 +42,15 @@ ruleTester.run("infolabel-needs-labelling", rule as unknown as Rule.RuleModule, 
             errors: [{ messageId: "infoLabelNeedsLabelling" }]
         },
         {
-            // aria-labelledby references ID that doesn't exist
             code: `<><Label id="wrong-id">Information</Label><InfoLabel aria-labelledby="info-label" /></>`,
+            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+        },
+        {
+            code: `<InfoLabel><img /></InfoLabel>`,
+            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+        },
+        {
+            code: `<InfoLabel><img alt="" /></InfoLabel>`,
             errors: [{ messageId: "infoLabelNeedsLabelling" }]
         }
     ]
