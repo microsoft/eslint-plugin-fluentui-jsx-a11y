@@ -17,7 +17,22 @@ import { labelBasedComponents, elementsUsedAsLabels } from "../../../lib/applica
 function generateTestCases(labelComponent: string, componentName: string) {
     return {
         valid: [
-            `<><${labelComponent} id="test-span">Some Label</${labelComponent}><${componentName} id="some-id" aria-labelledby="test-span"/></>`
+            `<><${labelComponent} id="test-span">Some Label</${labelComponent}><${componentName} id="some-id" aria-labelledby="test-span"/></>`,
+            // expression forms: binary concatenation and template literal (cover expression-literal forms)
+            "<><" +
+                labelComponent +
+                ' id={"my-label" + 1}>Some Label</' +
+                labelComponent +
+                "><" +
+                componentName +
+                ' aria-labelledby={"my-label" + 1}/></>',
+            "<><" +
+                labelComponent +
+                " id={`my-label-${value}`}>Some Label</" +
+                labelComponent +
+                "><" +
+                componentName +
+                " aria-labelledby={`my-label-${value}`}/></>"
         ],
         invalid: [
             {
@@ -38,7 +53,22 @@ function generateTestCasesLabel(labelComponent: string, componentName: string) {
             `<${labelComponent}>test<SomeNesting><${componentName} /></SomeNesting></${labelComponent}>`,
             `<Field label="this is my label"><${componentName} /></Field>`,
             `<${componentName} aria-label="this is my component" />`,
-            `<><${labelComponent} id="paragraph_label-2">type here</${labelComponent}><${componentName} aria-labelledby="paragraph_label-2"></${componentName}><${labelComponent} id="paragraph_label-3">type here</${labelComponent}><${componentName} aria-labelledby="paragraph_label-3"></${componentName}></>`
+            `<><${labelComponent} id="paragraph_label-2">type here</${labelComponent}><${componentName} aria-labelledby="paragraph_label-2"></${componentName}><${labelComponent} id="paragraph_label-3">type here</${labelComponent}><${componentName} aria-labelledby="paragraph_label-3"></${componentName}></>`,
+            // expression forms for htmlFor/id pairing
+            "<><" +
+                labelComponent +
+                ' htmlFor={"my-input" + 1}>Some Label</' +
+                labelComponent +
+                "><" +
+                componentName +
+                ' id={"my-input" + 1}/></>',
+            "<><" +
+                labelComponent +
+                " htmlFor={`my-input-${value}`}>Some Label</" +
+                labelComponent +
+                "><" +
+                componentName +
+                " id={`my-input-${value}`}/></>"
         ],
         invalid: [
             {
