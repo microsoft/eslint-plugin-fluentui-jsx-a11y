@@ -16,6 +16,7 @@ import { hasToolTipParent } from "./hasTooltipParent";
 import { hasLabeledChild } from "./hasLabeledChild";
 import { hasDefinedProp } from "./hasDefinedProp";
 import { hasTextContentChild } from "./hasTextContentChild";
+import { hasTriggerProp } from "./hasTriggerProp";
 
 /**
  * Configuration options for a rule created via the `ruleFactory`
@@ -47,10 +48,10 @@ export type LabeledControlConfig = {
      * Keep this off unless a specific component (e.g., Icon-only buttons) intentionally uses it.
      */
     allowDescribedBy: boolean;
-    /** Treat labeled child content (img `alt`, svg `title`, `aria-label` on `role="img"`) as the name */
-    allowLabeledChild: boolean;
-    /** Accept text children to provide the label e.g. <Button>Click me</Button> */
-    allowTextContentChild?: boolean;
+    allowLabeledChild: boolean; // Accept labeled child elements to provide the label e.g. <Button><img alt="..." /></Button>
+    allowTextContentChild?: boolean; // Accept text children to provide the label e.g. <Button>Click me</Button>
+    triggerProp?: string; // Only apply rule when this trigger prop is present (e.g., "dismissible", "disabled")
+    customValidator?: Function; // Custom validation logic
 };
 
 /**
@@ -66,6 +67,8 @@ export type LabeledControlConfig = {
  *  6) Parent <Tooltip content="..."> context .......................... (allowTooltipParent)
  *  7) aria-describedby association (opt-in; discouraged as primary) .... (allowDescribedBy)
  *  8) treat labeled child content (img alt, svg title, aria-label on role="img") as the name
+ *  9) Conditional application based on trigger prop ................... (triggerProp)
+ * 10) Custom validation for complex scenarios ......................... (customValidator)
  *
  * This checks for presence of an accessible *name* only; not contrast or UX.
  */
@@ -128,7 +131,17 @@ export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.R
 
                     if (!matches) return;
 
-                    if (!hasAccessibleLabel(opening, node, context, config)) {
+                    if (config.triggerProp && !hasTriggerProp(opening, config.triggerProp)) {
+                        return;
+                    }
+
+                    // Use custom validator if provided, otherwise use standard accessibility check
+                    let isValid: boolean;
+                    config.customValidator
+                        ? (isValid = config.customValidator(opening))
+                        : (isValid = hasAccessibleLabel(opening, node, context, config));
+
+                    if (!isValid) {
                         // report on the opening tag for better location
                         context.report({ node: opening, messageId: config.messageId });
                     }

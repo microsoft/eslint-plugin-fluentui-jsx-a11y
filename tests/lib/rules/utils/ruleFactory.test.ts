@@ -107,7 +107,7 @@ describe("hasAccessibleLabel (unit)", () => {
         getSourceCode: jest.fn()
     } as unknown as TSESLint.RuleContext<string, []>;
 
-    const cfg: Required<LabeledControlConfig> = {
+    const cfg: LabeledControlConfig = {
         component: "RadioGroup",
         requiredProps: ["alt"],
         labelProps: ["label", "aria-label"],
@@ -292,7 +292,7 @@ describe("hasAccessibleLabel (unit)", () => {
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } } });
 
 describe("makeLabeledControlRule (RuleTester integration)", () => {
-    const baseCfg: Required<LabeledControlConfig> = {
+    const baseCfg: LabeledControlConfig = {
         component: "RadioGroup",
         requiredProps: ["alt"],
         labelProps: ["label", "aria-label"],
