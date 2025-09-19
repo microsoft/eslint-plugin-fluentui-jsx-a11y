@@ -16,6 +16,9 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 ## Table of Contents
 
 [Dev Environment](#dev-environment)
+[Rule Factory System](#rule-factory-system)
+[Creating New Rules](#creating-new-rules)
+[Utility Functions](#utility-functions)
 [Pull requests](#pull-requests)
 
 ## Dev Environment
@@ -60,6 +63,205 @@ To ensure a consistent and productive development environment, install the follo
 - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) — Code formatting using Prettier.
 - [Prettier ESLint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint) — Format code with Prettier and ESLint integration.
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) — Linting and style checks for Markdown files.
+
+## Rule Factory System
+
+This plugin uses a powerful rule factory system that provides consistent behavior across accessibility rules. The factory system is built around the `ruleFactory` function in `lib/util/ruleFactory.ts` and several utility functions for validating accessible labeling.
+
+### Core Concept
+
+The rule factory centralizes common accessibility validation patterns, making it easy to create new rules with consistent behavior. Instead of implementing validation logic from scratch, rules can leverage the factory's built-in utilities.
+
+### Architecture
+
+```
+ruleFactory(config) → ESLint Rule
+    ↓
+hasAccessibleLabel(opening, element, context, config) → boolean
+    ↓
+Utility Functions:
+├── hasAssociatedLabelViaAriaLabelledBy(opening, context)
+├── hasAssociatedLabelViaHtmlFor(opening, context)  
+├── hasAssociatedLabelViaAriaDescribedby(opening, context)
+├── hasLabeledChild(opening, context)
+├── hasTextContentChild(element)
+└── isInsideLabelTag(context)
+```
+
+## Creating New Rules
+
+### Using the Rule Factory
+
+For most accessibility rules, use the rule factory:
+
+```typescript
+import { ruleFactory, LabeledControlConfig } from '../util/ruleFactory';
+
+const rule = ruleFactory({
+  component: 'YourComponent', // string or regex pattern
+  message: 'YourComponent needs accessible labeling',
+  
+  // Validation options (all optional, default false)
+  allowTextContentChild: true,      // Allow text content in children
+  allowLabeledChild: true,          // Allow images with alt, icons, etc.
+  allowHtmlFor: true,               // Allow htmlFor/id label association
+  allowLabelledBy: true,            // Allow aria-labelledby
+  allowDescribedBy: false,          // Allow aria-describedby (discouraged as primary)
+  allowWrappingLabel: true,         // Allow wrapping in <Label> tag
+  allowTooltipParent: false,        // Allow parent <Tooltip>
+  allowFieldParent: true,           // Allow parent <Field>
+  
+  // Property validation
+  labelProps: ['aria-label'],       // Props that provide labeling
+  requiredProps: ['role'],          // Props that must be present
+});
+
+export default rule;
+```
+
+### Configuration Options
+
+| Option | Description | Example Use Cases |
+|--------|-------------|-------------------|
+| `allowTextContentChild` | Allows text content in child elements | Buttons, links with text |
+| `allowLabeledChild` | Allows accessible child content (images with alt, icons, aria-labeled elements) | Icon buttons, image buttons |
+| `allowHtmlFor` | Allows label association via `htmlFor`/`id` | Form inputs, interactive controls |
+| `allowLabelledBy` | Allows `aria-labelledby` references | Complex components referencing external labels |
+| `allowDescribedBy` | Allows `aria-describedby` (discouraged for primary labeling) | Rare cases where description suffices |
+| `allowWrappingLabel` | Allows element to be wrapped in `<Label>` | Form controls |
+| `allowTooltipParent` | Allows parent `<Tooltip>` as accessible name | Simple tooltips (use sparingly) |
+| `allowFieldParent` | Allows parent `<Field>` component | FluentUI form fields |
+
+### Custom Rules
+
+For complex validation that doesn't fit the factory pattern:
+
+```typescript
+import { ESLintUtils, TSESTree } from "@typescript-eslint/utils";
+import { JSXOpeningElement } from "estree-jsx";
+
+const rule = ESLintUtils.RuleCreator.withoutDocs({
+  defaultOptions: [],
+  meta: {
+    messages: {
+      customMessage: "Custom validation message"
+    },
+    type: "problem",
+    schema: []
+  },
+  create(context) {
+    return {
+      JSXOpeningElement(node: TSESTree.JSXOpeningElement) {
+        // Custom validation logic
+        if (needsValidation(node)) {
+          context.report({
+            node,
+            messageId: "customMessage"
+          });
+        }
+      }
+    };
+  }
+});
+```
+
+## Utility Functions
+
+### hasLabeledChild
+
+The `hasLabeledChild` utility detects accessible child content and is one of the most powerful validation functions:
+
+```typescript
+import { hasLabeledChild } from '../util/hasLabeledChild';
+
+// Usage in rules
+if (hasLabeledChild(openingElement, context)) {
+  return; // Element has accessible child content
+}
+```
+
+**Detects:**
+
+1. **Images with alt text:**
+   ```jsx
+   <Button><img alt="Save document" /></Button>
+   <Button><Image alt="User profile" /></Button>
+   ```
+
+2. **SVG elements with accessible attributes:**
+   ```jsx
+   <Button><svg title="Close" /></Button>
+   <Button><svg aria-label="Menu" /></Button>
+   <Button><svg aria-labelledby="icon-label" /></Button>
+   ```
+
+3. **Elements with role="img" and labeling:**
+   ```jsx
+   <Button><span role="img" aria-label="Celebration">🎉</span></Button>
+   ```
+
+4. **FluentUI Icon components:**
+   ```jsx
+   <Button><SaveIcon /></Button>
+   <Button><Icon iconName="Save" /></Button>
+   <Button><MyCustomIcon /></Button>
+   ```
+
+5. **Any element with aria-label or title:**
+   ```jsx
+   <Button><div aria-label="Status indicator" /></Button>
+   <Button><span title="Tooltip text" /></Button>
+   ```
+
+6. **Elements with validated aria-labelledby:**
+   ```jsx
+   <Button><span aria-labelledby="save-label" /></Button>
+   <Label id="save-label">Save Document</Label>
+   ```
+
+**Key Features:**
+
+- **Source code validation:** Validates that `aria-labelledby` references point to actual elements with matching IDs
+- **Deep traversal:** Uses `flattenChildren` to find labeled content in nested structures
+- **Case insensitive:** Handles variations like `IMG`, `SVG`, `CLOSEICON`
+- **Error handling:** Gracefully handles malformed JSX and missing context
+
+### Other Utility Functions
+
+- **`hasAssociatedLabelViaAriaLabelledBy(opening, context)`** - Validates `aria-labelledby` references
+- **`hasAssociatedLabelViaHtmlFor(opening, context)`** - Validates `htmlFor`/`id` label associations  
+- **`hasAssociatedLabelViaAriaDescribedby(opening, context)`** - Validates `aria-describedby` references
+- **`hasTextContentChild(element)`** - Checks for meaningful text content in children
+- **`isInsideLabelTag(context)`** - Checks if element is wrapped in a `<Label>` tag
+- **`hasNonEmptyProp(attributes, propName)`** - Validates non-empty attribute values
+- **`hasDefinedProp(attributes, propName)`** - Checks if attribute is present
+
+### Writing Tests
+
+Use the comprehensive test patterns established in the codebase:
+
+```typescript
+import { hasLabeledChild } from "../../../../lib/util/hasLabeledChild";
+import { TSESLint } from "@typescript-eslint/utils";
+
+describe("hasLabeledChild", () => {
+  const mockContext = (sourceText = ""): TSESLint.RuleContext<string, unknown[]> => ({
+    getSourceCode: () => ({
+      getText: () => sourceText,
+      text: sourceText
+    })
+  } as unknown as TSESLint.RuleContext<string, unknown[]>);
+
+  it("validates aria-labelledby references", () => {
+    const element = createElementWithChild("div", [
+      createJSXAttribute("aria-labelledby", "existing-label")
+    ]);
+    const contextWithLabel = mockContext('<Label id="existing-label">Label Text</Label>');
+    
+    expect(hasLabeledChild(element, contextWithLabel)).toBe(true);
+  });
+});
+```
 
 ## To create a new ESLint rule
 
