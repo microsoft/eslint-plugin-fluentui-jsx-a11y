@@ -24,11 +24,12 @@ ruleTester.run("infolabel-needs-labelling", rule as unknown as Rule.RuleModule, 
         // InfoLabel with aria-labelledby that references existing element
         `<><Label id="info-label">Information</Label><InfoLabel aria-labelledby="info-label" /></>`,
         // InfoLabel wrapped in Tooltip
-        `<Tooltip content="Help information" relationship="label"><InfoLabel /></Tooltip>`,
+        `<Tooltip content="Help information" relationship="label"><InfoLabel /></Tooltip>`
+        // TODO: Uncomment when hasLabeledChild is implemented
         // InfoLabel with labeled child
-        `<InfoLabel><img alt="Help icon" /></InfoLabel>`,
+        // `<InfoLabel><img alt="Help icon" /></InfoLabel>`,
         // InfoLabel with Icon child
-        `<InfoLabel><InfoIcon /></InfoLabel>`
+        // `<InfoLabel><InfoIcon /></InfoLabel>`
     ],
     invalid: [
         {

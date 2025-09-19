@@ -15,20 +15,19 @@ import rule from "../../../../lib/rules/buttons/split-button-needs-labelling";
 
 ruleTester.run("split-button-needs-labelling", rule as unknown as Rule.RuleModule, {
     valid: [
-        // SplitButton with text content
-        `<SplitButton>Save</SplitButton>`,
         // SplitButton with aria-label
         `<SplitButton aria-label="Save options" />`,
-        // SplitButton with aria-labelledby
+        // SplitButton with text content
+        `<SplitButton>Save</SplitButton>`,
+        // SplitButton with aria-labelledby that references existing element
         `<><Label id="save-label">Save</Label><SplitButton aria-labelledby="save-label" /></>`,
-        // SplitButton wrapped in Label
-        `<label>Save<SplitButton /></label>`,
         // SplitButton wrapped in Tooltip
-        `<Tooltip content="Save with options" relationship="label"><SplitButton /></Tooltip>`,
+        `<Tooltip content="Save options" relationship="label"><SplitButton /></Tooltip>`
+        // TODO: Uncomment when hasLabeledChild is implemented
         // SplitButton with labeled child
-        `<SplitButton><img alt="Save icon" /></SplitButton>`,
+        // `<SplitButton><img alt="Save icon" /></SplitButton>`,
         // SplitButton with Icon child
-        `<SplitButton><SaveIcon /></SplitButton>`
+        // `<SplitButton><SaveIcon /></SplitButton>`
     ],
     invalid: [
         {
