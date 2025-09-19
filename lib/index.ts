@@ -49,9 +49,10 @@ module.exports = {
                 "@microsoft/fluentui-jsx-a11y/spin-button-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/spin-button-unrecommended-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/spinner-needs-labelling": "error",
-                "@microsoft/fluentui-jsx-a11y/swatchpicker-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/switch-needs-labelling": "error",
                 "@microsoft/fluentui-jsx-a11y/tablist-and-tabs-need-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/tag-dismissible-needs-labelling": "error",
+                "@microsoft/fluentui-jsx-a11y/tag-needs-name": "error",
                 "@microsoft/fluentui-jsx-a11y/toolbar-missing-aria": "error",
                 "@microsoft/fluentui-jsx-a11y/tooltip-not-recommended": "error",
                 "@microsoft/fluentui-jsx-a11y/visual-label-better-than-aria-suggestion": "warn"
@@ -92,9 +93,10 @@ module.exports = {
         "spin-button-needs-labelling": rules.spinButtonNeedsLabelling,
         "spin-button-unrecommended-labelling": rules.spinButtonUnrecommendedLabelling,
         "spinner-needs-labelling": rules.spinnerNeedsLabelling,
-        "swatchpicker-needs-labelling": rules.swatchpickerNeedsLabelling,
         "switch-needs-labelling": rules.switchNeedsLabelling,
         "tablist-and-tabs-need-labelling": rules.tablistAndTabsNeedLabelling,
+        "tag-dismissible-needs-labelling": rules.tagDismissibleNeedsLabelling,
+        "tag-needs-name": rules.tagNeedsName,
         "toolbar-missing-aria": rules.toolbarMissingAria,
         "tooltip-not-recommended": rules.tooltipNotRecommended,
         "visual-label-better-than-aria-suggestion": rules.visualLabelBetterThanAriaSuggestion
