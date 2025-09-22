@@ -24,17 +24,20 @@ ruleTester.run("image-needs-alt", rule as unknown as Rule.RuleModule, {
         {
             // No alt attribute
             code: '<Image src="image.png" />',
-            errors: [{ messageId: "imageNeedsAlt" }]
+            errors: [{ messageId: "imageNeedsAlt" }],
+            output: '<Image alt="" src="image.png" />'
         },
         {
             // Null alt attribute
             code: '<Image src="image.png" alt={null} />',
-            errors: [{ messageId: "imageNeedsAlt" }]
+            errors: [{ messageId: "imageNeedsAlt" }],
+            output: '<Image alt="" src="image.png" alt={null} />'
         },
         {
             // Undefined alt attribute
             code: '<Image src="image.png" alt={undefined} />',
-            errors: [{ messageId: "imageNeedsAlt" }]
+            errors: [{ messageId: "imageNeedsAlt" }],
+            output: '<Image alt="" src="image.png" alt={undefined} />'
         }
     ]
 });

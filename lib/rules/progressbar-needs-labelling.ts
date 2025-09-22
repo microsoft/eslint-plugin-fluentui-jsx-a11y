@@ -28,6 +28,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
             recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
+        fixable: "code",
         schema: []
     },
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree
@@ -69,7 +70,39 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
                 // if it has no visual labelling, report error
                 context.report({
                     node,
-                    messageId: `noUnlabelledProgressbar`
+                    messageId: `noUnlabelledProgressbar`,
+                    fix(fixer) {
+                        const fixes = [];
+
+                        // Add aria-label if neither aria-label nor aria-labelledby exist (and no Field parent)
+                        if (
+                            !hasFieldParentCheck &&
+                            !hasNonEmptyProp(node.attributes, "aria-label") &&
+                            !hasNonEmptyProp(node.attributes, "aria-labelledby")
+                        ) {
+                            fixes.push(fixer.insertTextAfter(node.name, ' aria-label="Progress"'));
+                        }
+
+                        // Add aria-describedby if missing
+                        if (!hasNonEmptyProp(node.attributes, "aria-describedby")) {
+                            fixes.push(fixer.insertTextAfter(node.name, ' aria-describedby=""'));
+                        }
+
+                        // Add missing ARIA value attributes if max prop is not present
+                        if (!hasMaxProp) {
+                            if (!hasNonEmptyProp(node.attributes, "aria-valuemin")) {
+                                fixes.push(fixer.insertTextAfter(node.name, ' aria-valuemin="0"'));
+                            }
+                            if (!hasNonEmptyProp(node.attributes, "aria-valuemax")) {
+                                fixes.push(fixer.insertTextAfter(node.name, ' aria-valuemax="100"'));
+                            }
+                            if (!hasNonEmptyProp(node.attributes, "aria-valuenow")) {
+                                fixes.push(fixer.insertTextAfter(node.name, ' aria-valuenow="0"'));
+                            }
+                        }
+
+                        return fixes;
+                    }
                 });
             }
         };

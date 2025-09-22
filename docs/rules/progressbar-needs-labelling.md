@@ -2,6 +2,8 @@
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
 <!-- end auto-generated rule header -->
 
 ProgressBar must have `max` or `aria-valuemin`, `aria-valuemax` and `aria-valuenow` attributes. It also must have an accessible `Field` parent or appropriate labelling using `aria-describedby` and `aria-label`/`aria-labelledby` .

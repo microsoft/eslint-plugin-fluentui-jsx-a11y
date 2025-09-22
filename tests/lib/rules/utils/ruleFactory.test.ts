@@ -17,7 +17,13 @@ import {
     hasAssociatedLabelViaHtmlFor,
     isInsideLabelTag
 } from "../../../../lib/util/labelUtils";
-import { hasAccessibleLabel, LabeledControlConfig, makeLabeledControlRule } from "../../../../lib/util/ruleFactory";
+import {
+    hasAccessibleLabel,
+    LabeledControlConfig,
+    makeLabeledControlRule,
+    generateAutoFix,
+    AutoFixConfig
+} from "../../../../lib/util/ruleFactory";
 
 jest.mock("../../../../lib/util/hasDefinedProp", () => ({
     hasDefinedProp: jest.fn()
@@ -524,5 +530,221 @@ describe("makeLabeledControlRule (RuleTester integration)", () => {
             ],
             invalid: []
         });
+    });
+});
+
+// Tests for auto-fix functionality
+describe("generateAutoFix", () => {
+    const mockFixer = {
+        insertTextAfter: jest.fn().mockReturnValue({ type: "fix" }),
+        insertTextBefore: jest.fn().mockReturnValue({ type: "fix" }),
+        replaceText: jest.fn().mockReturnValue({ type: "fix" }),
+        replaceTextRange: jest.fn().mockReturnValue({ type: "fix" }),
+        removeRange: jest.fn().mockReturnValue({ type: "fix" })
+    } as unknown as TSESLint.RuleFixer;
+
+    const mockOpening = {
+        type: AST_NODE_TYPES.JSXOpeningElement,
+        name: {
+            type: AST_NODE_TYPES.JSXIdentifier,
+            name: "Button",
+            range: [0, 6] as [number, number],
+            loc: {} as any
+        },
+        attributes: [],
+        selfClosing: false,
+        range: [0, 8] as [number, number],
+        loc: {} as any
+    } as TSESTree.JSXOpeningElement;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    test("returns null when config is falsy", () => {
+        const result = generateAutoFix(mockOpening, null as any);
+        expect(result).toBeNull();
+    });
+
+    test("aria-label-placeholder strategy", () => {
+        const config: AutoFixConfig = {
+            strategy: "aria-label-placeholder"
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(mockFixer.insertTextAfter).toHaveBeenCalledWith(mockOpening.name, ' aria-label=""');
+        expect(result).toEqual({ type: "fix" });
+    });
+
+    test("aria-label-suggestion strategy with default label", () => {
+        const config: AutoFixConfig = {
+            strategy: "aria-label-suggestion"
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(mockFixer.insertTextAfter).toHaveBeenCalledWith(mockOpening.name, ' aria-label="Provide accessible name"');
+        expect(result).toEqual({ type: "fix" });
+    });
+
+    test("aria-label-suggestion strategy with custom label", () => {
+        const config: AutoFixConfig = {
+            strategy: "aria-label-suggestion",
+            suggestedLabel: "Custom button label"
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(mockFixer.insertTextAfter).toHaveBeenCalledWith(mockOpening.name, ' aria-label="Custom button label"');
+        expect(result).toEqual({ type: "fix" });
+    });
+
+    test("add-required-prop strategy with propName only", () => {
+        const config: AutoFixConfig = {
+            strategy: "add-required-prop",
+            propName: "alt"
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(mockFixer.insertTextAfter).toHaveBeenCalledWith(mockOpening.name, ' alt=""');
+        expect(result).toEqual({ type: "fix" });
+    });
+
+    test("add-required-prop strategy with propName and propValue", () => {
+        const config: AutoFixConfig = {
+            strategy: "add-required-prop",
+            propName: "role",
+            propValue: '"button"'
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(mockFixer.insertTextAfter).toHaveBeenCalledWith(mockOpening.name, ' role="button"');
+        expect(result).toEqual({ type: "fix" });
+    });
+
+    test("add-required-prop strategy returns null when propName is missing", () => {
+        const config: AutoFixConfig = {
+            strategy: "add-required-prop"
+            // propName is missing
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(result).toBeNull();
+        expect(mockFixer.insertTextAfter).not.toHaveBeenCalled();
+    });
+
+    test("custom strategy with customFix function", () => {
+        const mockCustomFix = jest.fn().mockReturnValue(' custom-attribute="value"');
+        const config: AutoFixConfig = {
+            strategy: "custom",
+            customFix: mockCustomFix
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(mockCustomFix).toHaveBeenCalledWith(mockOpening);
+        expect(mockFixer.insertTextAfter).toHaveBeenCalledWith(mockOpening.name, ' custom-attribute="value"');
+        expect(result).toEqual({ type: "fix" });
+    });
+
+    test("custom strategy returns null when customFix is missing", () => {
+        const config: AutoFixConfig = {
+            strategy: "custom"
+            // customFix is missing
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(result).toBeNull();
+        expect(mockFixer.insertTextAfter).not.toHaveBeenCalled();
+    });
+
+    test("default case returns null for unknown strategy", () => {
+        const config: AutoFixConfig = {
+            strategy: "unknown-strategy" as any
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+
+        const result = fixFunction!(mockFixer);
+        expect(result).toBeNull();
+        expect(mockFixer.insertTextAfter).not.toHaveBeenCalled();
+    });
+});
+
+// Tests for auto-fix integration in makeLabeledControlRule
+describe("makeLabeledControlRule with auto-fix", () => {
+    beforeEach(() => {
+        resetAllMocksToFalse();
+    });
+
+    test("generateAutoFix integration - fix function is generated correctly", () => {
+        // Test the integration by directly calling generateAutoFix with mock data
+        const mockOpening = {
+            type: AST_NODE_TYPES.JSXOpeningElement,
+            name: {
+                type: AST_NODE_TYPES.JSXIdentifier,
+                name: "Button",
+                range: [0, 6] as [number, number],
+                loc: {} as any
+            },
+            attributes: [],
+            selfClosing: false,
+            range: [0, 8] as [number, number],
+            loc: {} as any
+        } as TSESTree.JSXOpeningElement;
+
+        const config: AutoFixConfig = {
+            strategy: "aria-label-placeholder"
+        };
+
+        const fixFunction = generateAutoFix(mockOpening, config);
+        expect(fixFunction).toBeDefined();
+        expect(typeof fixFunction).toBe("function");
+
+        // Test that the fix function works when called
+        const mockFixer = {
+            insertTextAfter: jest.fn().mockReturnValue({ type: "fix" })
+        } as unknown as TSESLint.RuleFixer;
+
+        const result = fixFunction!(mockFixer);
+        expect(mockFixer.insertTextAfter).toHaveBeenCalledWith(mockOpening.name, ' aria-label=""');
+        expect(result).toEqual({ type: "fix" });
+    });
+
+    test("generateAutoFix with null config returns null", () => {
+        const mockOpening = {
+            type: AST_NODE_TYPES.JSXOpeningElement,
+            name: {
+                type: AST_NODE_TYPES.JSXIdentifier,
+                name: "Button",
+                range: [0, 6] as [number, number],
+                loc: {} as any
+            }
+        } as TSESTree.JSXOpeningElement;
+
+        const result = generateAutoFix(mockOpening, null as any);
+        expect(result).toBeNull();
     });
 });

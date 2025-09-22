@@ -19,6 +19,32 @@ import { hasTextContentChild } from "./hasTextContentChild";
 import { hasTriggerProp } from "./hasTriggerProp";
 
 /**
+ * Auto-fix strategy types for accessibility rules
+ */
+export type AutoFixStrategy =
+    | "aria-label-placeholder" // Add aria-label=""
+    | "aria-label-suggestion" // Add aria-label="[Component description]"
+    | "add-required-prop" // Add specific required prop
+    | "custom"; // Custom fix logic
+
+/**
+ * Auto-fix configuration for accessibility rules
+ */
+export type AutoFixConfig = {
+    /** The auto-fix strategy to use */
+    strategy: AutoFixStrategy;
+    /** For add-required-prop: the prop name to add */
+    propName?: string;
+    /** For add-required-prop: the default prop value */
+    propValue?: string;
+    /** For aria-label-suggestion: the suggested label text */
+    suggestedLabel?: string;
+    /** For custom: custom fix function */
+    // eslint-disable-next-line no-unused-vars
+    customFix?: (opening: TSESTree.JSXOpeningElement) => string;
+};
+
+/**
  * Configuration options for a rule created via the `ruleFactory`
  */
 export type LabeledControlConfig = {
@@ -52,6 +78,7 @@ export type LabeledControlConfig = {
     allowTextContentChild?: boolean; // Accept text children to provide the label e.g. <Button>Click me</Button>
     triggerProp?: string; // Only apply rule when this trigger prop is present (e.g., "dismissible", "disabled")
     customValidator?: Function; // Custom validation logic
+    autoFix?: AutoFixConfig; // Auto-fix configuration for the rule
 };
 
 /**
@@ -105,6 +132,41 @@ export function hasAccessibleLabel(
 }
 
 /**
+ * Generate auto-fix for accessibility rules based on configuration
+ */
+export function generateAutoFix(opening: TSESTree.JSXOpeningElement, config: AutoFixConfig): TSESLint.ReportFixFunction | null {
+    if (!config) return null;
+
+    return (fixer: TSESLint.RuleFixer) => {
+        switch (config.strategy) {
+            case "aria-label-placeholder": {
+                return fixer.insertTextAfter(opening.name, ' aria-label=""');
+            }
+
+            case "aria-label-suggestion": {
+                const label = config.suggestedLabel || "Provide accessible name";
+                return fixer.insertTextAfter(opening.name, ` aria-label="${label}"`);
+            }
+
+            case "add-required-prop": {
+                if (!config.propName) return null;
+                const value = config.propValue || '""';
+                return fixer.insertTextAfter(opening.name, ` ${config.propName}=${value}`);
+            }
+
+            case "custom": {
+                if (!config.customFix) return null;
+                const fixText = config.customFix(opening);
+                return fixer.insertTextAfter(opening.name, fixText);
+            }
+
+            default:
+                return null;
+        }
+    };
+}
+
+/**
  * Factory for a minimal, strongly-configurable ESLint rule that enforces
  * accessible labeling on a specific JSX element/component.
  */
@@ -118,6 +180,7 @@ export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.R
                 recommended: "strict",
                 url: "https://www.w3.org/TR/html-aria/"
             },
+            fixable: config.autoFix ? "code" : undefined,
             schema: []
         },
         defaultOptions: [],
@@ -142,8 +205,15 @@ export function makeLabeledControlRule(config: LabeledControlConfig): TSESLint.R
                         : (isValid = hasAccessibleLabel(opening, node, context, config));
 
                     if (!isValid) {
+                        // Generate auto-fix if configuration is provided
+                        const autoFix = config.autoFix ? generateAutoFix(opening, config.autoFix) : undefined;
+
                         // report on the opening tag for better location
-                        context.report({ node: opening, messageId: config.messageId });
+                        context.report({
+                            node: opening,
+                            messageId: config.messageId,
+                            fix: autoFix
+                        });
                     }
                 }
             };

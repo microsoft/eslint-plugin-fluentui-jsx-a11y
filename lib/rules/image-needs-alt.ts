@@ -21,7 +21,12 @@ const rule = ESLintUtils.RuleCreator.withoutDocs(
         allowWrappingLabel: false,
         allowTooltipParent: false,
         allowDescribedBy: false,
-        allowLabeledChild: false
+        allowLabeledChild: false,
+        autoFix: {
+            strategy: "add-required-prop",
+            propName: "alt",
+            propValue: '""'
+        }
     })
 );
 
