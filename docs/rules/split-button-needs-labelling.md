@@ -1,4 +1,8 @@
-# Accessibility: SplitButton must have text content or accessible name on primaryActionButton prop (`@microsoft/fluentui-jsx-a11y/split-button-needs-labelling`)
+# Button must have an accessible name (`@microsoft/fluentui-jsx-a11y/split-button-needs-labelling`)
+
+💼 This rule is enabled in the ✅ `recommended` config.
+
+<!-- end auto-generated rule header -->
 
 💼 This rule is enabled in the ✅ `recommended` config.
 
