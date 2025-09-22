@@ -21,6 +21,10 @@ export default ESLintUtils.RuleCreator.withoutDocs(
         allowTooltipParent: true,
         allowDescribedBy: false,
         allowLabeledChild: true,
-        allowTextContentChild: true
+        allowTextContentChild: true,
+        autoFix: {
+            strategy: "aria-label-suggestion",
+            suggestedLabel: "Open menu"
+        }
     })
 );

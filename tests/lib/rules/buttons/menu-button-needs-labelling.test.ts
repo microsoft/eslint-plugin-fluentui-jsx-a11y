@@ -25,19 +25,23 @@ ruleTester.run("menu-button-needs-labelling", rule as unknown as Rule.RuleModule
     invalid: [
         {
             code: `<MenuButton />`,
-            errors: [{ messageId: "menuButtonNeedsLabelling" }]
+            errors: [{ messageId: "menuButtonNeedsLabelling" }],
+            output: `<MenuButton aria-label="Open menu" />`
         },
         {
             code: `<MenuButton></MenuButton>`,
-            errors: [{ messageId: "menuButtonNeedsLabelling" }]
+            errors: [{ messageId: "menuButtonNeedsLabelling" }],
+            output: `<MenuButton aria-label="Open menu"></MenuButton>`
         },
         {
             code: `<MenuButton aria-label="" />`,
-            errors: [{ messageId: "menuButtonNeedsLabelling" }]
+            errors: [{ messageId: "menuButtonNeedsLabelling" }],
+            output: `<MenuButton aria-label="Open menu" aria-label="" />`
         },
         {
             code: `<><Label id="wrong-id">Options</Label><MenuButton aria-labelledby="menu-label" /></>`,
-            errors: [{ messageId: "menuButtonNeedsLabelling" }]
+            errors: [{ messageId: "menuButtonNeedsLabelling" }],
+            output: `<><Label id="wrong-id">Options</Label><MenuButton aria-label="Open menu" aria-labelledby="menu-label" /></>`
         }
     ]
 });

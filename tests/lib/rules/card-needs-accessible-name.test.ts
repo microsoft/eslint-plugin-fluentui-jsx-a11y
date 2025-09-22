@@ -23,19 +23,23 @@ ruleTester.run("card-needs-accessible-name", rule as unknown as Rule.RuleModule,
     invalid: [
         {
             code: `<Card />`,
-            errors: [{ messageId: "cardNeedsAccessibleName" }]
+            errors: [{ messageId: "cardNeedsAccessibleName" }],
+            output: `<Card aria-label="Card" />`
         },
         {
             code: `<Card></Card>`,
-            errors: [{ messageId: "cardNeedsAccessibleName" }]
+            errors: [{ messageId: "cardNeedsAccessibleName" }],
+            output: `<Card aria-label="Card"></Card>`
         },
         {
             code: `<Card aria-label="" />`,
-            errors: [{ messageId: "cardNeedsAccessibleName" }]
+            errors: [{ messageId: "cardNeedsAccessibleName" }],
+            output: `<Card aria-label="Card" aria-label="" />`
         },
         {
             code: `<><Label id="wrong-id">Product</Label><Card aria-labelledby="card-label" /></>`,
-            errors: [{ messageId: "cardNeedsAccessibleName" }]
+            errors: [{ messageId: "cardNeedsAccessibleName" }],
+            output: `<><Label id="wrong-id">Product</Label><Card aria-label="Card" aria-labelledby="card-label" /></>`
         }
     ]
 });

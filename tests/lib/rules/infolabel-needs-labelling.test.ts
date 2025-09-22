@@ -27,31 +27,38 @@ ruleTester.run("infolabel-needs-labelling", rule as unknown as Rule.RuleModule, 
     invalid: [
         {
             code: `<InfoLabel />`,
-            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+            errors: [{ messageId: "infoLabelNeedsLabelling" }],
+            output: `<InfoLabel aria-label="Info" />`
         },
         {
             code: `<InfoLabel></InfoLabel>`,
-            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+            errors: [{ messageId: "infoLabelNeedsLabelling" }],
+            output: `<InfoLabel aria-label="Info"></InfoLabel>`
         },
         {
             code: `<InfoLabel aria-label="" />`,
-            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+            errors: [{ messageId: "infoLabelNeedsLabelling" }],
+            output: `<InfoLabel aria-label="Info" aria-label="" />`
         },
         {
             code: `<InfoLabel aria-labelledby="non-existent-id" />`,
-            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+            errors: [{ messageId: "infoLabelNeedsLabelling" }],
+            output: `<InfoLabel aria-label="Info" aria-labelledby="non-existent-id" />`
         },
         {
             code: `<><Label id="wrong-id">Information</Label><InfoLabel aria-labelledby="info-label" /></>`,
-            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+            errors: [{ messageId: "infoLabelNeedsLabelling" }],
+            output: `<><Label id="wrong-id">Information</Label><InfoLabel aria-label="Info" aria-labelledby="info-label" /></>`
         },
         {
             code: `<InfoLabel><img /></InfoLabel>`,
-            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+            errors: [{ messageId: "infoLabelNeedsLabelling" }],
+            output: `<InfoLabel aria-label="Info"><img /></InfoLabel>`
         },
         {
             code: `<InfoLabel><img alt="" /></InfoLabel>`,
-            errors: [{ messageId: "infoLabelNeedsLabelling" }]
+            errors: [{ messageId: "infoLabelNeedsLabelling" }],
+            output: `<InfoLabel aria-label="Info"><img alt="" /></InfoLabel>`
         }
     ]
 });

@@ -25,6 +25,7 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
             recommended: "strict",
             url: "https://www.w3.org/TR/html-aria/" // URL to the documentation page for this rule
         },
+        fixable: "code",
         schema: []
     },
     // create (function) returns an object with methods that ESLint calls to “visit” nodes while traversing the abstract syntax tree
@@ -48,7 +49,27 @@ const rule = ESLintUtils.RuleCreator.withoutDocs({
                 // if it has no visual labelling, report error
                 context.report({
                     node,
-                    messageId: `noUnlabelledSpinner`
+                    messageId: `noUnlabelledSpinner`,
+                    fix(fixer) {
+                        const fixes = [];
+
+                        // Add missing aria-label if neither label nor aria-label exist
+                        if (!hasNonEmptyProp(node.attributes, "label") && !hasNonEmptyProp(node.attributes, "aria-label")) {
+                            fixes.push(fixer.insertTextAfter(node.name, ' aria-label="Loading"'));
+                        }
+
+                        // Add missing aria-live
+                        if (!hasNonEmptyProp(node.attributes, "aria-live")) {
+                            fixes.push(fixer.insertTextAfter(node.name, ' aria-live="polite"'));
+                        }
+
+                        // Add missing aria-busy
+                        if (!hasNonEmptyProp(node.attributes, "aria-busy")) {
+                            fixes.push(fixer.insertTextAfter(node.name, ' aria-busy="true"'));
+                        }
+
+                        return fixes;
+                    }
                 });
             }
         };
