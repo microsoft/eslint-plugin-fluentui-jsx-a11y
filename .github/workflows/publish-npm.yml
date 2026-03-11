@@ -1,0 +1,73 @@
+name: Publish to npmjs.org
+
+on:
+    release:
+        types: [published]
+    push:
+        tags:
+            - "v*"
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "npm"
+            - run: npm ci
+            - run: npm run build
+            - run: npm test
+
+    publish:
+        needs: build
+        runs-on: ubuntu-latest
+        environment: npm-publish
+        permissions:
+            contents: read
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Determine tag
+              id: tag
+              shell: bash
+              run: |
+                  if [ "${{ github.event_name }}" = "release" ]; then
+                    TAG="${{ github.event.release.tag_name }}"
+                  else
+                    TAG="${GITHUB_REF_NAME}"
+                  fi
+                  if [[ "${TAG}" != v* ]]; then
+                    echo "::error::Expected a version tag starting with 'v', got '${TAG}'. When using workflow_dispatch, select a 'v*' tag as the ref."
+                    exit 1
+                  fi
+                  echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+            - name: Checkout tag
+              shell: bash
+              run: |
+                  git checkout "refs/tags/${{ steps.tag.outputs.tag }}" || {
+                    echo "::error::Tag 'refs/tags/${{ steps.tag.outputs.tag }}' not found. Ensure the tag exists before publishing."
+                    exit 1
+                  }
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  registry-url: "https://registry.npmjs.org"
+                  cache: "npm"
+
+            - run: npm ci
+            - run: npm run build
+            - run: npm test
+
+            - name: Publish
+              run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
