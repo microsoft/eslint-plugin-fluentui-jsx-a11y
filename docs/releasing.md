@@ -7,8 +7,7 @@ This package is published to npmjs.org as `@microsoft/eslint-plugin-fluentui-jsx
 | Role | Who | What they can do |
 |---|---|---|
 | External contributor | Anyone | Open PRs, create issues |
-| Internal maintainer | Microsoft team members | Approve publish jobs, rotate tokens, create releases/tags |
-| npm publisher | Microsoft-owned service account | Publish `@microsoft/eslint-plugin-fluentui-jsx-a11y` to npmjs.org |
+| Internal maintainer | Microsoft team members | Approve publish jobs, create releases/tags, configure Trusted Publishing |
 
 Publishing to npm always requires approval from an internal maintainer via the protected
 GitHub Environment `npm-publish`. External contributors cannot trigger an npm publish
@@ -26,25 +25,26 @@ The following steps need to be done once before the first automated npm publish.
    least two internal maintainers (e.g. `ryanlynch` + one backup).
 4. Optionally restrict the environment to the `main` branch only.
 
-### 2. Store the `NPM_TOKEN` secret
+### 2. Configure Trusted Publishing on npmjs.com
 
-1. Create (or rotate) an npm access token from the Microsoft-owned npm publisher
-   account that has publish permission for the `@microsoft` scope.
-2. In the `npm-publish` environment settings, click **Add secret**.
-3. Name: `NPM_TOKEN`, value: the token from step 1.
+Publishing uses npm's [Trusted Publishing (OIDC)](https://docs.npmjs.com/generating-provenance-statements)
+feature. No long-lived `NPM_TOKEN` secret is required. A one-time configuration
+on npmjs.com is needed instead:
 
-Storing the secret on the environment (rather than at repo level) ensures that
-only the publish job—after it receives environment approval—can access it.
+1. Sign in to npmjs.com as a user with owner/maintainer rights on
+   `@microsoft/eslint-plugin-fluentui-jsx-a11y`.
+2. Open the package settings and navigate to **Trusted Publishers**.
+3. Add a new trusted publisher with:
+   - **Provider:** GitHub Actions
+   - **Organization:** `microsoft`
+   - **Repository:** `eslint-plugin-fluentui-jsx-a11y`
+   - **Workflow filename:** `publish-npm.yml`
+   - **Environment (recommended):** `npm-publish`
+4. Save.
 
-### 3. Token rotation
-
-When the token expires or is rotated:
-
-1. Generate a new token from the Microsoft-owned npm publisher account.
-2. Update the `NPM_TOKEN` secret in the `npm-publish` environment.
-3. No code changes are required.
-
-Recommended: add a calendar reminder for token rotation to avoid blocked releases.
+The workflow already has `permissions: id-token: write` on the publish job and
+publishes with `npm publish --access public --provenance`, so no further code
+changes are needed after the npmjs.com configuration is complete.
 
 ## How to publish
 
@@ -62,7 +62,7 @@ Recommended: add a calendar reminder for token rotation to avoid blocked release
 5. The **publish job pauses** and waits for an internal maintainer to approve it in
    the `npm-publish` environment.
 6. After approval, the job checks out the exact tagged commit, builds, tests, and
-   runs `npm publish`.
+   runs `npm publish --access public --provenance`.
 
 ### B) Publish from a `v*` tag push
 
@@ -102,9 +102,7 @@ Rules:
   publish step for prereleases:
   ```yaml
   - name: Publish (prerelease)
-    run: npm publish --tag alpha
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    run: npm publish --access public --provenance --tag alpha
   ```
 
 ## Workflow reference
